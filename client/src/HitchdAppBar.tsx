@@ -1,7 +1,9 @@
-import { AppBar, createStyles, IconButton, Toolbar, Typography, WithStyles, withStyles } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
+import { AppBar, createStyles, Toolbar, WithStyles, withStyles } from '@material-ui/core';
 import React from 'react';
 
+import { Hamburger } from './Hamburger';
+import { HeaderText } from './HeaderText';
+import { Logo } from './Logo';
 import { theme } from './theme';
 
 const styles = createStyles({
@@ -14,8 +16,9 @@ const styles = createStyles({
     borderBottomStyle: 'solid',
     borderBottomColor: theme.palette.grey[200]
   },
-  grow: {
-    flexGrow: 1
+  logo: {
+    flexGrow: 1,
+    textAlign: 'center'
   },
   menuButton: {
     marginLeft: -12,
@@ -29,19 +32,9 @@ export const UnstyledAppBar: React.SFC<HitchdAppBarProps> = ({ classes }) => (
   <div className={classes.root}>
     <AppBar position='static' elevation={2} className={classes.paperElevation2}>
       <Toolbar>
-        <Typography color='inherit' className={classes.grow}>
-          Justin and Marisa are getting
-        </Typography>
-        <Typography color='inherit' className={classes.grow}>
-          Hitchd
-        </Typography>
-        <IconButton
-          className={classes.menuButton}
-          color='inherit'
-          aria-label='Menu'
-        >
-          <Menu />
-        </IconButton>
+        <HeaderText />
+        <Logo />
+        <Hamburger />
       </Toolbar>
     </AppBar>
   </div>
