@@ -1,7 +1,8 @@
 profiles:
-  - name: Justin Livi
-    photo: justin.png
-    relationship: Groom
-    about: Brinkbit co-founder, artist, musician, software engineer
+  - id: 0
+    name: Justin and Marisa
+    photo: justin-marisa.png
+    relationship: Bride and Groom
+    about: The happy couple
     rehearsal: true
     brunch: true

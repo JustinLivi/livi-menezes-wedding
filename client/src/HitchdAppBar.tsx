@@ -7,10 +7,21 @@ import { Logo } from './Logo';
 import { theme } from './theme';
 
 const styles = createStyles({
-  root: {
+  grow: {
     flexGrow: 1
   },
+  centerBar: {
+    flexGrow: 1,
+    margin: 'auto'
+  },
+  root: {
+    maxWidth: 400
+  },
   paperElevation2: {
+    display: 'inline-flex',
+    minWidth: '100%',
+    width: 'initial',
+    flexDirection: 'row',
     boxShadow: 'none',
     borderBottomWidth: 2,
     borderBottomStyle: 'solid',
@@ -29,9 +40,13 @@ const styles = createStyles({
 export interface HitchdAppBarProps extends WithStyles<typeof styles> {}
 
 export const UnstyledAppBar: React.SFC<HitchdAppBarProps> = ({ classes }) => (
-  <div className={classes.root}>
-    <AppBar position='static' elevation={2} className={classes.paperElevation2}>
-      <Toolbar>
+  <div className={classes.grow}>
+    <AppBar
+      position='static'
+      elevation={2}
+      classes={{ root: classes.paperElevation2 }}
+    >
+      <Toolbar className={classes.centerBar} classes={{ root: classes.root }}>
         <HeaderText />
         <Logo />
         <Hamburger />
