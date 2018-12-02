@@ -15,7 +15,8 @@ const styles = createStyles({
     margin: 'auto'
   },
   root: {
-    maxWidth: 400
+    maxWidth: 400,
+    padding: 0
   },
   paperElevation2: {
     display: 'inline-flex',

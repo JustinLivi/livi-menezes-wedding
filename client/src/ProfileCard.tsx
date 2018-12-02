@@ -15,7 +15,8 @@ const styles = createStyles({
     maxWidth: 400
   },
   media: {
-    height: 300
+    height: 300,
+    maxHeight: '40vh'
   },
   flexRow: {
     margin: 10,

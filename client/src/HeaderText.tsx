@@ -7,7 +7,8 @@ const styles = createStyles({
     height: '1.5em'
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginLeft: 16
   }
 });
 
