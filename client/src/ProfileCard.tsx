@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import * as React from 'react';
 
+import { theme } from './theme';
+
 const styles = createStyles({
   card: {
     maxWidth: 400
@@ -18,13 +20,13 @@ const styles = createStyles({
     height: 300,
     maxHeight: '40vh'
   },
-  flexRow: {
-    margin: 10,
+  root: {
+    margin: theme.spacing.unit,
     display: 'flex',
-    flexDirection: 'row'
-  },
-  grow: {
-    flexGrow: 1
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxPack: 'center'
   }
 });
 
@@ -34,14 +36,13 @@ export interface ProfileCardProps extends WithStyles<typeof styles> {
 
 export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   image,
-  classes
+  classes: { root, card, media }
 }) => (
-  <div className={classes.flexRow}>
-    <div className={classes.grow} />
-    <Card className={classes.card}>
+  <div className={root}>
+    <Card className={card}>
       <CardActionArea>
         <CardMedia
-          className={classes.media}
+          className={media}
           image={image}
           title='Contemplative Reptile'
         />
@@ -56,7 +57,6 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
         </CardContent>
       </CardActionArea>
     </Card>
-    <div className={classes.grow} />
   </div>
 );
 

@@ -8,6 +8,8 @@ import { ImGoing } from './icons/ImGoing';
 import { theme } from './theme';
 
 const commonButtonStyles = {
+  marginLeft: -6,
+  marginRight: -6,
   backgroundColor: theme.palette.primary.light,
   transition:
     'color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,' +
@@ -30,8 +32,16 @@ const largeButtonStyles = {
 };
 
 const styles = createStyles({
-  fab: {
-    margin: -6
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxPack: 'center',
+    margin: theme.spacing.unit
+  },
+  buttonBar: {
+    flexGrow: 0
   },
   cantMakeIt: {
     ...largeButtonStyles,
@@ -41,6 +51,7 @@ const styles = createStyles({
       backgroundColor: theme.cantMakeIt.color
     }
   },
+  cantMakeItLogo: {},
   imGoing: {
     ...largeButtonStyles,
     color: theme.imGoing.color,
@@ -49,6 +60,7 @@ const styles = createStyles({
       backgroundColor: theme.imGoing.color
     }
   },
+  imGoingLogo: {},
   details: {
     ...commonButtonStyles,
     color: theme.details.color,
@@ -59,28 +71,36 @@ const styles = createStyles({
       color: theme.palette.primary.light,
       backgroundColor: theme.details.color
     }
-  }
+  },
+  detailsLogo: {}
 });
 
 export interface ButtonBarProps extends WithStyles<typeof styles> {}
 
 export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
-  classes: { fab, cantMakeIt, details, imGoing }
+  classes: {
+    cantMakeIt,
+    cantMakeItLogo,
+    details,
+    detailsLogo,
+    imGoing,
+    imGoingLogo,
+    root,
+    buttonBar
+  }
 }) => (
-  <div>
-    <Fab
-      aria-label="Can't make it"
-      className={fab}
-      classes={{ root: cantMakeIt }}
-    >
-      <CantMakeIt />
-    </Fab>
-    <Fab aria-label='Details' className={fab} classes={{ root: details }}>
-      <Details />
-    </Fab>
-    <Fab aria-label="I'm going" className={fab} classes={{ root: imGoing }}>
-      <ImGoing />
-    </Fab>
+  <div className={root}>
+    <div className={buttonBar}>
+      <Fab aria-label="Can't make it" classes={{ root: cantMakeIt }}>
+        <CantMakeIt classes={{ root: cantMakeItLogo }} />
+      </Fab>
+      <Fab aria-label='Details' classes={{ root: details }}>
+        <Details classes={{ root: detailsLogo }} />
+      </Fab>
+      <Fab aria-label="I'm going" classes={{ root: imGoing }}>
+        <ImGoing classes={{ root: imGoingLogo }} />
+      </Fab>
+    </div>
   </div>
 );
 
