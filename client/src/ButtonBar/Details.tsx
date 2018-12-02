@@ -23,9 +23,12 @@ const styles = createStyles({
   }
 });
 
-export interface DetailsProps extends WithStyles<typeof styles> {}
+export interface DetailsProps extends WithStyles<typeof styles> {
+  hideHelp?: true;
+}
 
 export const UnstyledDetails: React.SFC<DetailsProps> = ({
+  hideHelp,
   classes: { fab, root, label }
 }) => (
   <div className={root}>
@@ -40,7 +43,7 @@ export const UnstyledDetails: React.SFC<DetailsProps> = ({
         </SvgIcon>
       </Icon>
     </Fab>
-    <span className={label}>details</span>
+    {!hideHelp && <span className={label}>details</span>}
   </div>
 );
 

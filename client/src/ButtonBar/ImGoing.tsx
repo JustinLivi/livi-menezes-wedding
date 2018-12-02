@@ -20,9 +20,12 @@ const styles = createStyles({
   }
 });
 
-export interface ImGoingProps extends WithStyles<typeof styles> {}
+export interface ImGoingProps extends WithStyles<typeof styles> {
+  hideHelp?: true;
+}
 
 export const UnstyledImGoing: React.SFC<ImGoingProps> = ({
+  hideHelp,
   classes: { fab, root, label }
 }) => (
   <div className={root}>
@@ -37,7 +40,7 @@ export const UnstyledImGoing: React.SFC<ImGoingProps> = ({
         </SvgIcon>
       </Icon>
     </Fab>
-    <span className={label}>I'm going!</span>
+    {!hideHelp && <span className={label}>I'm going!</span>}
   </div>
 );
 

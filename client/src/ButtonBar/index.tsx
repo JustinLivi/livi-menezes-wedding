@@ -9,6 +9,7 @@ import { ImGoing } from './ImGoing';
 const styles = createStyles({
   root: {
     display: 'flex',
+    flexGrow: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -20,16 +21,21 @@ const styles = createStyles({
   }
 });
 
-export interface ButtonBarProps extends WithStyles<typeof styles> {}
+export interface ButtonBarProps extends WithStyles<typeof styles> {
+  onlyInfo?: true;
+  hideHelp?: true;
+}
 
 export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
+  onlyInfo,
+  hideHelp,
   classes: { root, buttonBar }
 }) => (
   <div className={root}>
     <div className={buttonBar}>
-      <CantMakeIt />
-      <Details />
-      <ImGoing />
+      {!onlyInfo && <CantMakeIt hideHelp={hideHelp} />}
+      <Details hideHelp={hideHelp} />
+      {!onlyInfo && <ImGoing hideHelp={hideHelp} />}
     </div>
   </div>
 );

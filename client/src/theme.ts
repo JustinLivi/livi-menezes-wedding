@@ -34,6 +34,11 @@ export const theme = createMuiTheme({
       contrastText: '#fe5168'
     }
   },
+  typography: {
+    h5: {
+      fontSize: '1.3rem'
+    }
+  },
   cantMakeIt: {
     color: '#ff6662'
   },

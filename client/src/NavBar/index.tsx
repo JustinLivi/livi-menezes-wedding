@@ -8,7 +8,7 @@ import { Logo } from './Logo';
 
 const styles = createStyles({
   root: {
-    flexGrow: 1
+    flexGrow: 0
   },
   toolbar: {
     flexGrow: 1,

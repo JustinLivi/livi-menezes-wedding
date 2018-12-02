@@ -8,7 +8,8 @@ const styles = createStyles({
   },
   grow: {
     flexGrow: 1,
-    marginLeft: 16
+    display: 'flex',
+    flexDirection: 'row-reverse'
   }
 });
 

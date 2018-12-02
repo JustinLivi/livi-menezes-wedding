@@ -20,9 +20,12 @@ const styles = createStyles({
   }
 });
 
-export interface CantMakeItProps extends WithStyles<typeof styles> {}
+export interface CantMakeItProps extends WithStyles<typeof styles> {
+  hideHelp?: true;
+}
 
 export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
+  hideHelp,
   classes: { fab, root, label }
 }) => (
   <div className={root}>
@@ -37,7 +40,7 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
         </SvgIcon>
       </Icon>
     </Fab>
-    <span className={label}>can't make it</span>
+    {!hideHelp && <span className={label}>can't make it</span>}
   </div>
 );
 
