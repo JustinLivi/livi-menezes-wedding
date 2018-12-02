@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Hamburger } from './Hamburger';
 import { HeaderText } from './HeaderText';
-import { Logo } from './Logo';
+import { Logo } from './icons/Logo';
 import { theme } from './theme';
 
 const styles = createStyles({

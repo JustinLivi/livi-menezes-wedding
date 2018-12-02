@@ -1,4 +1,29 @@
-import { createMuiTheme } from '@material-ui/core';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
+declare module '@material-ui/core/styles/createMuiTheme' {
+  interface Theme {
+    cantMakeIt: {
+      color: React.CSSProperties['color'];
+    };
+    imGoing: {
+      color: React.CSSProperties['color'];
+    };
+    details: {
+      color: React.CSSProperties['color'];
+    };
+  }
+  interface ThemeOptions {
+    cantMakeIt?: {
+      color?: React.CSSProperties['color'];
+    };
+    imGoing?: {
+      color?: React.CSSProperties['color'];
+    };
+    details?: {
+      color?: React.CSSProperties['color'];
+    };
+  }
+}
 
 export const theme = createMuiTheme({
   palette: {
@@ -8,5 +33,14 @@ export const theme = createMuiTheme({
       dark: '#ebebeb',
       contrastText: '#fe5168'
     }
+  },
+  cantMakeIt: {
+    color: '#ff6662'
+  },
+  imGoing: {
+    color: '#45cd91'
+  },
+  details: {
+    color: '#1889fe'
   }
 });
