@@ -1,10 +1,10 @@
 import { AppBar, createStyles, Toolbar, WithStyles, withStyles } from '@material-ui/core';
 import React from 'react';
 
+import { theme } from '../theme';
 import { Hamburger } from './Hamburger';
 import { HeaderText } from './HeaderText';
-import { Logo } from './icons/Logo';
-import { theme } from './theme';
+import { Logo } from './Logo';
 
 const styles = createStyles({
   root: {
@@ -28,9 +28,9 @@ const styles = createStyles({
   }
 });
 
-export interface HitchdAppBarProps extends WithStyles<typeof styles> {}
+export interface NavBarProps extends WithStyles<typeof styles> {}
 
-export const UnstyledAppBar: React.SFC<HitchdAppBarProps> = ({
+export const UnstyledAppBar: React.SFC<NavBarProps> = ({
   classes: { root, appBar, toolbar }
 }) => (
   <div className={root}>
@@ -44,4 +44,4 @@ export const UnstyledAppBar: React.SFC<HitchdAppBarProps> = ({
   </div>
 );
 
-export const HitchdAppBar = withStyles(styles)(UnstyledAppBar);
+export const NavBar = withStyles(styles)(UnstyledAppBar);
