@@ -1,10 +1,7 @@
 import { ListItemIcon, ListItemText, MenuItem as CoreMenuItem } from '@material-ui/core';
-import { MenuItemProps as CoreMenuItemProps } from '@material-ui/core/MenuItem';
 import * as React from 'react';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-export type MenuLink = React.ReactType<Omit<CoreMenuItemProps, 'innerRef'>>;
+import { MenuLink } from '../Components/MenuLinks';
 
 export interface MenuItemProps {
   icon: React.ReactElement<any>;

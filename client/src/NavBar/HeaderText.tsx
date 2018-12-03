@@ -8,6 +8,7 @@ const styles = createStyles({
   },
   grow: {
     flexGrow: 1,
+    width: '33%',
     display: 'flex',
     flexDirection: 'row-reverse'
   }

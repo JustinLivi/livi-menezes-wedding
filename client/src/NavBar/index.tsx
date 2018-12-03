@@ -22,7 +22,7 @@ const styles = createStyles({
     width: 'initial',
     flexDirection: 'row',
     boxShadow: 'none',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomStyle: 'solid',
     borderBottomColor: theme.palette.grey[200]
   }

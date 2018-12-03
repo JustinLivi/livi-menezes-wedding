@@ -9,12 +9,17 @@ import {
   People,
 } from '@material-ui/icons';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
-import { MenuItem, MenuLink } from './MenuItem';
+import { DirectionsLink, OurStoryLink, RsvpLink, ThingsToDoLink, VenueLink, WhereToStayLink } from '../Components/MenuLinks';
+import { theme } from '../theme';
+import { MenuItem } from './MenuItem';
 
 const styles = createStyles({
   iconButton: {
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'initial'
+    },
     width: '3em',
     height: '3em'
   },
@@ -24,6 +29,7 @@ const styles = createStyles({
   },
   root: {
     flexGrow: 1,
+    width: '33%',
     display: 'flex',
     flexDirection: 'row-reverse'
   }
@@ -42,13 +48,6 @@ export class UnstyledHamburger extends React.Component<
   state = {
     anchorEl: null
   };
-
-  RsvpLink: MenuLink = props => <Link to='/' {...props} />;
-  OurStoryLink: MenuLink = props => <Link to='/our-story' {...props} />;
-  VenueLink: MenuLink = props => <Link to='/venue' {...props} />;
-  DirectionsLink: MenuLink = props => <Link to='/directions' {...props} />;
-  WhereToStayLink: MenuLink = props => <Link to='/where-to-stay' {...props} />;
-  ThingsToDoLink: MenuLink = props => <Link to='/things-to-do' {...props} />;
 
   handleClick: React.MouseEventHandler = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -81,37 +80,37 @@ export class UnstyledHamburger extends React.Component<
         >
           <MenuItem
             icon={<EmailRounded />}
-            linkComponent={this.RsvpLink}
+            linkComponent={RsvpLink}
             onClick={this.handleClose}
             primary='RSVP'
           />
           <MenuItem
             icon={<People />}
-            linkComponent={this.OurStoryLink}
+            linkComponent={OurStoryLink}
             onClick={this.handleClose}
             primary='Our Story'
           />
           <MenuItem
             icon={<LocationCityRounded />}
-            linkComponent={this.VenueLink}
+            linkComponent={VenueLink}
             onClick={this.handleClose}
             primary='Venue'
           />
           <MenuItem
             icon={<LocationOn />}
-            linkComponent={this.DirectionsLink}
+            linkComponent={DirectionsLink}
             onClick={this.handleClose}
             primary='Directions'
           />
           <MenuItem
             icon={<Hotel />}
-            linkComponent={this.WhereToStayLink}
+            linkComponent={WhereToStayLink}
             onClick={this.handleClose}
             primary='Where to Stay'
           />
           <MenuItem
             icon={<LocalCafe />}
-            linkComponent={this.ThingsToDoLink}
+            linkComponent={ThingsToDoLink}
             onClick={this.handleClose}
             primary='Things to Do'
           />

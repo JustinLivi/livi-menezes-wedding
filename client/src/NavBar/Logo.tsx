@@ -7,7 +7,7 @@ const styles = createStyles({
     width: '3em'
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 0
   }
 });
 

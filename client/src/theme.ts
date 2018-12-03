@@ -39,6 +39,11 @@ export const theme = createMuiTheme({
       fontSize: '1.3rem'
     }
   },
+  mixins: {
+    toolbar: {
+      minHeight: 74
+    }
+  },
   cantMakeIt: {
     color: '#ff6662'
   },
