@@ -1,16 +1,7 @@
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  createStyles,
-  Typography,
-  WithStyles,
-  withStyles,
-} from '@material-ui/core';
+import { Card, CardContent, CardMedia, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
-import { theme } from './theme';
+import { theme } from '../theme';
 
 const styles = createStyles({
   card: {
@@ -43,19 +34,24 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   image,
   title,
   blurb,
+  children,
   classes: { root, card, media }
 }) => (
   <div className={root}>
     <Card className={card}>
-      <CardActionArea>
+      {children ? (
+        <CardMedia className={media} title={title}>
+          {children}
+        </CardMedia>
+      ) : (
         <CardMedia className={media} image={image} title={title} />
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {title}
-          </Typography>
-          {blurb && <Typography component='p'>{blurb}</Typography>}
-        </CardContent>
-      </CardActionArea>
+      )}
+      <CardContent>
+        <Typography gutterBottom variant='h5' component='h2'>
+          {title}
+        </Typography>
+        {blurb && <Typography component='p'>{blurb}</Typography>}
+      </CardContent>
     </Card>
   </div>
 );

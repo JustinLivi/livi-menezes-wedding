@@ -3,6 +3,7 @@ import * as React from 'react';
 
 const styles = createStyles({
   root: {
+    paddingTop: 74,
     display: 'flex',
     flexGrow: 1,
     flexDirection: 'column',
@@ -12,11 +13,11 @@ const styles = createStyles({
   }
 });
 
-export interface MainLayoutProps extends WithStyles<typeof styles> {}
+export interface ColumnLayoutProps extends WithStyles<typeof styles> {}
 
-export const UnstyledMainLayout: React.SFC<MainLayoutProps> = ({
+export const UnstyledColumnLayout: React.SFC<ColumnLayoutProps> = ({
   classes: { root },
   children
 }) => <div className={root}>{children}</div>;
 
-export const MainLayout = withStyles(styles)(UnstyledMainLayout);
+export const ColumnLayout = withStyles(styles)(UnstyledColumnLayout);

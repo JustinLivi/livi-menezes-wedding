@@ -22,6 +22,7 @@ const styles = createStyles({
 });
 
 export interface ButtonBarProps extends WithStyles<typeof styles> {
+  toDetails: string;
   onlyInfo?: true;
   hideHelp?: true;
 }
@@ -29,12 +30,13 @@ export interface ButtonBarProps extends WithStyles<typeof styles> {
 export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
   onlyInfo,
   hideHelp,
+  toDetails,
   classes: { root, buttonBar }
 }) => (
   <div className={root}>
     <div className={buttonBar}>
       {!onlyInfo && <CantMakeIt hideHelp={hideHelp} />}
-      <Details hideHelp={hideHelp} />
+      <Details hideHelp={hideHelp} to={toDetails} />
       {!onlyInfo && <ImGoing hideHelp={hideHelp} />}
     </div>
   </div>

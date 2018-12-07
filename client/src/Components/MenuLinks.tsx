@@ -2,7 +2,7 @@ import { MenuItemProps } from '@material-ui/core/MenuItem';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+import { Omit } from '../Util/util';
 
 export type MenuLink = React.ReactType<Omit<MenuItemProps, 'innerRef'>>;
 

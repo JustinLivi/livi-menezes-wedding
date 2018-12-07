@@ -73,6 +73,7 @@ export class UnstyledHamburger extends React.Component<
           <MenuIcon classes={{ root: menu }} />
         </IconButton>
         <Menu
+          color='primary'
           id='simple-menu'
           anchorEl={anchorEl}
           open={!!anchorEl}

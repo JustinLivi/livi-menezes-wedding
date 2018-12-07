@@ -3,6 +3,7 @@ import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { theme } from '../theme';
 
 export const commonButtonStyles: CSSProperties = {
+  lineHeight: 'normal',
   marginLeft: -6,
   marginRight: -6,
   backgroundColor: theme.palette.primary.light,

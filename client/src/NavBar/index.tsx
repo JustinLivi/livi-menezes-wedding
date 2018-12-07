@@ -18,7 +18,10 @@ const styles = createStyles({
   },
   appBar: {
     display: 'inline-flex',
-    minWidth: '100%',
+    minWidth: 'calc(100% - 240px);',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%'
+    },
     width: 'initial',
     flexDirection: 'row',
     boxShadow: 'none',
@@ -34,7 +37,7 @@ export const UnstyledAppBar: React.SFC<NavBarProps> = ({
   classes: { root, appBar, toolbar }
 }) => (
   <div className={root}>
-    <AppBar position='static' elevation={2} classes={{ root: appBar }}>
+    <AppBar position='fixed' elevation={2} classes={{ root: appBar }}>
       <Toolbar classes={{ root: toolbar }}>
         <HeaderText />
         <Logo />

@@ -35,6 +35,7 @@ export const theme = createMuiTheme({
     }
   },
   typography: {
+    useNextVariants: true,
     h5: {
       fontSize: '1.3rem'
     }
