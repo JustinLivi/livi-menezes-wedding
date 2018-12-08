@@ -23,13 +23,13 @@ export const Directions: React.SFC = () => (
           zoom: 15
         }}
         marker={{
-          position: { lat: 39.2972032, lng: -76.6150171 },
           clickable: true,
-          title: 'George Peabody Library',
           place: {
             location: { lat: 39.2972032, lng: -76.6150171 },
             placeId: 'ChIJzYDBtZkEyIkR_5PpHaZnNR8'
-          }
+          },
+          position: { lat: 39.2972032, lng: -76.6150171 },
+          title: 'George Peabody Library'
         }}
         url={directionsUrl}
       />

@@ -7,9 +7,9 @@ const styles = createStyles({
   }
 });
 
-export interface VirtualTourCardProps extends WithStyles<typeof styles> {}
+export interface IVirtualTourCardProps extends WithStyles<typeof styles> {}
 
-export const UnstyledVirtualTourCard: React.SFC<VirtualTourCardProps> = ({
+export const UnstyledVirtualTourCard: React.SFC<IVirtualTourCardProps> = ({
   classes: { iframe }
 }) => (
   <Card>

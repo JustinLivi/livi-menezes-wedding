@@ -7,7 +7,7 @@ import { SideBar } from './SideBar';
 import { theme } from './theme';
 
 export class App extends Component {
-  render() {
+  public render() {
     return (
       <Router>
         <MuiThemeProvider theme={theme}>

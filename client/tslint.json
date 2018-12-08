@@ -1,3 +1,7 @@
 {
-  "extends": ["tslint:latest", "tslint-react", "tslint-config-airbnb"]
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "jsx-boolean-value": [true, "never"],
+    "no-submodule-imports": [false]
+  }
 }

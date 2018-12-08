@@ -6,18 +6,18 @@ import { StandardCard } from './StandardCard';
 const styles = createStyles({
   media: {
     height: 360,
-    maxWidth: '100%',
-    maxHeight: 'calc(100vh - 308px)'
+    maxHeight: 'calc(100vh - 308px)',
+    maxWidth: '100%'
   }
 });
 
-export interface ProfileCardProps extends WithStyles<typeof styles> {
+export interface IProfileCardProps extends WithStyles<typeof styles> {
   image: string;
   title: string;
   blurb?: React.ReactType<any>;
 }
 
-export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
+export const UnstyledProfileCard: React.SFC<IProfileCardProps> = ({
   image,
   title,
   blurb,
@@ -26,7 +26,7 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
 }) => (
   <StandardCard>
     {children ? (
-      <CardMedia className={media} title={title}>
+      <CardMedia className={media} title={title} image={image}>
         {children}
       </CardMedia>
     ) : (

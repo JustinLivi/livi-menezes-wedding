@@ -1,0 +1,28 @@
+{
+  "name": "livi-menezes-wedding-server",
+  "version": "0.1.0",
+  "description": "Typescript express server for wedding website",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wedding",
+    "express",
+    "website",
+    "typescript"
+  ],
+  "author": "Justin Livi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "prettier": "^1.15.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0"
+  }
+}

@@ -1,6 +1,7 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
+  // tslint:disable-next-line:interface-name
   interface Theme {
     cantMakeIt: {
       color: React.CSSProperties['color'];
@@ -12,6 +13,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       color: React.CSSProperties['color'];
     };
   }
+  // tslint:disable-next-line:interface-name
   interface ThemeOptions {
     cantMakeIt?: {
       color?: React.CSSProperties['color'];
@@ -26,36 +28,36 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 }
 
 export const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#fff',
-      main: '#fff',
-      dark: '#ebebeb',
-      contrastText: '#fe5168'
-    },
-    secondary: {
-      main: '#66696D',
-      dark: '#3A4145'
-    }
+  cantMakeIt: {
+    color: '#ff6662'
   },
-  typography: {
-    useNextVariants: true,
-    h5: {
-      fontSize: '1.3rem'
-    }
+  details: {
+    color: '#1889fe'
+  },
+  imGoing: {
+    color: '#45cd91'
   },
   mixins: {
     toolbar: {
       minHeight: 74
     }
   },
-  cantMakeIt: {
-    color: '#ff6662'
+  palette: {
+    primary: {
+      contrastText: '#fe5168',
+      dark: '#ebebeb',
+      light: '#fff',
+      main: '#fff'
+    },
+    secondary: {
+      dark: '#3A4145',
+      main: '#66696D'
+    }
   },
-  imGoing: {
-    color: '#45cd91'
-  },
-  details: {
-    color: '#1889fe'
+  typography: {
+    h5: {
+      fontSize: '1.3rem'
+    },
+    useNextVariants: true
   }
 });

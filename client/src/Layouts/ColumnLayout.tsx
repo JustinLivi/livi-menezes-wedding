@@ -3,19 +3,19 @@ import * as React from 'react';
 
 const styles = createStyles({
   root: {
-    paddingTop: 74,
-    display: 'flex',
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'stretch',
-    boxPack: 'center'
+    boxPack: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingTop: 74
   }
 });
 
-export interface ColumnLayoutProps extends WithStyles<typeof styles> {}
+export interface IColumnLayoutProps extends WithStyles<typeof styles> {}
 
-export const UnstyledColumnLayout: React.SFC<ColumnLayoutProps> = ({
+export const UnstyledColumnLayout: React.SFC<IColumnLayoutProps> = ({
   classes: { root },
   children
 }) => <div className={root}>{children}</div>;

@@ -6,25 +6,25 @@ import { theme } from '../theme';
 import { buttonHolderStyles, largeButtonStyles } from './commonStyles';
 
 const styles = createStyles({
-  root: buttonHolderStyles,
   fab: {
     ...largeButtonStyles,
-    color: theme.cantMakeIt.color,
     '&:hover': {
-      color: theme.palette.primary.light,
-      backgroundColor: theme.cantMakeIt.color
-    }
+      backgroundColor: theme.cantMakeIt.color,
+      color: theme.palette.primary.light
+    },
+    color: theme.cantMakeIt.color
   },
   label: {
     textAlign: 'center'
-  }
+  },
+  root: buttonHolderStyles
 });
 
-export interface CantMakeItProps extends WithStyles<typeof styles> {
+export interface ICantMakeItProps extends WithStyles<typeof styles> {
   hideHelp?: true;
 }
 
-export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
+export const UnstyledCantMakeIt: React.SFC<ICantMakeItProps> = ({
   hideHelp,
   classes: { fab, root, label }
 }) => (

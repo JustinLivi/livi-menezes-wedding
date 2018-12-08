@@ -8,39 +8,35 @@ import { Omit } from '../Util/util';
 import { buttonHolderStyles, commonButtonStyles } from './commonStyles';
 
 const styles = createStyles({
-  root: buttonHolderStyles,
   fab: {
     ...commonButtonStyles,
-    color: theme.details.color,
-    borderWidth: 13,
-    width: 80,
-    height: 80,
     '&:hover': {
-      color: theme.palette.primary.light,
-      backgroundColor: theme.details.color
-    }
+      backgroundColor: theme.details.color,
+      color: theme.palette.primary.light
+    },
+    borderWidth: 13,
+    color: theme.details.color,
+    height: 80,
+    width: 80
   },
   label: {
     textAlign: 'center'
-  }
+  },
+  root: buttonHolderStyles
 });
 
-export interface DetailsProps extends WithStyles<typeof styles> {
+export interface IDetailsProps extends WithStyles<typeof styles> {
   hideHelp?: true;
   to: string;
   external?: boolean;
 }
 
-export class UnstyledDetails extends React.Component<DetailsProps> {
-  constructor(props: DetailsProps) {
+export class UnstyledDetails extends React.Component<IDetailsProps> {
+  constructor(props: IDetailsProps) {
     super(props);
   }
 
-  linkComponent = (props: Omit<FabProps, 'innerRef'>) => (
-    <Link to={this.props.to} {...props} />
-  );
-
-  render() {
+  public render() {
     const {
       hideHelp,
       external,
@@ -70,6 +66,10 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
       </div>
     );
   }
+
+  private linkComponent = (props: Omit<FabProps, 'innerRef'>) => (
+    <Link to={this.props.to} {...props} />
+  );
 }
 
 export const Details = withStyles(styles)(UnstyledDetails);

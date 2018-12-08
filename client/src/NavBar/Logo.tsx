@@ -2,18 +2,18 @@ import { createStyles, Icon, SvgIcon, WithStyles, withStyles } from '@material-u
 import * as React from 'react';
 
 const styles = createStyles({
+  grow: {
+    flexGrow: 0
+  },
   root: {
     textAlign: 'center',
     width: '3em'
-  },
-  grow: {
-    flexGrow: 0
   }
 });
 
-export interface LogoProps extends WithStyles<typeof styles> {}
+export interface ILogoProps extends WithStyles<typeof styles> {}
 
-export const UnstyledLogo: React.SFC<LogoProps> = ({
+export const UnstyledLogo: React.SFC<ILogoProps> = ({
   classes: { grow, root }
 }) => (
   <span className={grow}>

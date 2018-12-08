@@ -7,28 +7,28 @@ import { Details } from './Details';
 import { ImGoing } from './ImGoing';
 
 const styles = createStyles({
-  root: {
-    display: 'flex',
-    flexGrow: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxPack: 'center',
-    margin: theme.spacing.unit
-  },
   buttonBar: {
     flexGrow: 0
+  },
+  root: {
+    alignItems: 'center',
+    boxPack: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    flexGrow: 0,
+    justifyContent: 'center',
+    margin: theme.spacing.unit
   }
 });
 
-export interface ButtonBarProps extends WithStyles<typeof styles> {
+export interface IButtonBarProps extends WithStyles<typeof styles> {
   toDetails: string;
   onlyInfo?: true;
   hideHelp?: true;
   external?: boolean;
 }
 
-export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
+export const UnstyledButtonBar: React.SFC<IButtonBarProps> = ({
   onlyInfo,
   hideHelp,
   toDetails,

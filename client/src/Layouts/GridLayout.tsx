@@ -8,9 +8,9 @@ const styles = createStyles({
   }
 });
 
-export interface GridLayoutProps extends WithStyles<typeof styles> {}
+export interface IGridLayoutProps extends WithStyles<typeof styles> {}
 
-export const UnstyledGridLayout: React.SFC<GridLayoutProps> = ({
+export const UnstyledGridLayout: React.SFC<IGridLayoutProps> = ({
   classes: { root },
   children
 }) => (

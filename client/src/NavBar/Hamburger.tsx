@@ -20,44 +20,44 @@ const styles = createStyles({
     [theme.breakpoints.down('sm')]: {
       display: 'initial'
     },
-    width: '3em',
-    height: '3em'
+    height: '3em',
+    width: '3em'
   },
   menu: {
-    width: '2em',
-    height: '2em'
+    height: '2em',
+    width: '2em'
   },
   root: {
-    flexGrow: 1,
-    width: '33%',
     display: 'flex',
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
+    flexGrow: 1,
+    width: '33%'
   }
 });
 
-export interface HamburgerProps extends WithStyles<typeof styles> {}
+export interface IHamburgerProps extends WithStyles<typeof styles> {}
 
-export interface HamburgerState {
+export interface IHamburgerState {
   anchorEl: Element | null;
 }
 
 export class UnstyledHamburger extends React.Component<
-  HamburgerProps,
-  HamburgerState
+  IHamburgerProps,
+  IHamburgerState
 > {
-  state = {
+  public state = {
     anchorEl: null
   };
 
-  handleClick: React.MouseEventHandler = event => {
+  public handleClick: React.MouseEventHandler = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  public handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
-  render() {
+  public render() {
     const {
       classes: { root, iconButton, menu }
     } = this.props;

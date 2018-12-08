@@ -9,22 +9,22 @@ import { ListItem } from './ListItem';
 const drawerWidth = 240;
 
 const styles = createStyles({
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth
-  },
   drawer: {
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     },
-    width: drawerWidth,
-    flexShrink: 0
-  }
+    flexShrink: 0,
+    width: drawerWidth
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  toolbar: theme.mixins.toolbar
 });
 
-export interface SideBarProps extends WithStyles<typeof styles> {}
+export interface ISideBarProps extends WithStyles<typeof styles> {}
 
-export const UnstyledSideBar: React.SFC<SideBarProps> = ({
+export const UnstyledSideBar: React.SFC<ISideBarProps> = ({
   classes: { toolbar, drawerPaper, drawer }
 }) => (
   <Drawer

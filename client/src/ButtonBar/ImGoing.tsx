@@ -6,18 +6,18 @@ import { theme } from '../theme';
 import { buttonHolderStyles, largeButtonStyles } from './commonStyles';
 
 const styles = createStyles({
-  root: buttonHolderStyles,
   fab: {
     ...largeButtonStyles,
-    color: theme.imGoing.color,
     '&:hover': {
-      color: theme.palette.primary.light,
-      backgroundColor: theme.imGoing.color
-    }
+      backgroundColor: theme.imGoing.color,
+      color: theme.palette.primary.light
+    },
+    color: theme.imGoing.color
   },
   label: {
     textAlign: 'center'
-  }
+  },
+  root: buttonHolderStyles
 });
 
 export interface ImGoingProps extends WithStyles<typeof styles> {

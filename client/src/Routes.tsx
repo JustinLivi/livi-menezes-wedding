@@ -14,16 +14,16 @@ import { WhereToStay } from './Pages/WhereToStay';
 
 export const styles = createStyles({
   root: {
-    flexGrow: 1,
-    minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    flexGrow: 1,
+    minHeight: '100vh'
   }
 });
 
-export interface RoutesProps extends WithStyles<typeof styles> {}
+export interface IRoutesProps extends WithStyles<typeof styles> {}
 
-export const UnstyledRoutes: React.SFC<RoutesProps> = ({
+export const UnstyledRoutes: React.SFC<IRoutesProps> = ({
   classes: { root }
 }) => (
   <div className={root}>

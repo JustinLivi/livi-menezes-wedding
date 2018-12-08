@@ -9,19 +9,19 @@ const styles = createStyles({
     maxWidth: 400
   },
   root: {
-    margin: theme.spacing.unit,
-    flexGrow: 0,
+    alignItems: 'center',
+    boxPack: 'center',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    flexGrow: 0,
     justifyContent: 'center',
-    boxPack: 'center'
+    margin: theme.spacing.unit
   }
 });
 
-export interface StandardCardProps extends WithStyles<typeof styles> {}
+export interface IStandardCardProps extends WithStyles<typeof styles> {}
 
-export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
+export const UnstyledStandardCard: React.SFC<IStandardCardProps> = ({
   classes: { card, root },
   children
 }) => (

@@ -7,6 +7,19 @@ import { HeaderText } from './HeaderText';
 import { Logo } from './Logo';
 
 const styles = createStyles({
+  appBar: {
+    borderBottomColor: theme.palette.grey[200],
+    borderBottomStyle: 'solid',
+    borderBottomWidth: 1,
+    boxShadow: 'none',
+    display: 'inline-flex',
+    flexDirection: 'row',
+    minWidth: 'calc(100% - 240px);',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%'
+    },
+    width: 'initial'
+  },
   root: {
     flexGrow: 0
   },
@@ -15,25 +28,12 @@ const styles = createStyles({
     margin: 'auto',
     maxWidth: 400,
     padding: 0
-  },
-  appBar: {
-    display: 'inline-flex',
-    minWidth: 'calc(100% - 240px);',
-    [theme.breakpoints.down('sm')]: {
-      minWidth: '100%'
-    },
-    width: 'initial',
-    flexDirection: 'row',
-    boxShadow: 'none',
-    borderBottomWidth: 1,
-    borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.grey[200]
   }
 });
 
-export interface NavBarProps extends WithStyles<typeof styles> {}
+export interface INavBarProps extends WithStyles<typeof styles> {}
 
-export const UnstyledAppBar: React.SFC<NavBarProps> = ({
+export const UnstyledAppBar: React.SFC<INavBarProps> = ({
   classes: { root, appBar, toolbar }
 }) => (
   <div className={root}>

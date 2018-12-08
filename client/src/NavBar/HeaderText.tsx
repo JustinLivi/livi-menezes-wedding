@@ -2,21 +2,21 @@ import { createStyles, Icon, SvgIcon, WithStyles, withStyles } from '@material-u
 import * as React from 'react';
 
 const styles = createStyles({
-  root: {
-    width: '2.7em',
-    height: '1.5em'
-  },
   grow: {
-    flexGrow: 1,
-    width: '33%',
     display: 'flex',
-    flexDirection: 'row-reverse'
+    flexDirection: 'row-reverse',
+    flexGrow: 1,
+    width: '33%'
+  },
+  root: {
+    height: '1.5em',
+    width: '2.7em'
   }
 });
 
-export interface HeaderTextProps extends WithStyles<typeof styles> {}
+export interface IHeaderTextProps extends WithStyles<typeof styles> {}
 
-export const UnstyledHeaderText: React.SFC<HeaderTextProps> = ({
+export const UnstyledHeaderText: React.SFC<IHeaderTextProps> = ({
   classes: { root, grow }
 }) => (
   <span className={grow}>

@@ -13,22 +13,22 @@ export enum CacheState {
 
 const styles = createStyles({
   card: {
-    color: theme.palette.secondary.main,
-    lineHeight: 1.6,
-    '& sup': {
-      lineHeight: 1
-    },
     '& a': {
       color: theme.palette.secondary.main,
       transition: 'color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
     },
     '& a:hover': {
       color: theme.palette.secondary.dark
-    }
+    },
+    '& sup': {
+      lineHeight: 1
+    },
+    color: theme.palette.secondary.main,
+    lineHeight: 1.6
   }
 });
 
-export interface WikiPayload {
+export interface IWikiPayload {
   parse: {
     title: string;
     pageid: number;
@@ -38,28 +38,28 @@ export interface WikiPayload {
   };
 }
 
-export interface WikiCardProps extends WithStyles<typeof styles> {
+export interface IWikiCardProps extends WithStyles<typeof styles> {
   section: number;
   page: string;
 }
 
-export interface WikiCardState {
+export interface IWikiCardState {
   cacheState: CacheState;
   content?: string;
 }
 
 export class UnstyledWikiCard extends React.Component<
-  WikiCardProps,
-  WikiCardState
+  IWikiCardProps,
+  IWikiCardState
 > {
-  constructor(props: WikiCardProps) {
+  constructor(props: IWikiCardProps) {
     super(props);
     this.state = {
       cacheState: CacheState.BEHIND
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const { section, page } = this.props;
     if (this.state.cacheState === CacheState.BEHIND) {
       this.setState(prev => ({
@@ -71,7 +71,7 @@ export class UnstyledWikiCard extends React.Component<
       )
         .then(res => res.json())
         .then(body => {
-          const $ = cheerio.load((body as WikiPayload).parse.text['*']);
+          const $ = cheerio.load((body as IWikiPayload).parse.text['*']);
           const $p = cheerio.load($('p').html() || '');
           $p('a').attr(
             'href',
@@ -79,14 +79,14 @@ export class UnstyledWikiCard extends React.Component<
           );
           this.setState(prev => ({
             ...prev,
-            content: $p.html() || '',
-            cacheState: CacheState.UP_TO_DATE
+            cacheState: CacheState.UP_TO_DATE,
+            content: $p.html() || ''
           }));
         });
     }
   }
 
-  render() {
+  public render() {
     const {
       classes: { card }
     } = this.props;

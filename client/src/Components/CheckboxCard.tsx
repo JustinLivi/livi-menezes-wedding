@@ -12,12 +12,12 @@ import * as React from 'react';
 
 import { StandardCard } from './StandardCard';
 
-export interface CheckboxCardProps {
+export interface ICheckboxCardProps {
   question: string;
   answers: string[];
 }
 
-export const CheckboxCard: React.SFC<CheckboxCardProps> = ({
+export const CheckboxCard: React.SFC<ICheckboxCardProps> = ({
   question,
   answers
 }) => (
