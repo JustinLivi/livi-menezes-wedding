@@ -10,8 +10,11 @@ export enum CacheState {
 }
 
 const styles = createStyles({
-  iframe: {
-    border: 0
+  card: {
+    lineHeight: 1.6,
+    '& sup': {
+      lineHeight: 1
+    }
   }
 });
 
@@ -75,10 +78,10 @@ export class UnstyledWikiCard extends React.Component<
 
   render() {
     const {
-      classes: { iframe }
+      classes: { card }
     } = this.props;
     return (
-      <Card>
+      <Card className={card}>
         <CardContent>
           {this.state.content && (
             <div dangerouslySetInnerHTML={{ __html: this.state.content }} />
