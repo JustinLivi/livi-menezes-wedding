@@ -9,15 +9,15 @@ const styles = createStyles({
   }
 });
 
-export interface MapProps extends WithStyles<typeof styles> {
+export interface GoogleMapProps extends WithStyles<typeof styles> {
   id: string;
   options: google.maps.MapOptions;
   marker?: google.maps.MarkerOptions;
   url?: string;
 }
 
-export class UnstyledMap extends React.Component<MapProps> {
-  constructor(props: MapProps) {
+export class UnstyledGoogleMap extends React.Component<GoogleMapProps> {
+  constructor(props: GoogleMapProps) {
     super(props);
   }
 
@@ -75,4 +75,4 @@ export class UnstyledMap extends React.Component<MapProps> {
   }
 }
 
-export const GoogleMap = withStyles(styles)(UnstyledMap);
+export const GoogleMap = withStyles(styles)(UnstyledGoogleMap);

@@ -9,6 +9,7 @@ import { OurStoryDetails } from './Pages/OurStory/Details';
 import { Rsvp } from './Pages/Rsvp';
 import { ThingsToDo } from './Pages/ThingsToDo';
 import { Venue } from './Pages/Venue';
+import { VenueDetails } from './Pages/Venue/Details';
 import { WhereToStay } from './Pages/WhereToStay';
 
 export const styles = createStyles({
@@ -32,6 +33,7 @@ export const UnstyledRoutes: React.SFC<RoutesProps> = ({
       <Route path='/our-story' exact component={OurStory} />
       <Route path='/our-story/details' component={OurStoryDetails} />
       <Route path='/venue' exact component={Venue} />
+      <Route path='/venue/details' exact component={VenueDetails} />
       <Route path='/directions' exact component={Directions} />
       <Route path='/where-to-stay' exact component={WhereToStay} />
       <Route path='/things-to-do' exact component={ThingsToDo} />

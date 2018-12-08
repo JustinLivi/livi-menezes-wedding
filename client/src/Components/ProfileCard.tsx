@@ -1,26 +1,13 @@
-import { Card, CardContent, CardMedia, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { CardContent, CardMedia, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
-import { theme } from '../theme';
+import { StandardCard } from './StandardCard';
 
 const styles = createStyles({
-  card: {
-    flexGrow: 1,
-    maxWidth: 400
-  },
   media: {
     height: 360,
     maxWidth: '100%',
     maxHeight: 'calc(100vh - 308px)'
-  },
-  root: {
-    margin: theme.spacing.unit,
-    flexGrow: 0,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxPack: 'center'
   }
 });
 
@@ -35,25 +22,23 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   title,
   blurb,
   children,
-  classes: { root, card, media }
+  classes: { media }
 }) => (
-  <div className={root}>
-    <Card className={card}>
-      {children ? (
-        <CardMedia className={media} title={title}>
-          {children}
-        </CardMedia>
-      ) : (
-        <CardMedia className={media} image={image} title={title} />
-      )}
-      <CardContent>
-        <Typography gutterBottom variant='h5' component='h2'>
-          {title}
-        </Typography>
-        {blurb && <Typography component='p'>{blurb}</Typography>}
-      </CardContent>
-    </Card>
-  </div>
+  <StandardCard>
+    {children ? (
+      <CardMedia className={media} title={title}>
+        {children}
+      </CardMedia>
+    ) : (
+      <CardMedia className={media} image={image} title={title} />
+    )}
+    <CardContent>
+      <Typography gutterBottom variant='h5' component='h2'>
+        {title}
+      </Typography>
+      {blurb && <Typography component='p'>{blurb}</Typography>}
+    </CardContent>
+  </StandardCard>
 );
 
 export const ProfileCard = withStyles(styles)(UnstyledProfileCard);
