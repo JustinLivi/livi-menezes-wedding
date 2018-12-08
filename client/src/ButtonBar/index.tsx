@@ -25,18 +25,20 @@ export interface ButtonBarProps extends WithStyles<typeof styles> {
   toDetails: string;
   onlyInfo?: true;
   hideHelp?: true;
+  external?: boolean;
 }
 
 export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
   onlyInfo,
   hideHelp,
   toDetails,
+  external,
   classes: { root, buttonBar }
 }) => (
   <div className={root}>
     <div className={buttonBar}>
       {!onlyInfo && <CantMakeIt hideHelp={hideHelp} />}
-      <Details hideHelp={hideHelp} to={toDetails} />
+      <Details hideHelp={hideHelp} to={toDetails} external={external} />
       {!onlyInfo && <ImGoing hideHelp={hideHelp} />}
     </div>
   </div>

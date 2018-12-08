@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import { NavBar } from './NavBar';
 import { Directions } from './Pages/Directions';
-import { DirectionsDetails } from './Pages/Directions/Details';
 import { OurStory } from './Pages/OurStory';
 import { OurStoryDetails } from './Pages/OurStory/Details';
 import { Rsvp } from './Pages/Rsvp';
@@ -34,7 +33,6 @@ export const UnstyledRoutes: React.SFC<RoutesProps> = ({
       <Route path='/our-story/details' component={OurStoryDetails} />
       <Route path='/venue' exact component={Venue} />
       <Route path='/directions' exact component={Directions} />
-      <Route path='/directions/details' exact component={DirectionsDetails} />
       <Route path='/where-to-stay' exact component={WhereToStay} />
       <Route path='/things-to-do' exact component={ThingsToDo} />
     </Switch>

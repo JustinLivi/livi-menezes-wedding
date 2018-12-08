@@ -28,6 +28,7 @@ const styles = createStyles({
 export interface DetailsProps extends WithStyles<typeof styles> {
   hideHelp?: true;
   to: string;
+  external?: boolean;
 }
 
 export class UnstyledDetails extends React.Component<DetailsProps> {
@@ -42,12 +43,16 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
   render() {
     const {
       hideHelp,
+      external,
+      to,
       classes: { fab, root, label }
     } = this.props;
     return (
       <div className={root}>
         <Fab
-          component={this.linkComponent}
+          component={!external ? this.linkComponent : undefined}
+          href={external ? to : undefined}
+          target={external ? '_blank' : undefined}
           aria-label='Details'
           classes={{ root: fab }}
         >

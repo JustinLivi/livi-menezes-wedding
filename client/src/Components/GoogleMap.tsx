@@ -13,27 +13,38 @@ export interface MapProps extends WithStyles<typeof styles> {
   id: string;
   options: google.maps.MapOptions;
   marker?: google.maps.MarkerOptions;
+  url?: string;
 }
 
 export class UnstyledMap extends React.Component<MapProps> {
   constructor(props: MapProps) {
     super(props);
-    this.onScriptLoad = this.onScriptLoad.bind(this);
   }
 
   map?: google.maps.Map;
   marker?: google.maps.Marker;
 
-  onScriptLoad() {
-    const { id, options, marker } = this.props;
+  openUrl = () => {
+    const { url } = this.props;
+    const win = window.open(url, '_blank');
+    if (win) {
+      win.focus();
+    }
+  };
+
+  onScriptLoad = () => {
+    const { id, options, marker, url } = this.props;
     this.map = new window.google.maps.Map(document.getElementById(id), options);
     if (marker) {
       this.marker = new window.google.maps.Marker({
         ...marker,
         map: this.map
       });
+      if (url) {
+        this.marker.addListener('click', this.openUrl);
+      }
     }
-  }
+  };
 
   componentDidMount() {
     if (!window.google) {
