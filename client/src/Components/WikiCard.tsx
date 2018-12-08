@@ -3,6 +3,8 @@ import cheerio from 'cheerio';
 import fetchJsonp from 'fetch-jsonp';
 import * as React from 'react';
 
+import { theme } from '../theme';
+
 export enum CacheState {
   BEHIND = 'BEHIND',
   FETCHING = 'FETCHING',
@@ -11,9 +13,17 @@ export enum CacheState {
 
 const styles = createStyles({
   card: {
+    color: theme.palette.secondary.main,
     lineHeight: 1.6,
     '& sup': {
       lineHeight: 1
+    },
+    '& a': {
+      color: theme.palette.secondary.main,
+      transition: 'color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+    },
+    '& a:hover': {
+      color: theme.palette.secondary.dark
     }
   }
 });
