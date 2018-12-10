@@ -15,12 +15,6 @@ export interface INormalizedError {
   message?: string;
 }
 
-// tslint:disable-next-line:ban-types
-export interface IErrorMap<ErrorClass> {
-  errorClass: ErrorClass;
-  errorNormalizer: (error: ErrorClass) => INormalizedError;
-}
-
 export const normalizeStringError = (error: string): INormalizedError => ({
   description: STATUS_CODES[500],
   message: error,
