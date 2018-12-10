@@ -11,6 +11,7 @@ process.on(UNCAUGHT_EXCEPTION, err => {
 const server = new App();
 
 const endGracefuly = async () => {
+  log.info('Attempting to end gracefully');
   try {
     await server.stop();
     log.info('Server closed gracefully');
