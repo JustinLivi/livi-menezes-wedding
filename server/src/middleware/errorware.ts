@@ -4,6 +4,8 @@ import { HttpError } from 'http-errors';
 import { find } from 'lodash';
 import { ValidationError } from 'yup';
 
+import { log } from '../log';
+
 export interface INormalizedError {
   // external status code
   status: number;
@@ -13,6 +15,8 @@ export interface INormalizedError {
   details?: ValidationError;
   // internal message
   message?: string;
+  // internal stack trace
+  stack?: string;
 }
 
 export const normalizeStringError = (error: string): INormalizedError => ({
@@ -35,19 +39,23 @@ export const normalizeHttpError = ({
   expose,
   description,
   status,
-  statusCode
+  statusCode,
+  stack
 }: HttpError): INormalizedError => ({
   description:
     (expose ? message : description) || STATUS_CODES[status || statusCode],
   message,
+  stack,
   status: status || statusCode
 });
 
 export const normalizeApplicationError = ({
-  message
+  message,
+  stack
 }: Error | TypeError): INormalizedError => ({
   description: STATUS_CODES[500],
   message,
+  stack,
   status: 500
 });
 
@@ -61,7 +69,7 @@ export const normalizeUnknownError = (error: any): INormalizedError => {
   return normalizeStringError(error);
 };
 
-export const errorMap = [
+export const errorNormalizationMap = [
   {
     errorClass: HttpError,
     errorNormalizer: normalizeHttpError
@@ -87,7 +95,7 @@ export const normalizeError = (error: any): INormalizedError => {
   }
   if (primitiveType === 'object') {
     const normalizer = find(
-      errorMap,
+      errorNormalizationMap,
       ({ errorClass }) => error instanceof errorClass
     );
     if (normalizer) {
@@ -104,5 +112,23 @@ export const errorware: ErrorRequestHandler = (error, req, res, next) => {
   if (!error) {
     return next();
   }
-  const normalizedError = normalizeError(error);
+  const { status, description, details, message, stack } = normalizeError(
+    error
+  );
+  if (status >= 500) {
+    log.error(
+      { status, description, details, stack },
+      `Handling error '${message}'`
+    );
+  } else {
+    log.info(
+      { status, description, details, stack },
+      `Handling error '${message}'`
+    );
+  }
+  res.send({
+    description,
+    details,
+    status
+  });
 };
