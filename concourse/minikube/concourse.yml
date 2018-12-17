@@ -1,0 +1,14 @@
+concourse:
+  baggageClaim:
+    driver: overlay
+  web:
+    bindPort: 8081
+web:
+  service:
+    type: ClusterIP
+persistence:
+  worker:
+    storageClass: concourse-pv
+postgresql:
+  persistence:
+    storageClass: concourse-pv
