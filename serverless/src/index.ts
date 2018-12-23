@@ -1,3 +1,5 @@
+import serverless from 'serverless-http';
+
 import { App } from './App';
 import { PORT } from './config';
 import { SIGINT, SIGTERM, UNCAUGHT_EXCEPTION } from './constants';
@@ -26,3 +28,5 @@ process.on(SIGINT, endGracefuly);
 process.on(SIGTERM, endGracefuly);
 
 server.start(PORT);
+
+export const handler = serverless(server.express);

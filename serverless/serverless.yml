@@ -1,0 +1,34 @@
+service: livi-menezes-wedding
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: prod
+  region: us-east-1
+  # environment:
+  #   USERS_TABLE: ${self:custom.tableName}
+
+functions:
+  app:
+    handler: build/index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+# resources:
+#   Resources:
+#     UsersDynamoDBTable:
+#       Type: 'AWS::DynamoDB::Table'
+#       Properties:
+#         AttributeDefinitions:
+#           - AttributeName: userId
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: userId
+#             KeyType: HASH
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1
+#         TableName: ${self:custom.tableName}

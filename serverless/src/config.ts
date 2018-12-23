@@ -1,5 +1,5 @@
 import { ConnectionConfig } from 'pg';
-import yup from 'yup';
+import * as yup from 'yup';
 
 export enum EnvVars {
   PORT = 'PORT',

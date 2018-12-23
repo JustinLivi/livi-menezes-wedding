@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -11,9 +11,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "lib": ["es2015", "esnext"],
-    "jsx": "preserve"
+    "lib": ["es2015"],
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "serverless-http": ["@types/serverless-http"]
+    },
+    "outDir": "./build"
   },
-  "include": ["src"]
+  "include": ["./src/**/*"]
 }

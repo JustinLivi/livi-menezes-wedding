@@ -121,10 +121,7 @@ export const errorware: ErrorRequestHandler = (error, req, res, next) => {
       `Handling error '${message}'`
     );
   } else {
-    log.info(
-      { status, description, details, stack },
-      `Handling error '${message}'`
-    );
+    log.info({ status, description, details }, `Handling error '${message}'`);
   }
   res.send({
     description,
