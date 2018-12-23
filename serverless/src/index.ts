@@ -1,32 +1,33 @@
 import serverless from 'serverless-http';
 
-import { App } from './App';
-import { PORT } from './config';
-import { SIGINT, SIGTERM, UNCAUGHT_EXCEPTION } from './constants';
+import bodyParser from 'body-parser';
+import express from 'express';
+import helmet = require('helmet');
+import hpp = require('hpp');
+import { STATUS_CODES } from 'http';
+import createError from 'http-errors';
+import { UNCAUGHT_EXCEPTION } from './constants';
 import { log } from './log';
+import { errorware } from './middleware/errorware';
+import { logger } from './middleware/logger';
+import { rootRouter } from './routes';
 
 process.on(UNCAUGHT_EXCEPTION, err => {
   log.fatal('Uncaught exception', err);
   throw err;
 });
 
-const server = new App();
+const app = express();
 
-const endGracefuly = async () => {
-  log.info('Attempting to end gracefully');
-  try {
-    await server.stop();
-    log.info('Server closed gracefully');
-    process.exit(0);
-  } catch (err) {
-    log.fatal(`Server closed with error '${err}'`);
-    process.exit(1);
-  }
-};
+app.use(logger);
+app.use(bodyParser.json());
+app.use(helmet());
+app.use(hpp());
+app.use(rootRouter);
+app.use('*', (req, res, next) => {
+  log.info('should be 404');
+  next(createError(404, STATUS_CODES[404] as string));
+});
+app.use(errorware);
 
-process.on(SIGINT, endGracefuly);
-process.on(SIGTERM, endGracefuly);
-
-server.start(PORT);
-
-export const handler = serverless(server.express);
+export const handler = serverless(app);

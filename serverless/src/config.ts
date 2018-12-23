@@ -1,47 +1,35 @@
-import { ConnectionConfig } from 'pg';
+import aws from 'aws-sdk';
 import * as yup from 'yup';
 
-export enum EnvVars {
-  PORT = 'PORT',
-  DB_USER = 'DB_USER',
-  DB_HOST = 'DB_HOST',
-  DB_DATABASE = 'DB_DATABASE',
-  DB_PORT = 'DB_PORT'
-}
+export type EnvVars =
+  | 'REGION'
+  | 'DYNAMODB_API_VERSION'
+  | 'DYNAMODB_PROFILE_TABLE';
+
+export const envDefaults = {
+  DYNAMODB_API_VERSION: '2012-10-08',
+  PORT: 3000,
+  REGION: 'us-east-1'
+};
 
 const schema = yup.object({
-  [EnvVars.PORT]: yup
-    .number()
-    .required()
-    .default(3000),
-  [EnvVars.DB_DATABASE]: yup
+  DYNAMODB_API_VERSION: yup
     .string()
     .required()
-    .default('bank'),
-  [EnvVars.DB_HOST]: yup
+    .default(envDefaults.DYNAMODB_API_VERSION),
+  DYNAMODB_PROFILE_TABLE: yup.string().required(),
+  REGION: yup
     .string()
     .required()
-    .default('db'),
-  [EnvVars.DB_PORT]: yup
-    .number()
-    .required()
-    .default(26257),
-  [EnvVars.DB_USER]: yup
-    .string()
-    .required()
-    .default('maxroach')
+    .default(envDefaults.REGION)
 });
 
 export const {
-  PORT,
-  DB_DATABASE,
-  DB_HOST,
-  DB_PORT,
-  DB_USER
+  REGION,
+  DYNAMODB_API_VERSION,
+  DYNAMODB_PROFILE_TABLE
 } = schema.validateSync(schema.cast(process.env));
-export const DB_CONFIG: ConnectionConfig = {
-  database: DB_DATABASE,
-  host: DB_HOST,
-  port: DB_PORT,
-  user: DB_USER
-};
+
+aws.config.update({ region: REGION });
+
+export const dynamo = new aws.DynamoDB({ apiVersion: DYNAMODB_API_VERSION });

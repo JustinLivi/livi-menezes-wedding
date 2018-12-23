@@ -1,6 +1,21 @@
 service: livi-menezes-wedding
 
+custom:
+  tables:
+    profiles: profiles
+  dynamodb:
+    stage: dev
+    start:
+      seed: true
+      migrate: true
+    seed:
+      test:
+        sources:
+          - table: ${self:custom.tables.profiles}
+            sources: [./seed/profiles.json]
+
 plugins:
+  - serverless-dynamodb-local
   - serverless-offline
 
 provider:
@@ -8,8 +23,8 @@ provider:
   runtime: nodejs8.10
   stage: prod
   region: us-east-1
-  # environment:
-  #   USERS_TABLE: ${self:custom.tableName}
+  environment:
+    DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
 
 functions:
   app:
@@ -17,18 +32,19 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-# resources:
-#   Resources:
-#     UsersDynamoDBTable:
-#       Type: 'AWS::DynamoDB::Table'
-#       Properties:
-#         AttributeDefinitions:
-#           - AttributeName: userId
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: userId
-#             KeyType: HASH
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 1
-#           WriteCapacityUnits: 1
-#         TableName: ${self:custom.tableName}
+
+resources:
+  Resources:
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tables.profiles}
