@@ -25,13 +25,13 @@ provider:
   region: us-east-1
   environment:
     DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
+    DYNAMODB_DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
 
 functions:
   app:
     handler: build/index.handler
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http: 'GET /profile/{proxy+}'
 
 resources:
   Resources:
