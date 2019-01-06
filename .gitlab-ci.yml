@@ -5,6 +5,26 @@ stages:
   - test
   - deploy
 
+build_serverless:
+  only:
+    changes:
+      - serverless/**/*
+      - .gitlab-ci.yml
+  stage: build
+  cache:
+    policy: push
+    paths:
+      - serverless/node_modules/
+  script:
+    - cd serverless
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - serverless/build/
+  tags:
+    - docker
+
 build_client:
   only:
     changes:
@@ -25,6 +45,22 @@ build_client:
   tags:
     - docker
 
+test_client:
+  only:
+    changes:
+      - client/**/*
+      - .gitlab-ci.yml
+  stage: test
+  cache:
+    policy: pull
+    paths:
+      - client/node_modules/
+  script:
+    - cd client
+    - npm test
+  tags:
+    - docker
+
 test_serverless:
   only:
     changes:
@@ -42,32 +78,16 @@ test_serverless:
   tags:
     - docker
 
-test_client:
-  only:
-    changes:
-      - client/**/*
-      - .gitlab-ci.yml
-  stage: test
-  cache:
-    policy: pull
-    paths:
-      - client/node_modules/
-  script:
-    - cd client
-    - npm install
-    - npm test
-  artifacts:
-    paths:
-      - client/build/
-  tags:
-    - docker
-
 deploy_client:
   only:
     changes:
       - client/**/*
       - .gitlab-ci.yml
   stage: deploy
+  cache:
+    policy: pull
+    paths:
+      - client/node_modules/
   variables:
     TF_VAR_aws_access_key_id: '$AWS_ACCESS_KEY_ID'
     TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
@@ -84,5 +104,25 @@ deploy_client:
     - terraform init -input=false -backend-config=backend.tfvars
     - terrafrom plan -input=false
     - terraform apply -input=false -auto-approve
+  artifacts:
+    paths:
+      - client/build/
+  tags:
+    - docker
+
+deploy_serverless:
+  only:
+    changes:
+      - serverless/**/*
+      - .gitlab-ci.yml
+  stage: deploy
+  cache:
+    policy: pull
+    paths:
+      - serverless/node_modules/
+  script:
+    - cd serverless
+    - npm i -g serverless
+    - sls deploy --stage prod --verbose
   tags:
     - docker

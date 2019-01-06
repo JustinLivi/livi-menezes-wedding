@@ -1,7 +1,14 @@
 {
   "name": "livi-menezes-wedding",
   "version": "0.1.0",
-  "private": true,
+  "keywords": [
+    "wedding",
+    "express",
+    "website",
+    "typescript"
+  ],
+  "author": "Justin Livi",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
