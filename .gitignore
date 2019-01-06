@@ -13,6 +13,10 @@ build
 **/.dynamodb
 **/.serverless
 
+# terraform
+backend.tfvars
+.terraform
+
 # misc
 .DS_Store
 .env.local

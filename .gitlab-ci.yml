@@ -1,23 +1,40 @@
 image: node:8.10
 
-cache:
-  paths:
-    - serverless/node_modules/
-    - client/node_modules/
-
 stages:
   - build
   - test
+  - deploy
 
 build_client:
+  only:
+    changes:
+      - client/**/*
+      - .gitlab-ci.yml
   stage: build
+  cache:
+    policy: push
+    paths:
+      - client/node_modules/
   script:
     - cd client
     - npm install
     - npm run build
+  artifacts:
+    paths:
+      - client/build/
+  tags:
+    - docker
 
 test_serverless:
+  only:
+    changes:
+      - serverless/**/*
+      - .gitlab-ci.yml
   stage: test
+  cache:
+    policy: push
+    paths:
+      - serverless/node_modules/
   script:
     - cd serverless
     - npm install
@@ -26,10 +43,46 @@ test_serverless:
     - docker
 
 test_client:
+  only:
+    changes:
+      - client/**/*
+      - .gitlab-ci.yml
   stage: test
+  cache:
+    policy: pull
+    paths:
+      - client/node_modules/
   script:
     - cd client
     - npm install
     - npm test
+  artifacts:
+    paths:
+      - client/build/
+  tags:
+    - docker
+
+deploy_client:
+  only:
+    changes:
+      - client/**/*
+      - .gitlab-ci.yml
+  stage: deploy
+  variables:
+    TF_VAR_aws_access_key_id: '$AWS_ACCESS_KEY_ID'
+    TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
+    TF_VAR_cf_alias_zone_id: '$CF_ALIAS_ZONE_ID'
+    TF_BACKEND_CONFIG: '$TF_BACKEND_CONFIG'
+  image:
+    name: hashicorp/terraform:light
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  script:
+    - cd client/terraform
+    - $TF_BACKEND_CONFIG > backend.tfvars
+    - terraform init -input=false -backend-config=backend.tfvars
+    - terrafrom plan -input=false
+    - terraform apply -input=false -auto-approve
   tags:
     - docker
