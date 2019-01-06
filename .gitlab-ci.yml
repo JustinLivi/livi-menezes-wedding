@@ -6,12 +6,29 @@ cache:
     - client/node_modules/
 
 stages:
+  - build
   - test
+
+build_client:
+  stage: build
+  script:
+    - cd client
+    - npm install
+    - npm run build
 
 test_serverless:
   stage: test
   script:
     - cd serverless
+    - npm install
+    - npm test
+  tags:
+    - docker
+
+test_client:
+  stage: test
+  script:
+    - cd client
     - npm install
     - npm test
   tags:
