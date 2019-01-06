@@ -1,0 +1,18 @@
+image: node:8.10
+
+cache:
+  paths:
+    - serverless/node_modules/
+    - client/node_modules/
+
+stages:
+  - test
+
+test_serverless:
+  stage: test
+  script:
+    - cd serverless
+    - npm install
+    - npm test
+  tags:
+    - docker
