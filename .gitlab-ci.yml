@@ -68,7 +68,7 @@ test_serverless:
       - .gitlab-ci.yml
   stage: test
   cache:
-    policy: push
+    policy: pull
     paths:
       - serverless/node_modules/
   script:
