@@ -26,8 +26,8 @@ data "aws_iam_policy_document" "s3_policy" {
 
 resource "aws_s3_bucket" "static_website" {
   provider = "aws"
-
-  bucket = "${var.subdomain}"
+  acl      = "public-read"
+  bucket   = "${var.subdomain}"
 
   website {
     index_document = "index.html"
@@ -65,7 +65,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   depends_on = ["aws_s3_bucket.static_website"]
 
   origin {
-    domain_name = "${aws_s3_bucket.static_website.website_domain}"
+    domain_name = "${aws_s3_bucket.static_website.website_endpoint}"
     origin_id   = "${var.domain}"
 
     s3_origin_config = {
