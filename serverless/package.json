@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "tsc && sls offline start --seed=test",
-    "test": "DYNAMODB_PROFILE_TABLE=profile jest"
+    "test": "DYNAMODB_PROFILE_TABLE=profile jest",
+    "deploy": "serverless deploy --stage prod --verbose"
   },
   "keywords": [
     "wedding",
