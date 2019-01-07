@@ -1,11 +1,11 @@
-import serverless from 'serverless-http';
-
 import bodyParser from 'body-parser';
 import express from 'express';
 import helmet = require('helmet');
 import hpp = require('hpp');
 import { STATUS_CODES } from 'http';
 import createError from 'http-errors';
+import serverless from 'serverless-http';
+
 import { UNCAUGHT_EXCEPTION } from './constants';
 import { log } from './log';
 import { errorware } from './middleware/errorware';

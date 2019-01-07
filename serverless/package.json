@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "tsc && sls offline start --seed=test",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DYNAMODB_PROFILE_TABLE=profile jest"
   },
   "keywords": [
     "wedding",
@@ -37,16 +37,20 @@
     "@types/helmet": "0.0.42",
     "@types/hpp": "^0.2.1",
     "@types/http-errors": "^1.6.1",
+    "@types/jest": "^23.3.12",
     "@types/lodash": "^4.14.118",
     "@types/pg": "^7.4.11",
     "@types/yup": "^0.26.2",
     "aws-lambda": "^0.1.2",
+    "jest": "^23.6.0",
+    "jest-extended": "^0.11.0",
     "nodemon": "^1.18.7",
     "prettier": "^1.15.3",
     "serverless": "^1.35.1",
     "serverless-dynamodb-local": "^0.2.35",
     "serverless-offline": "^3.31.3",
     "serverless-plugin-typescript": "^1.1.5",
+    "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",

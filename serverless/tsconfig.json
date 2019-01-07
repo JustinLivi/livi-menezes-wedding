@@ -16,7 +16,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "serverless-http": ["@types/serverless-http"]
+      "serverless-http": ["@types/serverless-http"],
+      "jest-extended": ["jest-extended"]
     },
     "outDir": "./build"
   },

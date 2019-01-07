@@ -93,6 +93,7 @@ deploy_client:
     TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
     TF_VAR_cf_alias_zone_id: '$CF_ALIAS_ZONE_ID'
     TF_BACKEND_CONFIG: '$TF_BACKEND_CONFIG'
+    TF_IN_AUTOMATION: true
   image:
     name: hashicorp/terraform:light
     entrypoint:
@@ -120,6 +121,9 @@ deploy_serverless:
     policy: pull
     paths:
       - serverless/node_modules/
+  variables:
+    AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY_ID'
+    AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_ACCESS_KEY'
   script:
     - cd serverless
     - npm i -g serverless
