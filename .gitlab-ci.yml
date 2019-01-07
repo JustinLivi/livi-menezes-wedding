@@ -73,7 +73,6 @@ test_serverless:
       - serverless/node_modules/
   script:
     - cd serverless
-    - npm install
     - npm test
   tags:
     - docker
@@ -101,7 +100,7 @@ deploy_client:
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
     - cd client/terraform
-    - $TF_BACKEND_CONFIG > backend.tfvars
+    - echo $TF_BACKEND_CONFIG > backend.tfvars
     - terraform init -input=false -backend-config=backend.tfvars
     - terrafrom plan -input=false
     - terraform apply -input=false -auto-approve
