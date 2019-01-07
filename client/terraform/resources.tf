@@ -65,7 +65,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   depends_on = ["aws_s3_bucket.static_website"]
 
   origin {
-    domain_name = "${aws_s3_bucket.static_website.website_endpoint}"
+    domain_name = "${aws_s3_bucket.static_website.website_domain}"
     origin_id   = "${var.domain}"
 
     s3_origin_config = {
