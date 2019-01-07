@@ -12,6 +12,7 @@ build_serverless:
       - .gitlab-ci.yml
   stage: build
   cache:
+    key: serverless
     policy: push
     paths:
       - serverless/node_modules/
@@ -32,6 +33,7 @@ build_client:
       - .gitlab-ci.yml
   stage: build
   cache:
+    key: client
     policy: push
     paths:
       - client/node_modules/
@@ -52,6 +54,7 @@ test_client:
       - .gitlab-ci.yml
   stage: test
   cache:
+    key: client
     policy: pull
     paths:
       - client/node_modules/
@@ -69,6 +72,7 @@ test_serverless:
       - .gitlab-ci.yml
   stage: test
   cache:
+    key: serverless
     policy: pull
     paths:
       - serverless/node_modules/
@@ -85,10 +89,6 @@ deploy_client:
       - client/**/*
       - .gitlab-ci.yml
   stage: deploy
-  cache:
-    policy: pull
-    paths:
-      - client/node_modules/
   variables:
     TF_VAR_aws_access_key_id: '$AWS_ACCESS_KEY_ID'
     TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
@@ -119,6 +119,7 @@ deploy_serverless:
       - .gitlab-ci.yml
   stage: deploy
   cache:
+    key: serverless
     policy: pull
     paths:
       - serverless/node_modules/
@@ -127,6 +128,7 @@ deploy_serverless:
     AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_ACCESS_KEY'
   script:
     - cd serverless
+    - npm install
     - npm run deploy
   tags:
     - docker
