@@ -57,6 +57,7 @@ test_client:
       - client/node_modules/
   script:
     - cd client
+    - npm install
     - npm test
   tags:
     - docker
@@ -73,6 +74,7 @@ test_serverless:
       - serverless/node_modules/
   script:
     - cd serverless
+    - npm install
     - npm test
   tags:
     - docker
