@@ -58,11 +58,22 @@ resource "aws_route53_record" "website_route53_record" {
   }
 }
 
+module "acm_ops" {
+  source       = "./modules/aws_acm_certificate"
+  domain_names = ["${var.domain}", "${var.subdomain}"]
+  zone_id      = "${aws_route53_zone.route53_zone.zone_id}"
+
+  providers = {
+    "aws.acm"     = "aws"
+    "aws.route53" = "aws"
+  }
+}
+
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {}
 
 resource "aws_cloudfront_distribution" "cdn" {
   provider            = "aws"
-  depends_on          = ["aws_s3_bucket.static_website"]
+  depends_on          = ["aws_s3_bucket.static_website", "module.acm_ops"]
   enabled             = true
   default_root_object = "index.html"
   aliases             = ["${var.subdomain}", "${var.domain}"]
@@ -79,9 +90,14 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.s3_sub_origin_id}"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "${local.s3_sub_origin_id}"
+    viewer_protocol_policy = "redirect-to-https"
+    compress               = true
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
 
     forwarded_values {
       query_string = true
@@ -90,15 +106,12 @@ resource "aws_cloudfront_distribution" "cdn" {
         forward = "none"
       }
     }
-
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = "${module.acm_ops.arn}"
+    minimum_protocol_version = "TLSv1.1_2016"
+    ssl_support_method       = "sni-only"
   }
 
   restrictions {
