@@ -52,8 +52,8 @@ resource "aws_route53_record" "website_route53_record" {
   type     = "A"
 
   alias {
-    name                   = "${aws_s3_bucket.static_website.website_domain}"
-    zone_id                = "${aws_s3_bucket.static_website.hosted_zone_id}"
+    name                   = "${aws_cloudfront_distribution.cdn.domain_name}"
+    zone_id                = "${aws_cloudfront_distribution.cdn.hosted_zone_id}"
     evaluate_target_health = false
   }
 }
@@ -65,8 +65,8 @@ resource "aws_cloudfront_distribution" "cdn" {
   depends_on = ["aws_s3_bucket.static_website"]
 
   origin {
-    domain_name = "${aws_s3_bucket.static_website.website_endpoint}"
-    origin_id   = "${var.domain}"
+    domain_name = "${var.subdomain}.s3.amazonaws.com"
+    origin_id   = "${local.s3_origin_id}"
 
     s3_origin_config = {
       origin_access_identity = "${aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path}"
@@ -118,7 +118,7 @@ resource "aws_route53_record" "route53_to_cdn" {
 
   alias {
     name                   = "${aws_cloudfront_distribution.cdn.domain_name}"
-    zone_id                = "${var.cf_alias_zone_id}"
+    zone_id                = "${aws_cloudfront_distribution.cdn.hosted_zone_id}"
     evaluate_target_health = false
   }
 }
