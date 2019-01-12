@@ -1,5 +1,4 @@
 locals {
-  s3_origin_id     = "cloudfront-distribution-origin-${var.domain}.s3.amazonaws.com/"
   s3_sub_origin_id = "cloudfront-distribution-origin-${var.subdomain}.s3.amazonaws.com/"
 }
 

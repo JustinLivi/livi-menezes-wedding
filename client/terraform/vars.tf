@@ -13,7 +13,3 @@ variable "domain" {
 variable "subdomain" {
   default = "www.livimenezes.com"
 }
-
-variable "cdn_subdomain" {
-  default = "livimenezes.com"
-}
