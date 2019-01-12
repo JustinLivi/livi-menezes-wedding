@@ -83,16 +83,15 @@ test_serverless:
   tags:
     - docker
 
-deploy_client:
+deploy_client_infrastructure:
   only:
     changes:
-      - client/**/*
+      - client/terraform/**/*
       - .gitlab-ci.yml
   stage: deploy
   variables:
     TF_VAR_aws_access_key_id: '$AWS_ACCESS_KEY_ID'
     TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
-    TF_VAR_cf_alias_zone_id: '$CF_ALIAS_ZONE_ID'
     TF_BACKEND_CONFIG: '$TF_BACKEND_CONFIG'
     TF_IN_AUTOMATION: 'true'
   image:
@@ -106,11 +105,31 @@ deploy_client:
     - terraform init -input=false -backend-config=backend.tfvars
     - terraform plan -input=false
     - terraform apply -input=false -auto-approve
-    - cd ..
-    - aws s3 cp --recursive ./build s3://www.livimenezes.com
   artifacts:
     paths:
       - client/build/
+  tags:
+    - docker
+
+deploy_client_code:
+  image:
+    name: robpco/awscli
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  only:
+    changes:
+      - client/**/*
+      - .gitlab-ci.yml
+  stage: deploy
+  variables:
+    AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY_ID'
+    AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_ACCESS_KEY'
+  artifacts:
+    paths:
+      - client/build/
+  script:
+    - aws s3 sync --no-progress "./client/build" "s3://www.livimenezes.com"
   tags:
     - docker
 
