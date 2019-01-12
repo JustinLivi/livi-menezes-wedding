@@ -2,8 +2,6 @@ variable "aws_access_key_id" {}
 
 variable "aws_secret_access_key" {}
 
-variable "cf_alias_zone_id" {}
-
 variable "region" {
   default = "us-east-1"
 }
