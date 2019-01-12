@@ -1,5 +1,6 @@
 locals {
-  s3_origin_id = "cloudfront-distribution-origin-${var.domain}.s3.amazonaws.com/"
+  s3_origin_id     = "cloudfront-distribution-origin-${var.domain}.s3.amazonaws.com/"
+  s3_sub_origin_id = "cloudfront-distribution-origin-${var.subdomain}.s3.amazonaws.com/"
 }
 
 data "aws_iam_policy_document" "s3_policy" {
@@ -9,7 +10,7 @@ data "aws_iam_policy_document" "s3_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn}"]
+      identifiers = ["*"]
     }
   }
 
@@ -19,7 +20,7 @@ data "aws_iam_policy_document" "s3_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn}"]
+      identifiers = ["*"]
     }
   }
 }
@@ -61,28 +62,27 @@ resource "aws_route53_record" "website_route53_record" {
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {}
 
 resource "aws_cloudfront_distribution" "cdn" {
-  provider   = "aws"
-  depends_on = ["aws_s3_bucket.static_website"]
+  provider            = "aws"
+  depends_on          = ["aws_s3_bucket.static_website"]
+  enabled             = true
+  default_root_object = "index.html"
+  aliases             = ["${var.subdomain}", "${var.domain}"]
+  price_class         = "PriceClass_200"
+  retain_on_delete    = true
 
   origin {
     domain_name = "${var.subdomain}.s3.amazonaws.com"
-    origin_id   = "${local.s3_origin_id}"
+    origin_id   = "${local.s3_sub_origin_id}"
 
     s3_origin_config = {
       origin_access_identity = "${aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path}"
     }
   }
 
-  enabled             = true
-  default_root_object = "index.html"
-  aliases             = ["${var.subdomain}"]
-  price_class         = "PriceClass_200"
-  retain_on_delete    = true
-
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.s3_origin_id}"
+    target_origin_id = "${local.s3_sub_origin_id}"
 
     forwarded_values {
       query_string = true
@@ -108,12 +108,37 @@ resource "aws_cloudfront_distribution" "cdn" {
       locations        = ["US"]
     }
   }
+
+  custom_error_response {
+    error_code         = 403
+    response_code      = 200
+    response_page_path = "/index.html"
+  }
+
+  custom_error_response {
+    error_code         = 404
+    response_code      = 200
+    response_page_path = "/index.html"
+  }
 }
 
 resource "aws_route53_record" "route53_to_cdn" {
   provider = "aws"
   zone_id  = "${aws_route53_zone.route53_zone.zone_id}"
-  name     = "${var.cdn_subdomain}"
+  name     = "${var.domain}"
+  type     = "A"
+
+  alias {
+    name                   = "${aws_cloudfront_distribution.cdn.domain_name}"
+    zone_id                = "${aws_cloudfront_distribution.cdn.hosted_zone_id}"
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "route53_sub_to_cdn" {
+  provider = "aws"
+  zone_id  = "${aws_route53_zone.route53_zone.zone_id}"
+  name     = "${var.subdomain}"
   type     = "A"
 
   alias {
