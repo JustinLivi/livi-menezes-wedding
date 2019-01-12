@@ -106,6 +106,8 @@ deploy_client:
     - terraform init -input=false -backend-config=backend.tfvars
     - terraform plan -input=false
     - terraform apply -input=false -auto-approve
+    - cd ..
+    - aws s3 cp --recursive ./build s3://www.livimenezes.com
   artifacts:
     paths:
       - client/build/
