@@ -3,6 +3,7 @@ image: node:8.10
 stages:
   - build
   - test
+  - terraform
   - deploy
 
 build_serverless:
@@ -83,12 +84,12 @@ test_serverless:
   tags:
     - docker
 
-deploy_client_infrastructure:
+terraform:
   only:
     changes:
-      - client/terraform/**/*
+      - terraform/**/*
       - .gitlab-ci.yml
-  stage: deploy
+  stage: terraform
   variables:
     TF_VAR_aws_access_key_id: '$AWS_ACCESS_KEY_ID'
     TF_VAR_aws_secret_access_key: '$AWS_SECRET_ACCESS_KEY'
@@ -100,18 +101,15 @@ deploy_client_infrastructure:
       - '/usr/bin/env'
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   script:
-    - cd client/terraform
+    - cd terraform
     - echo $TF_BACKEND_CONFIG > backend.tfvars
     - terraform init -input=false -backend-config=backend.tfvars
     - terraform plan -input=false
     - terraform apply -input=false -auto-approve
-  artifacts:
-    paths:
-      - client/build/
   tags:
     - docker
 
-deploy_client_code:
+deploy_client:
   image:
     name: robpco/awscli
     entrypoint:
