@@ -3,7 +3,7 @@ import {
   createKeyableRequestReducer,
   createKeyableSuccessReducer,
 } from '../../Util/rsaaActionCreator';
-import { IGetProfileActionSet } from '../actions';
+import { IGetProfileActionSet } from '../actions/profile';
 import { Endpoints } from '../endpoints';
 import { CacheStatus, IProfile } from '../stateDefinition';
 

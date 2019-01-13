@@ -1,5 +1,6 @@
 import { IGetProfilePayload } from '../../../../common';
-import { createRsaaActionCreator, IRsaaMeta, RsaaActionSet } from '../../Util/rsaaActionCreator';
+import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
+import { IRsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 import { Endpoints } from '../endpoints';
 
 export interface IGetProfileMeta
@@ -17,7 +18,7 @@ export const getProfile = createRsaaActionCreator<
   IGetProfileMeta,
   IGetProfileActionSet
 >(params => ({
-  endpoint: '/profiles/',
+  endpoint: Endpoints.GET_BY_PROFILE_ID,
   method: 'GET',
   params
 }));

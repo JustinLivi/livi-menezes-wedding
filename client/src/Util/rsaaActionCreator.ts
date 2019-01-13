@@ -1,5 +1,5 @@
 import immer, { Draft } from 'immer';
-import { find, get } from 'lodash';
+import { find, get, reduce } from 'lodash';
 import { Action } from 'redux';
 import { ApiError, HttpMethod } from 'redux-api-middleware';
 
@@ -8,6 +8,7 @@ import {
   createRsaaActionCreatorFactory,
   IBaseRsaaAction,
   IBaseRsaaMeta,
+  IRsaaMeta,
 } from './rsaaActionCreatorFactory';
 
 export enum RsaaActionType {
@@ -16,15 +17,10 @@ export enum RsaaActionType {
   RSAA_FAILURE = 'RSAA_FAILURE'
 }
 
-export interface IRsaaMeta<Method extends HttpMethod, Endpoint extends string> {
-  endpoint: Endpoint;
-  method: Method;
-}
-
 export interface IRsaaRequestAction<
   Meta extends IRsaaMeta<Method, Endpoint>,
   Method extends HttpMethod = Meta['method'],
-  Endpoint extends string = Meta['endpoint']
+  Endpoint = Meta['endpoint']
 > extends IBaseRsaaAction {
   type: RsaaActionType.RSAA_REQUEST;
   meta: Meta;
@@ -35,7 +31,7 @@ export interface IRsaaSuccessAction<
   Meta extends IRsaaMeta<Method, Endpoint>,
   Payload,
   Method extends HttpMethod = Meta['method'],
-  Endpoint extends string = Meta['endpoint']
+  Endpoint = Meta['endpoint']
 > extends IBaseRsaaAction {
   type: RsaaActionType.RSAA_SUCCESS;
   meta: Meta;
@@ -46,7 +42,7 @@ export interface IRsaaFailureAction<
   Meta extends IRsaaMeta<Method, Endpoint>,
   Payload,
   Method extends HttpMethod = Meta['method'],
-  Endpoint extends string = Meta['endpoint']
+  Endpoint = Meta['endpoint']
 > extends IBaseRsaaAction {
   type: RsaaActionType.RSAA_FAILURE;
   meta: Meta;
@@ -58,7 +54,7 @@ export type RsaaActionSet<
   SuccessPayload,
   FailurePayload,
   Method extends HttpMethod = Meta['method'],
-  Endpoint extends string = Meta['endpoint']
+  Endpoint = Meta['endpoint']
 > =
   | IRsaaRequestAction<Meta, Method, Endpoint>
   | IRsaaSuccessAction<Meta, SuccessPayload, Method, Endpoint>
@@ -221,25 +217,29 @@ export const combineKeyableRsaaReducers = <State = never>(
 
 export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<
   IBaseRsaaMeta
->(params => {
-  const { method, endpoint } = params;
+>(factoryParams => {
+  const { method, endpoint, params } = factoryParams;
   return {
-    endpoint,
+    endpoint: reduce(
+      params,
+      (result, value, key) => result.replace(`:${key}`, value),
+      endpoint
+    ),
     meta: {
       method
     },
     method,
     types: [
       {
-        meta: params,
+        meta: factoryParams,
         type: RsaaActionType.RSAA_REQUEST
       },
       {
-        meta: params,
+        meta: factoryParams,
         type: RsaaActionType.RSAA_SUCCESS
       },
       {
-        meta: params,
+        meta: factoryParams,
         type: RsaaActionType.RSAA_FAILURE
       }
     ]
