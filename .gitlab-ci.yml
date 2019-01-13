@@ -165,7 +165,7 @@ invalidate_cdn:
     paths:
       - terraform/res/
   script:
-    - aws cloudfront create-invalidation --distribution-id $(cat ../terraform/res/cloudfront_did) --paths /index.html
+    - aws cloudfront create-invalidation --distribution-id $(cat terraform/res/cloudfront_did) --paths /index.html
   tags:
     - docker
 
