@@ -25,14 +25,14 @@ const styles = createStyles({
   root: buttonHolderStyles
 });
 
-export interface IDetailsProps extends WithStyles<typeof styles> {
+export interface DetailsProps extends WithStyles<typeof styles> {
   hideHelp?: true;
   to: string;
   external?: boolean;
 }
 
-export class UnstyledDetails extends React.Component<IDetailsProps> {
-  constructor(props: IDetailsProps) {
+export class UnstyledDetails extends React.Component<DetailsProps> {
+  constructor(props: DetailsProps) {
     super(props);
   }
 

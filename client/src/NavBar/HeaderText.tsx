@@ -14,9 +14,9 @@ const styles = createStyles({
   }
 });
 
-export interface IHeaderTextProps extends WithStyles<typeof styles> {}
+export interface HeaderTextProps extends WithStyles<typeof styles> {}
 
-export const UnstyledHeaderText: React.SFC<IHeaderTextProps> = ({
+export const UnstyledHeaderText: React.SFC<HeaderTextProps> = ({
   classes: { root, grow }
 }) => (
   <span className={grow}>

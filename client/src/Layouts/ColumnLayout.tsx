@@ -13,9 +13,9 @@ const styles = createStyles({
   }
 });
 
-export interface IColumnLayoutProps extends WithStyles<typeof styles> {}
+export interface ColumnLayoutProps extends WithStyles<typeof styles> {}
 
-export const UnstyledColumnLayout: React.SFC<IColumnLayoutProps> = ({
+export const UnstyledColumnLayout: React.SFC<ColumnLayoutProps> = ({
   classes: { root },
   children
 }) => <div className={root}>{children}</div>;

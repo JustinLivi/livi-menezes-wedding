@@ -4,12 +4,12 @@ import * as React from 'react';
 
 import { StandardCard } from './StandardCard';
 
-export interface IRadioButtonCardProps {
+export interface RadioButtonCardProps {
   question: string;
   answers: string[];
 }
 
-export const RadioButtonCard: React.SFC<IRadioButtonCardProps> = ({
+export const RadioButtonCard: React.SFC<RadioButtonCardProps> = ({
   question,
   answers
 }) => (

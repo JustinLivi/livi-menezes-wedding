@@ -1,22 +1,22 @@
-import { IGetProfilePayload } from '../../../../common';
+import { ProfileData } from '../../../../common';
 import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
-import { IRsaaMeta } from '../../Util/rsaaActionCreatorFactory';
+import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 import { Endpoints } from '../endpoints';
 
-export interface IGetProfileMeta
-  extends IRsaaMeta<'GET', Endpoints.GET_BY_PROFILE_ID> {
+export interface FetchProfileMeta
+  extends RsaaMeta<'GET', Endpoints.GET_BY_PROFILE_ID> {
   params: { profileId: string };
 }
 
-export type IGetProfileActionSet = RsaaActionSet<
-  IGetProfileMeta,
-  IGetProfilePayload,
+export type FetchProfileActionSet = RsaaActionSet<
+  FetchProfileMeta,
+  ProfileData,
   {}
 >;
 
-export const getProfile = createRsaaActionCreator<
-  IGetProfileMeta,
-  IGetProfileActionSet
+export const fetchProfile = createRsaaActionCreator<
+  FetchProfileMeta['params'],
+  FetchProfileActionSet
 >(params => ({
   endpoint: Endpoints.GET_BY_PROFILE_ID,
   method: 'GET',

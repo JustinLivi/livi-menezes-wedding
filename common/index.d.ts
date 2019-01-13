@@ -1,4 +1,4 @@
-export interface IGetProfilePayload {
+export interface ProfileData {
   name: string;
   id: string;
   rehearsal: boolean;

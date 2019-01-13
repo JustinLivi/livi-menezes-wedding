@@ -6,6 +6,7 @@ import { NavBar } from './NavBar';
 import { Directions } from './Pages/Directions';
 import { OurStory } from './Pages/OurStory';
 import { OurStoryDetails } from './Pages/OurStory/Details';
+import { ProfilePage } from './Pages/Profile';
 import { Rsvp } from './Pages/Rsvp';
 import { ThingsToDo } from './Pages/ThingsToDo';
 import { Venue } from './Pages/Venue';
@@ -21,9 +22,9 @@ export const styles = createStyles({
   }
 });
 
-export interface IRoutesProps extends WithStyles<typeof styles> {}
+export interface RoutesProps extends WithStyles<typeof styles> {}
 
-export const UnstyledRoutes: React.SFC<IRoutesProps> = ({
+export const UnstyledRoutes: React.SFC<RoutesProps> = ({
   classes: { root }
 }) => (
   <div className={root}>
@@ -37,7 +38,7 @@ export const UnstyledRoutes: React.SFC<IRoutesProps> = ({
       <Route path='/directions' exact component={Directions} />
       <Route path='/where-to-stay' exact component={WhereToStay} />
       <Route path='/things-to-do' exact component={ThingsToDo} />
-      {/* <Route path='/profile/:profileId' exact component={} /> */}
+      <Route path='/profile/:profileId' exact component={ProfilePage} />
     </Switch>
   </div>
 );

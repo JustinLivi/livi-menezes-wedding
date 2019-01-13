@@ -8,7 +8,7 @@ export type ReducerMethod<
   ActionType extends string = ReducerAction['type']
 > = (state: Draft<State>, action: ReducerAction) => void | State;
 
-export interface IKeyableReducer<
+export interface KeyableReducer<
   State,
   ReducerAction extends Action<ActionType> = Action<ActionType>,
   ActionType extends string = ReducerAction['type']
@@ -30,10 +30,10 @@ export const createKeyableReducer = <
 });
 
 export const combineKeyableReducers = <State = never>(defaultState: State) => (
-  ...keyableReducers: Array<IKeyableReducer<State>>
+  ...keyableReducers: Array<KeyableReducer<State>>
 ) => (baseState: State = defaultState, action: Action): State => {
   let res: State | void;
-  res = find(keyableReducers, (reducer: IKeyableReducer<State>) => {
+  res = find(keyableReducers, (reducer: KeyableReducer<State>) => {
     if (reducer.type === action.type) {
       return immer<State, void | State>(baseState, state => {
         return reducer.reducer(state, action);

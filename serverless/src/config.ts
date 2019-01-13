@@ -61,7 +61,7 @@ log.info({
   REGION
 });
 
-export const dynamo = new aws.DynamoDB({
+export const dynamo = new aws.DynamoDB.DocumentClient({
   apiVersion: DYNAMODB_API_VERSION,
   endpoint: DYNAMODB_ENDPOINT,
   region: REGION

@@ -22,9 +22,9 @@ const styles = createStyles({
   toolbar: theme.mixins.toolbar
 });
 
-export interface ISideBarProps extends WithStyles<typeof styles> {}
+export interface SideBarProps extends WithStyles<typeof styles> {}
 
-export const UnstyledSideBar: React.SFC<ISideBarProps> = ({
+export const UnstyledSideBar: React.SFC<SideBarProps> = ({
   classes: { toolbar, drawerPaper, drawer }
 }) => (
   <Drawer

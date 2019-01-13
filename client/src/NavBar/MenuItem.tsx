@@ -3,14 +3,14 @@ import * as React from 'react';
 
 import { MenuLink } from '../Components/MenuLinks';
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   icon: React.ReactElement<any>;
   onClick: React.MouseEventHandler;
   linkComponent: MenuLink;
   primary: string;
 }
 
-export const MenuItem: React.SFC<IMenuItemProps> = ({
+export const MenuItem: React.SFC<MenuItemProps> = ({
   icon,
   onClick,
   linkComponent,

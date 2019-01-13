@@ -19,9 +19,9 @@ const styles = createStyles({
   }
 });
 
-export interface IStandardCardProps extends WithStyles<typeof styles> {}
+export interface StandardCardProps extends WithStyles<typeof styles> {}
 
-export const UnstyledStandardCard: React.SFC<IStandardCardProps> = ({
+export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
   classes: { card, root },
   children
 }) => (

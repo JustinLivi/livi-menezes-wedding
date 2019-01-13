@@ -12,10 +12,10 @@ export const profileRouter: RequestHandler = (
 ) => {
   log.info({ dynamo });
   log.info({ profileId }, 'fetching profile');
-  dynamo.getItem(
+  dynamo.get(
     {
       Key: {
-        id: { S: profileId }
+        id: profileId
       },
       TableName: DYNAMODB_PROFILE_TABLE
     },
@@ -26,8 +26,8 @@ export const profileRouter: RequestHandler = (
       if (keys(data).length === 0) {
         return next(createHttpError(404, 'Profile not found'));
       }
-      log.info({ data }, 'got profile');
-      res.json(data);
+      log.debug({ data }, 'got profile');
+      res.json(data.Item);
     }
   );
 };

@@ -21,14 +21,14 @@ const styles = createStyles({
   }
 });
 
-export interface IButtonBarProps extends WithStyles<typeof styles> {
+export interface ButtonBarProps extends WithStyles<typeof styles> {
   toDetails: string;
   onlyInfo?: true;
   hideHelp?: true;
   external?: boolean;
 }
 
-export const UnstyledButtonBar: React.SFC<IButtonBarProps> = ({
+export const UnstyledButtonBar: React.SFC<ButtonBarProps> = ({
   onlyInfo,
   hideHelp,
   toDetails,

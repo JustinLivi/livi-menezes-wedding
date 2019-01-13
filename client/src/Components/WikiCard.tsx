@@ -3,13 +3,8 @@ import cheerio from 'cheerio';
 import fetchJsonp from 'fetch-jsonp';
 import * as React from 'react';
 
+import { CacheStatus } from '../store/stateDefinition';
 import { theme } from '../theme';
-
-export enum CacheState {
-  BEHIND = 'BEHIND',
-  FETCHING = 'FETCHING',
-  UP_TO_DATE = 'UP_TO_DATE'
-}
 
 const styles = createStyles({
   card: {
@@ -28,7 +23,7 @@ const styles = createStyles({
   }
 });
 
-export interface IWikiPayload {
+export interface WikiPayload {
   parse: {
     title: string;
     pageid: number;
@@ -38,40 +33,40 @@ export interface IWikiPayload {
   };
 }
 
-export interface IWikiCardProps extends WithStyles<typeof styles> {
+export interface WikiCardProps extends WithStyles<typeof styles> {
   section: number;
   page: string;
 }
 
-export interface IWikiCardState {
-  cacheState: CacheState;
+export interface WikiCardState {
+  cacheStatus: CacheStatus;
   content?: string;
 }
 
 export class UnstyledWikiCard extends React.Component<
-  IWikiCardProps,
-  IWikiCardState
+  WikiCardProps,
+  WikiCardState
 > {
-  constructor(props: IWikiCardProps) {
+  constructor(props: WikiCardProps) {
     super(props);
     this.state = {
-      cacheState: CacheState.BEHIND
+      cacheStatus: CacheStatus.BEHIND
     };
   }
 
   public componentDidMount() {
     const { section, page } = this.props;
-    if (this.state.cacheState === CacheState.BEHIND) {
+    if (this.state.cacheStatus === CacheStatus.BEHIND) {
       this.setState(prev => ({
         ...prev,
-        cacheState: CacheState.FETCHING
+        cacheStatus: CacheStatus.FETCHING
       }));
       fetchJsonp(
         `https://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&section=${section}&page=${page}&callback=?`
       )
         .then(res => res.json())
         .then(body => {
-          const $ = cheerio.load((body as IWikiPayload).parse.text['*']);
+          const $ = cheerio.load((body as WikiPayload).parse.text['*']);
           const $p = cheerio.load($('p').html() || '');
           $p('a').attr(
             'href',
@@ -79,7 +74,7 @@ export class UnstyledWikiCard extends React.Component<
           );
           this.setState(prev => ({
             ...prev,
-            cacheState: CacheState.UP_TO_DATE,
+            cacheStatus: CacheStatus.UP_TO_DATE,
             content: $p.html() || ''
           }));
         });

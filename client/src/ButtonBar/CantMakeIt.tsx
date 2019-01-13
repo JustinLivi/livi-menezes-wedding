@@ -20,11 +20,11 @@ const styles = createStyles({
   root: buttonHolderStyles
 });
 
-export interface ICantMakeItProps extends WithStyles<typeof styles> {
+export interface CantMakeItProps extends WithStyles<typeof styles> {
   hideHelp?: true;
 }
 
-export const UnstyledCantMakeIt: React.SFC<ICantMakeItProps> = ({
+export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
   hideHelp,
   classes: { fab, root, label }
 }) => (

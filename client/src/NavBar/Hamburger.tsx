@@ -35,15 +35,15 @@ const styles = createStyles({
   }
 });
 
-export interface IHamburgerProps extends WithStyles<typeof styles> {}
+export interface HamburgerProps extends WithStyles<typeof styles> {}
 
-export interface IHamburgerState {
+export interface HamburgerState {
   anchorEl: Element | null;
 }
 
 export class UnstyledHamburger extends React.Component<
-  IHamburgerProps,
-  IHamburgerState
+  HamburgerProps,
+  HamburgerState
 > {
   public state = {
     anchorEl: null

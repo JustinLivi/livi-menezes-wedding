@@ -5,24 +5,24 @@ export type IRsaaCreatorMapper<
   Body extends ReduxStandardApicallingActionBody
 > = (p: Params) => Body;
 
-export interface IBaseRsaaMeta {
+export interface BaseRsaaMeta {
   method: HttpMethod;
   endpoint: any;
   params?: object;
   body?: object;
 }
 
-export interface IBaseRsaaAction {
-  meta: IBaseRsaaMeta;
+export interface BaseRsaaAction {
+  meta: BaseRsaaMeta;
 }
 
-export interface IRsaaMeta<Method extends HttpMethod = any, Endpoint = any> {
+export interface RsaaMeta<Method extends HttpMethod = any, Endpoint = any> {
   endpoint: Endpoint;
   method: Method;
 }
 
 export type RsaaActionCreatorFactory<
-  Params extends IRsaaMeta,
+  Params extends RsaaMeta,
   Body extends ReduxStandardApicallingActionBody = ReduxStandardApicallingActionBody
 > = (params: Params) => ReduxStandardApicallingAction<Body>;
 
@@ -35,12 +35,12 @@ export function configureRsaaActionCreatorFactory<
   });
 }
 
-export function createRsaaActionCreatorFactory<FactoryParams extends IRsaaMeta>(
+export function createRsaaActionCreatorFactory<FactoryParams extends RsaaMeta>(
   factory: RsaaActionCreatorFactory<FactoryParams>
 ) {
-  return <ExtractorParams = never, Action extends IBaseRsaaAction = never>(
+  return <ExtractorParams = never, Action extends BaseRsaaAction = never>(
     extractor: (
       params: ExtractorParams
-    ) => IRsaaMeta<Action['meta']['method'], Action['meta']['endpoint']>
-  ) => (params: ExtractorParams) => (factory as any)(extractor(params));
+    ) => RsaaMeta<Action['meta']['method'], Action['meta']['endpoint']>
+  ) => (params: ExtractorParams) => factory(extractor(params) as FactoryParams);
 }

@@ -1,5 +1,5 @@
 declare module 'redux-api-middleware' {
-  import { Middleware, Dispatch } from 'redux';
+  import { Middleware, Dispatch, MiddlewareAPI, AnyAction } from 'redux';
 
   export type HttpMethod =
     | 'GET'
@@ -176,11 +176,7 @@ declare module 'redux-api-middleware' {
     S = any,
     D extends Dispatch = Dispatch
   >(options: RsaaMiddlewareOptions): Middleware<DispatchExt, S, D>;
-  export function apiMiddleware<
-    DispatchExt = {},
-    S = any,
-    D extends Dispatch = Dispatch
-  >(
+  export function apiMiddleware(
     api: MiddlewareAPI<D, S>
   ): (next: Dispatch<AnyAction>) => (action: any) => any;
 }

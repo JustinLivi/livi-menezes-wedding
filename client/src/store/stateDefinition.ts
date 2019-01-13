@@ -1,4 +1,4 @@
-import { IGetProfilePayload } from '../../../common';
+import { ProfileData } from '../../../common';
 
 export enum CacheStatus {
   UP_TO_DATE = 'UP_TO_DATE',
@@ -7,11 +7,11 @@ export enum CacheStatus {
   PERSISTING = 'PERSISTING'
 }
 
-export interface IProfile {
+export interface ProfileState {
   cacheStatus: CacheStatus;
-  data?: IGetProfilePayload;
+  data?: ProfileData;
 }
 
-export interface IState {
-  profile: IProfile;
+export interface State {
+  profile: ProfileState;
 }

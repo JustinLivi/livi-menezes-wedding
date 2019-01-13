@@ -3,12 +3,13 @@ import { find, get, reduce } from 'lodash';
 import { Action } from 'redux';
 import { ApiError, HttpMethod } from 'redux-api-middleware';
 
+import { API_ROOT } from '../config';
 import {
+  BaseRsaaAction,
+  BaseRsaaMeta,
   configureRsaaActionCreatorFactory,
   createRsaaActionCreatorFactory,
-  IBaseRsaaAction,
-  IBaseRsaaMeta,
-  IRsaaMeta,
+  RsaaMeta,
 } from './rsaaActionCreatorFactory';
 
 export enum RsaaActionType {
@@ -17,61 +18,61 @@ export enum RsaaActionType {
   RSAA_FAILURE = 'RSAA_FAILURE'
 }
 
-export interface IRsaaRequestAction<
-  Meta extends IRsaaMeta<Method, Endpoint>,
+export interface RsaaRequestAction<
+  Meta extends RsaaMeta<Method, Endpoint>,
   Method extends HttpMethod = Meta['method'],
   Endpoint = Meta['endpoint']
-> extends IBaseRsaaAction {
+> extends BaseRsaaAction {
   type: RsaaActionType.RSAA_REQUEST;
   meta: Meta;
   error?: boolean;
 }
 
-export interface IRsaaSuccessAction<
-  Meta extends IRsaaMeta<Method, Endpoint>,
+export interface RsaaSuccessAction<
+  Meta extends RsaaMeta<Method, Endpoint>,
   Payload,
   Method extends HttpMethod = Meta['method'],
   Endpoint = Meta['endpoint']
-> extends IBaseRsaaAction {
+> extends BaseRsaaAction {
   type: RsaaActionType.RSAA_SUCCESS;
   meta: Meta;
   payload: Payload;
 }
 
-export interface IRsaaFailureAction<
-  Meta extends IRsaaMeta<Method, Endpoint>,
+export interface RsaaFailureAction<
+  Meta extends RsaaMeta<Method, Endpoint>,
   Payload,
   Method extends HttpMethod = Meta['method'],
   Endpoint = Meta['endpoint']
-> extends IBaseRsaaAction {
+> extends BaseRsaaAction {
   type: RsaaActionType.RSAA_FAILURE;
   meta: Meta;
   payload: ApiError<Payload>;
 }
 
 export type RsaaActionSet<
-  Meta extends IRsaaMeta<Method, Endpoint>,
+  Meta extends RsaaMeta<Method, Endpoint>,
   SuccessPayload,
   FailurePayload,
   Method extends HttpMethod = Meta['method'],
   Endpoint = Meta['endpoint']
 > =
-  | IRsaaRequestAction<Meta, Method, Endpoint>
-  | IRsaaSuccessAction<Meta, SuccessPayload, Method, Endpoint>
-  | IRsaaFailureAction<Meta, FailurePayload, Method, Endpoint>;
+  | RsaaRequestAction<Meta, Method, Endpoint>
+  | RsaaSuccessAction<Meta, SuccessPayload, Method, Endpoint>
+  | RsaaFailureAction<Meta, FailurePayload, Method, Endpoint>;
 
 type AnyRsaaActionSet = RsaaActionSet<any, any, any>;
 
 export type ExtractRequestAction<
   A extends AnyRsaaActionSet
-> = A extends IRsaaRequestAction<infer Meta>
-  ? IRsaaRequestAction<A['meta'], A['meta']['method'], A['meta']['endpoint']>
+> = A extends RsaaRequestAction<infer Meta>
+  ? RsaaRequestAction<A['meta'], A['meta']['method'], A['meta']['endpoint']>
   : never;
 
 export type ExtractSuccessAction<
   A extends AnyRsaaActionSet
-> = A extends IRsaaSuccessAction<infer Meta, infer Payload>
-  ? IRsaaSuccessAction<
+> = A extends RsaaSuccessAction<infer Meta, infer Payload>
+  ? RsaaSuccessAction<
       A['meta'],
       A['payload'],
       A['meta']['method'],
@@ -81,8 +82,8 @@ export type ExtractSuccessAction<
 
 export type ExtractFailureAction<
   A extends AnyRsaaActionSet
-> = A extends IRsaaFailureAction<infer Meta, infer Payload>
-  ? IRsaaFailureAction<
+> = A extends RsaaFailureAction<infer Meta, infer Payload>
+  ? RsaaFailureAction<
       A['meta'],
       A['payload']['response'],
       A['meta']['method'],
@@ -114,7 +115,7 @@ export type KeyableFailureReducerMethod<
   action: ExtractFailureAction<FailureAction>
 ) => void | State;
 
-export interface IKeyableRequestReducer<
+export interface KeyableRequestReducer<
   State,
   RequestAction extends AnyRsaaActionSet
 > {
@@ -124,7 +125,7 @@ export interface IKeyableRequestReducer<
   reducer: KeyableRequestReducerMethod<State, RequestAction>;
 }
 
-export interface IKeyableSuccessReducer<
+export interface KeyableSuccessReducer<
   State,
   SuccessAction extends AnyRsaaActionSet
 > {
@@ -134,7 +135,7 @@ export interface IKeyableSuccessReducer<
   reducer: KeyableSuccessReducerMethod<State, SuccessAction>;
 }
 
-export interface IKeyableFailureReducer<
+export interface KeyableFailureReducer<
   State,
   FailureAction extends AnyRsaaActionSet
 > {
@@ -148,9 +149,9 @@ export type KeyableRsaaReducer<
   State,
   RsaaAction extends AnyRsaaActionSet = any
 > =
-  | IKeyableRequestReducer<State, RsaaAction>
-  | IKeyableSuccessReducer<State, RsaaAction>
-  | IKeyableFailureReducer<State, RsaaAction>;
+  | KeyableRequestReducer<State, RsaaAction>
+  | KeyableSuccessReducer<State, RsaaAction>
+  | KeyableFailureReducer<State, RsaaAction>;
 
 export const createKeyableRequestReducer = <
   State,
@@ -159,7 +160,7 @@ export const createKeyableRequestReducer = <
   endpoint: ReducerAction['meta']['endpoint'],
   method: ReducerAction['meta']['method'],
   reducer: KeyableRequestReducerMethod<State, ReducerAction>
-): IKeyableRequestReducer<State, ReducerAction> => ({
+): KeyableRequestReducer<State, ReducerAction> => ({
   endpoint,
   method,
   reducer,
@@ -173,7 +174,7 @@ export const createKeyableSuccessReducer = <
   endpoint: ReducerAction['meta']['endpoint'],
   method: ReducerAction['meta']['method'],
   reducer: KeyableSuccessReducerMethod<State, ReducerAction>
-): IKeyableSuccessReducer<State, ReducerAction> => ({
+): KeyableSuccessReducer<State, ReducerAction> => ({
   endpoint,
   method,
   reducer,
@@ -187,7 +188,7 @@ export const createKeyableFailureReducer = <
   endpoint: ReducerAction['meta']['endpoint'],
   method: ReducerAction['meta']['method'],
   reducer: KeyableFailureReducerMethod<State, ReducerAction>
-): IKeyableFailureReducer<State, ReducerAction> => ({
+): KeyableFailureReducer<State, ReducerAction> => ({
   endpoint,
   method,
   reducer,
@@ -200,34 +201,32 @@ export const combineKeyableRsaaReducers = <State = never>(
   baseState: State = defaultState,
   action: Action
 ): State => {
-  let res: State | void;
-  res = find(keyableReducers, (reducer: KeyableRsaaReducer<State>) => {
+  let res: State | undefined;
+  find(keyableReducers, (reducer: KeyableRsaaReducer<State>) => {
     if (
       reducer.type === action.type &&
       reducer.endpoint === get(action, 'meta.endpoint') &&
       reducer.method === get(action, 'meta.method')
     ) {
-      return immer<State, void | State>(baseState, state => {
+      res = immer<State, void | State>(baseState, state => {
         return (reducer.reducer as any)(state, action);
-      });
+      }) as State;
+      return true;
     }
-  }) as State | void;
+  });
   return res || baseState;
 };
 
 export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<
-  IBaseRsaaMeta
+  BaseRsaaMeta
 >(factoryParams => {
   const { method, endpoint, params } = factoryParams;
   return {
-    endpoint: reduce(
+    endpoint: `${API_ROOT}${reduce(
       params,
       (result, value, key) => result.replace(`:${key}`, value),
       endpoint
-    ),
-    meta: {
-      method
-    },
+    )}`,
     method,
     types: [
       {

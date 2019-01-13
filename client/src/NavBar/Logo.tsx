@@ -11,9 +11,9 @@ const styles = createStyles({
   }
 });
 
-export interface ILogoProps extends WithStyles<typeof styles> {}
+export interface LogoProps extends WithStyles<typeof styles> {}
 
-export const UnstyledLogo: React.SFC<ILogoProps> = ({
+export const UnstyledLogo: React.SFC<LogoProps> = ({
   classes: { grow, root }
 }) => (
   <span className={grow}>

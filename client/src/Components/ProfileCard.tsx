@@ -11,13 +11,13 @@ const styles = createStyles({
   }
 });
 
-export interface IProfileCardProps extends WithStyles<typeof styles> {
+export interface ProfileCardProps extends WithStyles<typeof styles> {
   image: string;
   title: string;
   blurb?: React.ReactType<any>;
 }
 
-export const UnstyledProfileCard: React.SFC<IProfileCardProps> = ({
+export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   image,
   title,
   blurb,

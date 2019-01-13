@@ -31,9 +31,9 @@ const styles = createStyles({
   }
 });
 
-export interface INavBarProps extends WithStyles<typeof styles> {}
+export interface NavBarProps extends WithStyles<typeof styles> {}
 
-export const UnstyledAppBar: React.SFC<INavBarProps> = ({
+export const UnstyledAppBar: React.SFC<NavBarProps> = ({
   classes: { root, appBar, toolbar }
 }) => (
   <div className={root}>
