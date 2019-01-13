@@ -53,6 +53,7 @@
     "nodemon": "^1.18.7",
     "prettier": "^1.15.3",
     "serverless": "^1.35.1",
+    "serverless-domain-manager": "^2.6.11",
     "serverless-offline": "^3.31.3",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",

@@ -8,9 +8,16 @@ custom:
     stage: dev
     region: localhost
     cacheInvalidationRegex: node_modules|build
+  customDomain:
+    domainName: api.livimenezes.com
+    stage: prod
+    certificateName: 'api.livimenezes.com'
+    createRoute53Record: true
+    endpointType: 'regional'
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
 
 provider:
   name: aws
