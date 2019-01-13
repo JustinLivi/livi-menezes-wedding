@@ -37,6 +37,7 @@ export const UnstyledRoutes: React.SFC<IRoutesProps> = ({
       <Route path='/directions' exact component={Directions} />
       <Route path='/where-to-stay' exact component={WhereToStay} />
       <Route path='/things-to-do' exact component={ThingsToDo} />
+      {/* <Route path='/profile/:profileId' exact component={} /> */}
     </Switch>
   </div>
 );
