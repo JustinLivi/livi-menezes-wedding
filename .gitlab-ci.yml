@@ -86,6 +86,8 @@ test_serverless:
 
 terraform:
   only:
+    refs:
+      - master
     changes:
       - terraform/**/*
       - .gitlab-ci.yml
@@ -116,6 +118,8 @@ deploy_client:
       - '/usr/bin/env'
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   only:
+    refs:
+      - master
     changes:
       - client/**/*
       - .gitlab-ci.yml
@@ -133,6 +137,8 @@ deploy_client:
 
 deploy_serverless:
   only:
+    refs:
+      - master
     changes:
       - serverless/**/*
       - .gitlab-ci.yml
