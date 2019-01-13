@@ -17,6 +17,9 @@ build_serverless:
     policy: push
     paths:
       - serverless/node_modules/
+  variables:
+    REACT_APP_PICTURE_ENDPOINT: '$REACT_APP_PICTURE_ENDPOINT'
+    REACT_APP_API_ROOT: '$REACT_APP_API_ROOT'
   script:
     - cd serverless
     - npm install
@@ -108,10 +111,17 @@ terraform:
     - terraform init -input=false -backend-config=backend.tfvars
     - terraform plan -input=false
     - terraform apply -input=false -auto-approve
+    - mkdir res
+    - terraform output cloudfront_did > res/cloudfront_did
+  artifacts:
+    paths:
+      - terraform/res/
   tags:
     - docker
 
 deploy_client:
+  dependencies:
+    - terraform
   image:
     name: robpco/awscli
     entrypoint:
@@ -130,8 +140,10 @@ deploy_client:
   artifacts:
     paths:
       - client/build/
+      - terraform/res/
   script:
     - aws s3 sync --no-progress "./client/build" "s3://www.livimenezes.com"
+    - aws cloudfront create-invalidation --distribution-id $(echo ../terraform/res/cloudfront_did) --paths /index.html
   tags:
     - docker
 

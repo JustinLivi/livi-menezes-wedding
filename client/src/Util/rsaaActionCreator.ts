@@ -3,7 +3,7 @@ import { find, get, reduce } from 'lodash';
 import { Action } from 'redux';
 import { ApiError, HttpMethod } from 'redux-api-middleware';
 
-import { API_ROOT } from '../config';
+import { REACT_APP_API_ROOT } from '../config';
 import {
   BaseRsaaAction,
   BaseRsaaMeta,
@@ -222,7 +222,7 @@ export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<
 >(factoryParams => {
   const { method, endpoint, params } = factoryParams;
   return {
-    endpoint: `${API_ROOT}${reduce(
+    endpoint: `${REACT_APP_API_ROOT}${reduce(
       params,
       (result, value, key) => result.replace(`:${key}`, value),
       endpoint

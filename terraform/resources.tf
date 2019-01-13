@@ -60,7 +60,7 @@ resource "aws_route53_record" "website_route53_record" {
 
 module "acm_ops" {
   source       = "./modules/aws_acm_certificate"
-  domain_names = ["${var.domain}", "${var.subdomain}"]
+  domain_names = ["${var.domain}", "${var.subdomain}", "${var.apidomain}"]
   zone_id      = "${aws_route53_zone.route53_zone.zone_id}"
 
   providers = {

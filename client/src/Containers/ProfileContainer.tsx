@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 
 import { ProfileData } from '../../../common';
 import { ProfileCard } from '../Components/ProfileCard';
-import { PICTURE_ENDPOINT } from '../config';
+import { REACT_APP_PICTURE_ENDPOINT } from '../config';
 import { fetchProfile } from '../store/actions/profile';
 import { getProfileCacheStatus, getProfileData } from '../store/selectors';
 import { CacheStatus } from '../store/stateDefinition';
@@ -50,7 +50,7 @@ export class UnconnectedProfileContainer extends React.Component<ProfileProps> {
       } = profileData;
       return (
         <ProfileCard
-          image={`${PICTURE_ENDPOINT}/${photo}`}
+          image={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
           title="Justin and Marisa's Wedding"
         />
       );

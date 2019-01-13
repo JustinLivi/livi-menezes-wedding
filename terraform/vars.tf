@@ -13,3 +13,7 @@ variable "domain" {
 variable "subdomain" {
   default = "www.livimenezes.com"
 }
+
+variable "apidomain" {
+  default = "api.livimenezes.com"
+}
