@@ -3,19 +3,13 @@ service: livi-menezes-wedding
 custom:
   tables:
     profiles: profiles
-  dynamodb:
+  serverless-offline:
+    port: 3001
     stage: dev
-    start:
-      seed: true
-      migrate: true
-    seed:
-      test:
-        sources:
-          - table: ${self:custom.tables.profiles}
-            sources: [./seed/profiles.json]
+    region: localhost
+    cacheInvalidationRegex: node_modules|build
 
 plugins:
-  - serverless-dynamodb-local
   - serverless-offline
 
 provider:
@@ -25,11 +19,12 @@ provider:
   region: us-east-1
   environment:
     DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
-    DYNAMODB_DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
+    DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
+    REGION: 'us-east-1'
 
 functions:
   app:
-    handler: build/index.handler
+    handler: build/src/index.handler
     events:
       - http: 'GET /profile/{proxy+}'
 

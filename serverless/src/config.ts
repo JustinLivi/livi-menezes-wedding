@@ -1,6 +1,8 @@
 import aws from 'aws-sdk';
 import * as yup from 'yup';
 
+import { log } from './log';
+
 export type EnvVars =
   | 'REGION'
   | 'DYNAMODB_API_VERSION'
@@ -9,10 +11,10 @@ export type EnvVars =
   | 'IS_OFFLINE';
 
 export const envDefaults = {
-  DYNAMODB_API_VERSION: '2012-10-08',
+  DYNAMODB_API_VERSION: '2012-08-10',
   DYNAMODB_ENDPOINT: 'http://localhost:8000',
-  PORT: 3000,
-  REGION: 'us-east-1'
+  DYNAMODB_PROFILE_TABLE: 'profiles',
+  REGION: 'localhost'
 };
 
 const schema = yup.object({
@@ -28,11 +30,18 @@ const schema = yup.object({
       then: yup.string().transform(() => envDefaults.DYNAMODB_ENDPOINT)
     })
     .default(envDefaults.DYNAMODB_ENDPOINT),
-  DYNAMODB_PROFILE_TABLE: yup.string().required(),
+  DYNAMODB_PROFILE_TABLE: yup
+    .string()
+    .required()
+    .default(envDefaults.DYNAMODB_PROFILE_TABLE),
   IS_OFFLINE: yup.string(),
   REGION: yup
     .string()
     .required()
+    .when('IS_OFFLINE', {
+      is: 'true',
+      then: yup.string().transform(() => envDefaults.REGION)
+    })
     .default(envDefaults.REGION)
 });
 
@@ -45,7 +54,15 @@ export const {
 
 aws.config.update({ region: REGION });
 
+log.info({
+  DYNAMODB_API_VERSION,
+  DYNAMODB_ENDPOINT,
+  DYNAMODB_PROFILE_TABLE,
+  REGION
+});
+
 export const dynamo = new aws.DynamoDB({
   apiVersion: DYNAMODB_API_VERSION,
-  endpoint: DYNAMODB_ENDPOINT
+  endpoint: DYNAMODB_ENDPOINT,
+  region: REGION
 });

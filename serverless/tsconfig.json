@@ -16,10 +16,11 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "dynamodb-migrations": ["@types/dynamodb-migrations"],
       "serverless-http": ["@types/serverless-http"],
       "jest-extended": ["jest-extended"]
     },
     "outDir": "./build"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./seed/**/*"]
 }

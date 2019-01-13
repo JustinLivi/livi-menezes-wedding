@@ -1,0 +1,33 @@
+{
+  "Table": {
+    "TableName": "profiles",
+    "KeySchema": [
+      {
+        "AttributeName": "id",
+        "KeyType": "HASH"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "id",
+        "AttributeType": "S"
+      }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 1,
+      "WriteCapacityUnits": 1
+    }
+  },
+  "Seeds": [
+    {
+      "id": "edcddbd1-37ec-4a15-850c-3ffd3625e2a9",
+      "name": "Justin",
+      "profile": {
+        "photo": "justin.jpg",
+        "about": "the proud groom"
+      },
+      "relationships": [],
+      "rehearsal": true
+    }
+  ]
+}
