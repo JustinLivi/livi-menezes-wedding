@@ -48,7 +48,7 @@ export interface IRsaaFailureAction<
   Method extends HttpMethod = Meta['method'],
   Endpoint extends string = Meta['endpoint']
 > extends IBaseRsaaAction {
-  type: RsaaActionType.RSAA_SUCCESS;
+  type: RsaaActionType.RSAA_FAILURE;
   meta: Meta;
   payload: ApiError<Payload>;
 }
@@ -60,26 +60,38 @@ export type RsaaActionSet<
   Method extends HttpMethod = Meta['method'],
   Endpoint extends string = Meta['endpoint']
 > =
-  | IRsaaRequestAction<Meta>
-  | IRsaaSuccessAction<Meta, SuccessPayload>
-  | IRsaaFailureAction<Meta, FailurePayload>;
+  | IRsaaRequestAction<Meta, Method, Endpoint>
+  | IRsaaSuccessAction<Meta, SuccessPayload, Method, Endpoint>
+  | IRsaaFailureAction<Meta, FailurePayload, Method, Endpoint>;
 
 type AnyRsaaActionSet = RsaaActionSet<any, any, any>;
 
 export type ExtractRequestAction<
   A extends AnyRsaaActionSet
-> = A extends IRsaaRequestAction<infer Meta> ? IRsaaRequestAction<Meta> : never;
+> = A extends IRsaaRequestAction<infer Meta>
+  ? IRsaaRequestAction<A['meta'], A['meta']['method'], A['meta']['endpoint']>
+  : never;
 
 export type ExtractSuccessAction<
   A extends AnyRsaaActionSet
 > = A extends IRsaaSuccessAction<infer Meta, infer Payload>
-  ? IRsaaSuccessAction<Meta, Payload>
+  ? IRsaaSuccessAction<
+      A['meta'],
+      A['payload'],
+      A['meta']['method'],
+      A['meta']['endpoint']
+    >
   : never;
 
 export type ExtractFailureAction<
   A extends AnyRsaaActionSet
 > = A extends IRsaaFailureAction<infer Meta, infer Payload>
-  ? IRsaaFailureAction<Meta, Payload>
+  ? IRsaaFailureAction<
+      A['meta'],
+      A['payload']['response'],
+      A['meta']['method'],
+      A['meta']['endpoint']
+    >
   : never;
 
 export type KeyableRequestReducerMethod<

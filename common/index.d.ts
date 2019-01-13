@@ -1,12 +1,10 @@
 export interface IGetProfilePayload {
-  Item: {
-    name: string;
-    id: string;
-    rehearsal: boolean;
-    relationships?: string[];
-    profile?: {
-      about: string;
-      photo: string;
-    };
+  name: string;
+  id: string;
+  rehearsal: boolean;
+  relationships?: string[];
+  profile?: {
+    about: string;
+    photo: string;
   };
 }

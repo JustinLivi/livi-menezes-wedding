@@ -17,8 +17,9 @@ const getProfileRequestReducer = createKeyableRequestReducer<
 const getProfileSuccessReducer = createKeyableSuccessReducer<
   IProfile,
   IGetProfileActionSet
->(Endpoints.GET_BY_PROFILE_ID, 'GET', state => {
-  state.cacheStatus = CacheStatus.FETCHING;
+>(Endpoints.GET_BY_PROFILE_ID, 'GET', (state, { payload }) => {
+  state.cacheStatus = CacheStatus.UP_TO_DATE;
+  state.data = payload;
 });
 
 export const profile = combineKeyableRsaaReducers<IProfile>({
