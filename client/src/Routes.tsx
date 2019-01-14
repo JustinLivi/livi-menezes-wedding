@@ -8,6 +8,8 @@ import { OurStory } from './Pages/OurStory';
 import { OurStoryDetails } from './Pages/OurStory/Details';
 import { ProfilePage } from './Pages/Profile';
 import { Rsvp } from './Pages/Rsvp';
+import { CantMakeIt } from './Pages/Rsvp/CantMakeIt';
+import { RsvpDetails } from './Pages/Rsvp/Details';
 import { ThingsToDo } from './Pages/ThingsToDo';
 import { Venue } from './Pages/Venue';
 import { VenueDetails } from './Pages/Venue/Details';
@@ -31,6 +33,8 @@ export const UnstyledRoutes: React.SFC<RoutesProps> = ({
     <NavBar />
     <Switch>
       <Route path='/' exact component={Rsvp} />
+      <Route path='/details' exact component={RsvpDetails} />
+      <Route path='/cant-make-it' exact component={CantMakeIt} />
       <Route path='/our-story' exact component={OurStory} />
       <Route path='/our-story/details' component={OurStoryDetails} />
       <Route path='/venue' exact component={Venue} />

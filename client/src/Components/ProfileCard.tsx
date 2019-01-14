@@ -6,15 +6,19 @@ import { StandardCard } from './StandardCard';
 const styles = createStyles({
   media: {
     height: 360,
-    maxHeight: 'calc(100vh - 308px)',
+    maxHeight: 'calc(100vh - 350px)',
     maxWidth: '100%'
+  },
+  root: {
+    '&:last-child': { paddingBottom: 10 },
+    paddingTop: 10
   }
 });
 
 export interface ProfileCardProps extends WithStyles<typeof styles> {
   image: string;
   title: string;
-  blurb?: React.ReactType<any>;
+  blurb?: React.ReactNode;
 }
 
 export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
@@ -22,7 +26,7 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   title,
   blurb,
   children,
-  classes: { media }
+  classes: { media, root }
 }) => (
   <StandardCard>
     {children ? (
@@ -32,11 +36,15 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
     ) : (
       <CardMedia className={media} image={image} title={title} />
     )}
-    <CardContent>
+    <CardContent className={root}>
       <Typography gutterBottom variant='h5' component='h2'>
         {title}
       </Typography>
-      {blurb && <Typography component='p'>{blurb}</Typography>}
+      {blurb && typeof blurb === 'string' ? (
+        <Typography component='p'>{blurb}</Typography>
+      ) : (
+        blurb
+      )}
     </CardContent>
   </StandardCard>
 );

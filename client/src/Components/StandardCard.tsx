@@ -1,4 +1,5 @@
 import { Card, createStyles, WithStyles, withStyles } from '@material-ui/core';
+import classnames from 'classnames';
 import * as React from 'react';
 
 import { theme } from '../theme';
@@ -19,14 +20,17 @@ const styles = createStyles({
   }
 });
 
-export interface StandardCardProps extends WithStyles<typeof styles> {}
+export interface StandardCardProps extends WithStyles<typeof styles> {
+  className?: string;
+}
 
 export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
+  className,
   classes: { card, root },
   children
 }) => (
   <div className={root}>
-    <Card className={card}>{children}</Card>
+    <Card className={classnames(card, className)}>{children}</Card>
   </div>
 );
 
