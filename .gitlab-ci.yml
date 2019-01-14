@@ -185,6 +185,8 @@ deploy_serverless:
   variables:
     AWS_ACCESS_KEY_ID: '$AWS_ACCESS_KEY_ID'
     AWS_SECRET_ACCESS_KEY: '$AWS_SECRET_ACCESS_KEY'
+    ADMIN_EMAIL: '$ADMIN_EMAIL'
+    ADMIN_SMS: '$ADMIN_SMS'
   script:
     - cd serverless
     - npm install

@@ -14,10 +14,38 @@ custom:
     certificateName: 'api.livimenezes.com'
     createRoute53Record: true
     endpointType: 'regional'
+  alerts:
+    stages:
+      - prod
+    alarms:
+      - functionErrors
+      - functionThrottles
+      - functionInvocations
+      - functionDuration
+    topics:
+      ok: ${self:service}-${opt:stage}-alerts-ok
+      insufficientData: ${self:service}-${opt:stage}-alerts-insufficientData
+      alarm:
+        topic: ${self:service}-${opt:stage}-alerts-alarm
+        notifications:
+          - protocol: email
+            endpoint: ${env:ADMIN_EMAIL}
+          - protocol: sms
+            endpoint: ${env:ADMIN_SMS}
+    definitions:
+      bunyanErrors:
+        metric: bunyanErrors
+        threshold: 0
+        statistic: Sum
+        period: 60
+        evaluationPeriods: 1
+        comparisonOperator: GreaterThanThreshold
+        pattern: '{$.level > 40}'
 
 plugins:
   - serverless-offline
   - serverless-domain-manager
+  - serverless-plugin-aws-alerts
 
 provider:
   name: aws
@@ -28,6 +56,13 @@ provider:
     DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
     DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
     REGION: 'us-east-1'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+      Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_PROFILE_TABLE}'
 
 functions:
   app:
