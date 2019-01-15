@@ -1,11 +1,10 @@
 import { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
-import { keys } from 'lodash';
 import * as yup from 'yup';
 
 import { RsvpPayload } from '../../../client/src/common';
-import { dynamo, DYNAMODB_PROFILE_TABLE } from '../config';
 import { log } from '../log';
+import { updateProfile } from '../updateProfile';
 
 const schema = yup.object({
   rsvp: yup.boolean().required(),
@@ -20,32 +19,20 @@ export const rsvpCeremonyRouter: RequestHandler = async (
   try {
     await schema.validate(body);
   } catch (err) {
-    next(createHttpError(400, err));
+    return next(createHttpError(400, err));
   }
   log.info({ body }, 'rsvping to ceremony');
   const { userId, rsvp } = body;
-  dynamo.update(
-    {
-      ConditionExpression: 'attribute_exists(id)',
+  try {
+    await updateProfile({
       ExpressionAttributeValues: {
         ':rsvp': rsvp
       },
-      Key: {
-        id: userId
-      },
-      ReturnValues: 'ALL_NEW',
-      TableName: DYNAMODB_PROFILE_TABLE,
-      UpdateExpression: 'SET attendingWedding = :rsvp'
-    },
-    (err, data) => {
-      if (err) {
-        return next(err);
-      }
-      if (keys(data).length === 0) {
-        return next(createHttpError(404, 'Profile not found'));
-      }
-      log.debug({ data }, 'got profile');
-      res.json({ success: true });
-    }
-  );
+      UpdateExpression: 'SET attendingWedding = :rsvp',
+      userId
+    });
+  } catch (err) {
+    return next(err);
+  }
+  res.json({ success: true });
 };

@@ -77,6 +77,10 @@ functions:
           path: /rsvp/ceremony
           method: post
           cors: true
+      - http:
+          path: /rsvp/details
+          method: post
+          cors: true
 
 resources:
   Resources:

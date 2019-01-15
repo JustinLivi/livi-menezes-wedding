@@ -20,6 +20,12 @@ export interface RsvpPayload {
   rsvp: boolean;
 }
 
+export interface UpdateDetailsPayload {
+  userId: string;
+  address?: string;
+  favoriteDanceSong?: string;
+}
+
 export enum Endpoints {
   GET_BY_PROFILE_ID = '/profile/:userId',
   RSVP_CEREMONY = '/rsvp/ceremony',

@@ -8,11 +8,12 @@ const styles = createStyles({
   root: {}
 });
 
-export interface AddressInputProps extends WithStyles<typeof styles> {}
+export interface AddressInputProps extends WithStyles<typeof styles> {
+  handleSelect: (address: string) => void;
+}
 
 export interface AddressInputState {
   loaded: boolean;
-  address: string;
 }
 
 const inputComponent: React.SFC<{
@@ -33,7 +34,6 @@ export class UnstyledAddressInput extends React.Component<
   constructor(props: AddressInputProps) {
     super(props);
     this.state = {
-      address: '',
       loaded: false
     };
   }
@@ -42,27 +42,25 @@ export class UnstyledAddressInput extends React.Component<
     loadMapApi(this.onScriptLoad);
   }
 
-  public handleSelect = (address: string) => {
-    this.setState({ address });
-  };
+  public target = () => (
+    <div
+      style={{
+        maxWidth: '100%'
+      }}
+    />
+  );
 
   public render() {
-    const { loaded, address } = this.state;
+    const { handleSelect } = this.props;
+    const { loaded } = this.state;
     return loaded ? (
       <MUIPlacesAutocomplete
-        onSuggestionSelected={this.handleSelect}
-        // tslint:disable-next-line:jsx-no-lambda
-        renderTarget={() => (
-          <div
-            style={{
-              maxWidth: '100%'
-            }}
-          />
-        )}
+        onSuggestionSelected={handleSelect}
+        renderTarget={this.target}
         textFieldProps={{
           autoFocus: false,
           fullWidth: true,
-          label: 'Enter your home address',
+          label: 'Enter your home address (for thank yous!)',
           placeholder: 'Your home address'
         }}
       />
