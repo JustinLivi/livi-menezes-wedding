@@ -56,6 +56,7 @@ provider:
     DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
     DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
     REGION: 'us-east-1'
+    UI_ORIGIN: 'https://livimenezes.com'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -66,6 +67,8 @@ provider:
 
 functions:
   app:
+    cors:
+      origin: 'livimenezes.com'
     handler: build/src/index.handler
     events:
       - http: 'GET /profile/{proxy+}'

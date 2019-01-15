@@ -14,7 +14,8 @@ export const envDefaults = {
   DYNAMODB_API_VERSION: '2012-08-10',
   DYNAMODB_ENDPOINT: 'http://localhost:8000',
   DYNAMODB_PROFILE_TABLE: 'profiles',
-  REGION: 'localhost'
+  REGION: 'localhost',
+  UI_ORIGIN: 'http://localhost:3000'
 };
 
 const schema = yup.object({
@@ -42,14 +43,23 @@ const schema = yup.object({
       is: 'true',
       then: yup.string().transform(() => envDefaults.REGION)
     })
-    .default(envDefaults.REGION)
+    .default(envDefaults.REGION),
+  UI_ORIGIN: yup
+    .string()
+    .required()
+    .when('IS_OFFLINE', {
+      is: 'true',
+      then: yup.string().transform(() => envDefaults.UI_ORIGIN)
+    })
+    .default(envDefaults.UI_ORIGIN)
 });
 
 export const {
   REGION,
   DYNAMODB_API_VERSION,
   DYNAMODB_ENDPOINT,
-  DYNAMODB_PROFILE_TABLE
+  DYNAMODB_PROFILE_TABLE,
+  UI_ORIGIN
 } = schema.validateSync(schema.cast(process.env));
 
 aws.config.update({ region: REGION });
