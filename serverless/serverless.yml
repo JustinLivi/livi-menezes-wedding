@@ -69,9 +69,10 @@ functions:
   app:
     cors:
       origin: 'livimenezes.com'
-    handler: build/src/index.handler
+    handler: build/serverless/src/index.handler
     events:
       - http: 'GET /profile/{proxy+}'
+      - http: 'POST /rsvp/ceremony'
 
 resources:
   Resources:

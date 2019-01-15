@@ -3,4 +3,10 @@ import { State } from '../stateDefinition';
 export const getProfileCacheStatus = ({ profile: { cacheStatus } }: State) =>
   cacheStatus;
 
-export const getProfileData = ({ profile: { data } }: State) => data;
+export const getUserId = ({ profile: { data } }: State) => data && data.id;
+
+export const getWeddingRsvp = ({ profile: { data } }: State) =>
+  data && data.attendingWedding;
+
+export const getProfile = ({ profile: { data } }: State) =>
+  data && data.profile;

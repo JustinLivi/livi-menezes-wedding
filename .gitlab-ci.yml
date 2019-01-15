@@ -175,6 +175,7 @@ deploy_serverless:
       - master
     changes:
       - serverless/**/*
+      - client/src/common/**/*
       - .gitlab-ci.yml
   stage: deploy
   cache:

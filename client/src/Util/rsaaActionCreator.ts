@@ -220,13 +220,18 @@ export const combineKeyableRsaaReducers = <State = never>(
 export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<
   BaseRsaaMeta
 >(factoryParams => {
-  const { method, endpoint, params } = factoryParams;
+  const { method, endpoint, params, body } = factoryParams;
   return {
+    body: JSON.stringify(body),
     endpoint: `${REACT_APP_API_ROOT}${reduce(
       params,
       (result, value, key) => result.replace(`:${key}`, value),
       endpoint
     )}`,
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json'
+    },
     method,
     types: [
       {

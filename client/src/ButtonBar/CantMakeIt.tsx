@@ -21,15 +21,24 @@ const styles = createStyles({
 });
 
 export interface CantMakeItProps extends WithStyles<typeof styles> {
+  onClick: React.MouseEventHandler;
+  disabled?: boolean;
   hideHelp?: true;
 }
 
 export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
+  disabled,
   hideHelp,
+  onClick,
   classes: { fab, root, label }
 }) => (
   <div className={root}>
-    <Fab aria-label="Can't make it" classes={{ root: fab }}>
+    <Fab
+      aria-label="Can't make it"
+      classes={{ root: fab }}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <Icon fontSize='large' color='inherit'>
         <SvgIcon
           fontSize='inherit'

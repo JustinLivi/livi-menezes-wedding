@@ -21,15 +21,24 @@ const styles = createStyles({
 });
 
 export interface ImGoingProps extends WithStyles<typeof styles> {
+  onClick: React.MouseEventHandler;
+  disabled?: boolean;
   hideHelp?: true;
 }
 
 export const UnstyledImGoing: React.SFC<ImGoingProps> = ({
   hideHelp,
+  onClick,
+  disabled,
   classes: { fab, root, label }
 }) => (
   <div className={root}>
-    <Fab aria-label="I'm going" classes={{ root: fab }}>
+    <Fab
+      aria-label="I'm going"
+      classes={{ root: fab }}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <Icon fontSize='large' color='inherit'>
         <SvgIcon
           fontSize='inherit'

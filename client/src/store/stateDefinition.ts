@@ -1,10 +1,11 @@
-import { ProfileData } from '../../../common';
+import { ProfileData } from '../common';
 
 export enum CacheStatus {
   UP_TO_DATE = 'UP_TO_DATE',
   BEHIND = 'BEHIND',
   FETCHING = 'FETCHING',
-  PERSISTING = 'PERSISTING'
+  PERSISTING = 'PERSISTING',
+  ERRORED = 'ERRORED'
 }
 
 export interface ProfileState {

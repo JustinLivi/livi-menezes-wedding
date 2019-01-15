@@ -6,16 +6,15 @@ import { dynamo, DYNAMODB_PROFILE_TABLE } from '../config';
 import { log } from '../log';
 
 export const profileRouter: RequestHandler = (
-  { params: { profileId } },
+  { params: { userId } },
   res,
   next
 ) => {
-  log.info({ dynamo });
-  log.info({ profileId }, 'fetching profile');
+  log.info({ userId }, 'fetching profile');
   dynamo.get(
     {
       Key: {
-        id: profileId
+        id: userId
       },
       TableName: DYNAMODB_PROFILE_TABLE
     },
