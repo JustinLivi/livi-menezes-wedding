@@ -92,6 +92,7 @@ terraform:
     refs:
       - master
     changes:
+      - client/**/*
       - terraform/**/*
       - .gitlab-ci.yml
   stage: terraform
