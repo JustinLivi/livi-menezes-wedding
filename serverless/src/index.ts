@@ -1,5 +1,4 @@
 import bodyParser from 'body-parser';
-import cors = require('cors');
 import express from 'express';
 import helmet = require('helmet');
 import hpp = require('hpp');
@@ -7,9 +6,9 @@ import { STATUS_CODES } from 'http';
 import createError from 'http-errors';
 import serverless from 'serverless-http';
 
-import { UI_ORIGIN } from './config';
 import { UNCAUGHT_EXCEPTION } from './constants';
 import { log } from './log';
+import { cors } from './middleware/cors';
 import { errorware } from './middleware/errorware';
 import { logger } from './middleware/logger';
 import { rootRouter } from './routes';
@@ -21,11 +20,8 @@ process.on(UNCAUGHT_EXCEPTION, err => {
 
 const app = express();
 
-app.use(
-  cors({
-    origin: UI_ORIGIN
-  })
-);
+app.options('*');
+app.use(cors);
 app.use(logger);
 app.use(bodyParser.json());
 app.use(helmet());

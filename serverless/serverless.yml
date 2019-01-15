@@ -56,7 +56,7 @@ provider:
     DYNAMODB_PROFILE_TABLE: ${self:custom.tables.profiles}
     DYNAMODB_ENDPOINT: https://dynamodb.us-east-1.amazonaws.com
     REGION: 'us-east-1'
-    UI_ORIGIN: 'https://livimenezes.com'
+    UI_ORIGIN: 'https://livimenezes.com,https://www.livimenezes.com'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -72,19 +72,11 @@ functions:
       - http:
           path: /profile/{proxy+}
           method: get
-          cors:
-            origin: 'livimenezes.com'
-            headers:
-              - Content-Type
-              - Accept
+          cors: true
       - http:
           path: /rsvp/ceremony
           method: post
-          cors:
-            origin: 'livimenezes.com'
-            headers:
-              - Content-Type
-              - Accept
+          cors: true
 
 resources:
   Resources:
