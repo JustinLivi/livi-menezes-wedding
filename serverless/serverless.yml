@@ -67,12 +67,24 @@ provider:
 
 functions:
   app:
-    cors:
-      origin: 'livimenezes.com'
     handler: build/serverless/src/index.handler
     events:
-      - http: 'GET /profile/{proxy+}'
-      - http: 'POST /rsvp/ceremony'
+      - http:
+          path: /profile/{proxy+}
+          method: get
+          cors:
+            origin: 'livimenezes.com'
+            headers:
+              - Content-Type
+              - Accept
+      - http:
+          path: /rsvp/ceremony
+          method: post
+          cors:
+            origin: 'livimenezes.com'
+            headers:
+              - Content-Type
+              - Accept
 
 resources:
   Resources:

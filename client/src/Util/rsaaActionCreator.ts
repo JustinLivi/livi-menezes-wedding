@@ -1,4 +1,3 @@
-import fetchJsonp from 'fetch-jsonp';
 import immer, { Draft } from 'immer';
 import { find, get, reduce } from 'lodash';
 import { Action } from 'redux';
@@ -229,7 +228,6 @@ export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<
       (result, value, key) => result.replace(`:${key}`, value),
       endpoint
     )}`,
-    fetch: fetchJsonp,
     headers: {
       accept: 'application/json',
       'content-type': 'application/json'
