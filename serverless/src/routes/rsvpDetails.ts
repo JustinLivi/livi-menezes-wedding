@@ -8,6 +8,7 @@ import { updateProfile } from '../updateProfile';
 
 const schema = yup.object({
   address: yup.string(),
+  dietaryRestrictions: yup.string(),
   favoriteDanceSong: yup.string(),
   userId: yup.string().required()
 });
@@ -23,7 +24,7 @@ export const rsvpDetails: RequestHandler = async (
     return next(createHttpError(400, err));
   }
   log.info({ body }, 'rsvping to ceremony');
-  const { userId, address, favoriteDanceSong } = body;
+  const { userId, address, favoriteDanceSong, dietaryRestrictions } = body;
   try {
     if (address) {
       await updateProfile({
@@ -36,6 +37,15 @@ export const rsvpDetails: RequestHandler = async (
       await updateProfile({
         ExpressionAttributeValues: { ':favoriteDanceSong': favoriteDanceSong },
         UpdateExpression: 'SET favoriteDanceSong = :favoriteDanceSong',
+        userId
+      });
+    }
+    if (dietaryRestrictions) {
+      await updateProfile({
+        ExpressionAttributeValues: {
+          ':dietaryRestrictions': dietaryRestrictions
+        },
+        UpdateExpression: 'SET dietaryRestrictions = :dietaryRestrictions',
         userId
       });
     }

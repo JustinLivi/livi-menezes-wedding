@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
 
+import { DetailsUpdates } from '../../common';
 import { AddressInput } from '../../Components/AddressInput';
 import { StandardCard } from '../../Components/StandardCard';
 
@@ -27,7 +28,8 @@ const styles = createStyles({
 });
 
 export interface CantMakeItCardProps extends WithStyles<typeof styles> {
-  updateAddress: (address: string) => void;
+  changeDetails: (updates: DetailsUpdates) => void;
+  updateDetails: (update: DetailsUpdates) => void;
   address?: string;
 }
 
@@ -38,16 +40,21 @@ export class UnstyledCantMakeItCard extends React.Component<
     super(props);
   }
 
-  public handleChange = (event: Event) => {
-    this.setState({
-      address: get(event, 'target.value')
-    });
+  public handleChange: (
+    propName: keyof DetailsUpdates
+  ) => React.ChangeEventHandler = propName => event => {
+    const { changeDetails } = this.props;
+    changeDetails({ [propName]: get(event, 'target.value') });
+  };
+
+  public handleSelect: (address?: string) => void = address => {
+    const { updateDetails } = this.props;
+    updateDetails({ address });
   };
 
   public render() {
     const {
       classes: { content, topName, names, italic, standardCard },
-      updateAddress,
       address
     } = this.props;
     return (
@@ -68,7 +75,11 @@ export class UnstyledCantMakeItCard extends React.Component<
           >
             We will miss you!
           </Typography>
-          <AddressInput handleSelect={updateAddress} value={address} />
+          <AddressInput
+            onChange={this.handleChange('address')}
+            onSelect={this.handleSelect}
+            value={address}
+          />
         </CardContent>
       </StandardCard>
     );

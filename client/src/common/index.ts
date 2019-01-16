@@ -13,6 +13,7 @@ export interface UserData {
   attendingRehearsal?: boolean;
   address?: string;
   favoriteDanceSong?: string;
+  dietaryRestrictions?: string;
 }
 
 export interface RsvpPayload {
@@ -20,10 +21,14 @@ export interface RsvpPayload {
   rsvp: boolean;
 }
 
-export interface UpdateDetailsPayload {
-  userId: string;
+export interface DetailsUpdates {
   address?: string;
   favoriteDanceSong?: string;
+  dietaryRestrictions?: string;
+}
+
+export interface UpdateDetailsPayload extends DetailsUpdates {
+  userId: string;
 }
 
 export enum Endpoints {

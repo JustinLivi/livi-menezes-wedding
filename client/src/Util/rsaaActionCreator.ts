@@ -1,5 +1,5 @@
 import immer, { Draft } from 'immer';
-import { find, get, reduce } from 'lodash';
+import { get, mapValues, reduce } from 'lodash';
 import { Action } from 'redux';
 import { ApiError, HttpMethod } from 'redux-api-middleware';
 
@@ -201,23 +201,23 @@ export const combineKeyableRsaaReducers = <State = never>(
   baseState: State = defaultState,
   action: Action
 ): State => {
-  let res: State | undefined;
-  find(keyableReducers, (reducer: KeyableRsaaReducer<State>) => {
+  let newState: State = baseState;
+  mapValues(keyableReducers, (reducer: KeyableRsaaReducer<State>) => {
     if (
       reducer.type === action.type &&
       reducer.endpoint === get(action, 'meta.endpoint') &&
       reducer.method === get(action, 'meta.method')
     ) {
       // tslint:disable-next-line:no-object-literal-type-assertion
-      res = {
-        ...(immer<State, void | State>(baseState, state => {
+      newState = {
+        ...((immer<State, void | State>(baseState, state => {
           return (reducer.reducer as any)(state, action);
-        }) as object)
+        }) || {}) as object)
       } as State;
       return true;
     }
   });
-  return res || baseState;
+  return newState;
 };
 
 export const rsaaActionCreatorFactory = configureRsaaActionCreatorFactory<

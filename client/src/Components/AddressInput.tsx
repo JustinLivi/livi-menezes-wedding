@@ -9,7 +9,8 @@ const styles = createStyles({
 });
 
 export interface AddressInputProps extends WithStyles<typeof styles> {
-  handleSelect: (address: string) => void;
+  onChange: React.ChangeEventHandler;
+  onSelect: (address: string) => void;
   value?: string;
 }
 
@@ -52,12 +53,12 @@ export class UnstyledAddressInput extends React.Component<
   );
 
   public handleSelect = (suggestion: Suggestion) => {
-    const { handleSelect } = this.props;
+    const { onSelect: handleSelect } = this.props;
     handleSelect(suggestion.description);
   };
 
   public render() {
-    const { value } = this.props;
+    const { value, onChange } = this.props;
     const { loaded } = this.state;
     return loaded ? (
       <MUIPlacesAutocomplete
@@ -66,7 +67,8 @@ export class UnstyledAddressInput extends React.Component<
         textFieldProps={{
           autoFocus: false,
           fullWidth: true,
-          label: 'Enter your home address (for thank yous!)',
+          label: 'Your home address (for thank yous!)',
+          onChange,
           placeholder: 'Your home address',
           value
         }}

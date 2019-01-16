@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
 
+import { DetailsUpdates } from '../../common';
 import { AddressInput } from '../../Components/AddressInput';
 import { StandardCard } from '../../Components/StandardCard';
 
@@ -25,29 +26,43 @@ const styles = createStyles({
   }
 });
 
-export interface ImGoingCardProps extends WithStyles<typeof styles> {
-  updateAddress: (address: string) => void;
-  updateFavoriteDanceSong: (name: string) => void;
-  address?: string;
-  favoriteDanceSong?: string;
+export interface ImGoingCardParentProps extends WithStyles<typeof styles> {
+  updateDetails: (updates: DetailsUpdates) => void;
+  changeDetails: (updates: DetailsUpdates) => void;
 }
+
+export type ImGoingCardProps = DetailsUpdates & ImGoingCardParentProps;
 
 export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
   constructor(props: ImGoingCardProps) {
     super(props);
   }
 
-  public handleChange: React.ChangeEventHandler = event => {
-    const { updateFavoriteDanceSong } = this.props;
-    updateFavoriteDanceSong(get(event, 'target.value'));
+  public handleBlur: (
+    propName: keyof DetailsUpdates
+  ) => React.ChangeEventHandler = propName => event => {
+    const { updateDetails } = this.props;
+    updateDetails({ [propName]: get(event, 'target.value') });
+  };
+
+  public handleChange: (
+    propName: keyof DetailsUpdates
+  ) => React.ChangeEventHandler = propName => event => {
+    const { changeDetails } = this.props;
+    changeDetails({ [propName]: get(event, 'target.value') });
+  };
+
+  public handleSelect: (address?: string) => void = address => {
+    const { updateDetails } = this.props;
+    updateDetails({ address });
   };
 
   public render() {
     const {
       classes: { content, topName, italic, standardCard, centered },
-      updateAddress,
       address,
-      favoriteDanceSong
+      favoriteDanceSong,
+      dietaryRestrictions
     } = this.props;
     return (
       <StandardCard className={standardCard}>
@@ -71,13 +86,29 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
             If you wouldn't mind, we'd like to collect just a few more details
             from you
           </Typography>
-          <AddressInput handleSelect={updateAddress} value={address} />
+          <AddressInput
+            onChange={this.handleChange('address')}
+            onSelect={this.handleSelect}
+            value={address}
+          />
           <TextField
             id='standard-name'
             label='Your favorite dance song'
             fullWidth
             value={favoriteDanceSong}
-            onBlur={this.handleChange}
+            onChange={this.handleChange('favoriteDanceSong')}
+            onBlur={this.handleBlur('favoriteDanceSong')}
+            margin='normal'
+          />
+          <TextField
+            id='standard-multiline-flexible'
+            label='Dietary restrictions'
+            fullWidth
+            multiline
+            rowsMax='4'
+            value={dietaryRestrictions}
+            onChange={this.handleChange('dietaryRestrictions')}
+            onBlur={this.handleBlur('dietaryRestrictions')}
             margin='normal'
           />
         </CardContent>

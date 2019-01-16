@@ -14,3 +14,6 @@ export const getFavoriteDanceSong = ({ user }: State) =>
 export const getAddress = ({ user }: State) => user && user.address;
 
 export const getProfile = ({ user }: State) => user && user.profile;
+
+export const getDietaryRestrictions = ({ user }: State) =>
+  user && user.dietaryRestrictions;

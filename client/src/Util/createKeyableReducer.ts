@@ -1,5 +1,5 @@
 import immer, { Draft } from 'immer';
-import { find } from 'lodash';
+import { mapValues } from 'lodash';
 import { Action } from 'redux';
 
 export type ReducerMethod<
@@ -17,6 +17,20 @@ export interface KeyableReducer<
   reducer: ReducerMethod<State, ReducerAction>;
 }
 
+export type ActionCreator<
+  Params,
+  A extends Action<ActionType>,
+  ActionType extends string = A['type']
+> = (params: Params) => A;
+
+export const createActionCreator = <
+  Params = never,
+  A extends Action<ActionType> = never,
+  ActionType extends string = A['type']
+>(
+  actionCreator: ActionCreator<Params, A, ActionType>
+) => actionCreator;
+
 export const createKeyableReducer = <
   State = never,
   ReducerAction extends Action<ActionType> = never,
@@ -30,15 +44,18 @@ export const createKeyableReducer = <
 });
 
 export const combineKeyableReducers = <State = never>(defaultState: State) => (
-  ...keyableReducers: Array<KeyableReducer<State>>
+  ...keyableReducers: Array<KeyableReducer<State, any, any>>
 ) => (baseState: State = defaultState, action: Action): State => {
-  let res: State | void;
-  res = find(keyableReducers, (reducer: KeyableReducer<State>) => {
+  let newState: State = baseState;
+  mapValues(keyableReducers, (reducer: KeyableReducer<State>) => {
     if (reducer.type === action.type) {
-      return immer<State, void | State>(baseState, state => {
-        return reducer.reducer(state, action);
-      });
+      // tslint:disable-next-line:no-object-literal-type-assertion
+      newState = {
+        ...(immer<State, void | State>(newState, state => {
+          return reducer.reducer(state, action);
+        }) as object)
+      } as State;
     }
-  }) as State | void;
-  return res || baseState;
+  });
+  return newState;
 };
