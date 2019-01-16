@@ -3,6 +3,8 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { App } from './App';
 import * as serviceWorker from './serviceWorker';
@@ -10,7 +12,9 @@ import { store } from './store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate persistor={persistStore(store)}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

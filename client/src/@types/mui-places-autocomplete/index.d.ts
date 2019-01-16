@@ -1,6 +1,7 @@
 declare module 'mui-places-autocomplete' {
   import { ReactType } from 'react';
   import { TextFieldProps } from '@material-ui/core/TextField';
+  import { Suggestion } from 'react-places-autocomplete';
 
   export {
     geocodeByPlaceId,

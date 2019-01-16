@@ -3,7 +3,7 @@ export interface Profile {
   photo: string;
 }
 
-export interface ProfileData {
+export interface UserData {
   name: string;
   id: string;
   rehearsal: boolean;
@@ -27,7 +27,7 @@ export interface UpdateDetailsPayload {
 }
 
 export enum Endpoints {
-  GET_BY_PROFILE_ID = '/profile/:userId',
+  GET_BY_USER_ID = '/user/:userId',
   RSVP_CEREMONY = '/rsvp/ceremony',
   RSVP_REHEARSAL = '/rsvp/rehearsal',
   RSVP_DETAILS = '/rsvp/details',

@@ -7,6 +7,6 @@ import { rsvpDetails } from './rsvpDetails';
 
 export const rootRouter = Router();
 
-rootRouter.get(Endpoints.GET_BY_PROFILE_ID, profileRouter);
+rootRouter.get(Endpoints.GET_BY_USER_ID, profileRouter);
 rootRouter.post(Endpoints.RSVP_CEREMONY, rsvpCeremonyRouter);
 rootRouter.post(Endpoints.RSVP_DETAILS, rsvpDetails);

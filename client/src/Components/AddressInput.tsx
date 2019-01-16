@@ -1,5 +1,5 @@
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
-import MUIPlacesAutocomplete from 'mui-places-autocomplete';
+import MUIPlacesAutocomplete, { Suggestion } from 'mui-places-autocomplete';
 import * as React from 'react';
 
 import { loadMapApi } from '../Util/loadMapsApi';
@@ -10,6 +10,7 @@ const styles = createStyles({
 
 export interface AddressInputProps extends WithStyles<typeof styles> {
   handleSelect: (address: string) => void;
+  value?: string;
 }
 
 export interface AddressInputState {
@@ -50,18 +51,24 @@ export class UnstyledAddressInput extends React.Component<
     />
   );
 
-  public render() {
+  public handleSelect = (suggestion: Suggestion) => {
     const { handleSelect } = this.props;
+    handleSelect(suggestion.description);
+  };
+
+  public render() {
+    const { value } = this.props;
     const { loaded } = this.state;
     return loaded ? (
       <MUIPlacesAutocomplete
-        onSuggestionSelected={handleSelect}
+        onSuggestionSelected={this.handleSelect}
         renderTarget={this.target}
         textFieldProps={{
           autoFocus: false,
           fullWidth: true,
           label: 'Enter your home address (for thank yous!)',
-          placeholder: 'Your home address'
+          placeholder: 'Your home address',
+          value
         }}
       />
     ) : (

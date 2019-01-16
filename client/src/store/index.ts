@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
 
 import { NODE_ENV } from '../config';
-import { reducers } from './reducers';
+import { reducer } from './reducers';
 import { CacheStatus } from './stateDefinition';
 
 export const middleware = [apiMiddleware];
@@ -14,11 +14,9 @@ if (NODE_ENV === 'development') {
 }
 
 export const store = createStore(
-  reducers,
+  reducer,
   {
-    profile: {
-      cacheStatus: CacheStatus.BEHIND
-    }
+    userCacheStatus: CacheStatus.BEHIND
   },
   composeWithDevTools(applyMiddleware(...middleware))
 );

@@ -208,9 +208,12 @@ export const combineKeyableRsaaReducers = <State = never>(
       reducer.endpoint === get(action, 'meta.endpoint') &&
       reducer.method === get(action, 'meta.method')
     ) {
-      res = immer<State, void | State>(baseState, state => {
-        return (reducer.reducer as any)(state, action);
-      }) as State;
+      // tslint:disable-next-line:no-object-literal-type-assertion
+      res = {
+        ...(immer<State, void | State>(baseState, state => {
+          return (reducer.reducer as any)(state, action);
+        }) as object)
+      } as State;
       return true;
     }
   });

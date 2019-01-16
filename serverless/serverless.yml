@@ -70,7 +70,7 @@ functions:
     handler: build/serverless/src/index.handler
     events:
       - http:
-          path: /profile/{proxy+}
+          path: /user/{proxy+}
           method: get
           cors: true
       - http:

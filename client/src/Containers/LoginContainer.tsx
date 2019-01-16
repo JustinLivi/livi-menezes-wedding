@@ -6,8 +6,8 @@ import { createSelector } from 'reselect';
 
 import { Profile } from '../common';
 import { ErrorMessage } from '../Components/ErrorMessage';
-import { fetchProfile } from '../store/actions/profile';
-import { getProfile, getProfileCacheStatus } from '../store/selectors';
+import { fetchUser } from '../store/actions/user';
+import { getProfile, getUserCacheStatus } from '../store/selectors';
 import { CacheStatus } from '../store/stateDefinition';
 
 export interface LoginStateProps {
@@ -16,7 +16,7 @@ export interface LoginStateProps {
 }
 
 export interface LoginDispatchProps {
-  fetchProfile: typeof fetchProfile;
+  fetchProfile: typeof fetchUser;
 }
 
 export interface LoginParentProps {
@@ -62,7 +62,7 @@ export class UnconnectedLoginContainer extends React.Component<LoginProps> {
 }
 
 export const mapStateToProps = createSelector(
-  [getProfileCacheStatus, getProfile],
+  [getUserCacheStatus, getProfile],
   (cacheStatus, profile) => ({
     cacheStatus,
     profile
@@ -70,7 +70,7 @@ export const mapStateToProps = createSelector(
 );
 
 export const actionCreators = {
-  fetchProfile
+  fetchProfile: fetchUser
 };
 
 export const LoginContainer = connect(

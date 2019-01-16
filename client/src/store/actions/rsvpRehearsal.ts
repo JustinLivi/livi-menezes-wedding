@@ -1,4 +1,4 @@
-import { Endpoints, ProfileData, RsvpPayload } from '../../common';
+import { Endpoints, RsvpPayload, UserData } from '../../common';
 import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
 import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 
@@ -9,7 +9,7 @@ export interface RsvpRehearsalMeta
 
 export type RsvpRehearsalActionSet = RsaaActionSet<
   RsvpRehearsalMeta,
-  ProfileData,
+  UserData,
   {}
 >;
 

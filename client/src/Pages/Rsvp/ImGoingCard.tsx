@@ -28,6 +28,7 @@ const styles = createStyles({
 export interface ImGoingCardProps extends WithStyles<typeof styles> {
   updateAddress: (address: string) => void;
   updateFavoriteDanceSong: (name: string) => void;
+  address?: string;
   favoriteDanceSong?: string;
 }
 
@@ -45,6 +46,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
     const {
       classes: { content, topName, italic, standardCard, centered },
       updateAddress,
+      address,
       favoriteDanceSong
     } = this.props;
     return (
@@ -69,7 +71,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
             If you wouldn't mind, we'd like to collect just a few more details
             from you
           </Typography>
-          <AddressInput handleSelect={updateAddress} />
+          <AddressInput handleSelect={updateAddress} value={address} />
           <TextField
             id='standard-name'
             label='Your favorite dance song'

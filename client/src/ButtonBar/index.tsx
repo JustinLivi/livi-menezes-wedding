@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { rsvpCeremony } from '../store/actions/rsvpCeremony';
-import { getProfileCacheStatus, getUserId, getWeddingRsvp } from '../store/selectors';
+import { getUserCacheStatus, getUserId, getWeddingRsvp } from '../store/selectors';
 import { CacheStatus } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';
@@ -106,7 +106,7 @@ export class UnstyledButtonBar extends React.Component<ButtonBarProps> {
 export const UnconnectedButtonBar = withStyles(styles)(UnstyledButtonBar);
 
 export const mapStateToProps = createSelector(
-  [getProfileCacheStatus, getWeddingRsvp, getUserId],
+  [getUserCacheStatus, getWeddingRsvp, getUserId],
   (cacheStatus, weddingRsvp, userId) => ({
     cacheStatus,
     userId,

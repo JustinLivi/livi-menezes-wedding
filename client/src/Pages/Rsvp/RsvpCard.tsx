@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import { ProfileCard } from '../../Components/ProfileCard';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { updateDetails } from '../../store/actions/updateDetails';
-import { getFavoriteDanceSong, getUserId, getWeddingRsvp } from '../../store/selectors';
+import { getAddress, getFavoriteDanceSong, getUserId, getWeddingRsvp } from '../../store/selectors';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
 
@@ -14,6 +14,7 @@ export interface RsvpCardStateProps {
   userId?: string;
   weddingRsvp?: boolean;
   favoriteDanceSong?: string;
+  address?: string;
 }
 
 export interface RsvpCardDispatchProps {
@@ -43,16 +44,23 @@ export class UnconnectedRsvpCard extends React.Component<RsvpCardProps> {
     const {
       updateDetails: update,
       favoriteDanceSong,
+      address,
       weddingRsvp
     } = this.props;
     if (weddingRsvp === false) {
-      return <CantMakeItCard updateAddress={this.update('address')} />;
+      return (
+        <CantMakeItCard
+          updateAddress={this.update('address')}
+          address={address}
+        />
+      );
     }
     if (weddingRsvp === true) {
       return (
         <ImGoingCard
-          updateAddress={this.update('address')}
+          address={address}
           favoriteDanceSong={favoriteDanceSong}
+          updateAddress={this.update('address')}
           updateFavoriteDanceSong={this.update('favoriteDanceSong')}
         />
       );
@@ -75,8 +83,9 @@ export class UnconnectedRsvpCard extends React.Component<RsvpCardProps> {
 }
 
 export const mapStateToProps = createSelector(
-  [getWeddingRsvp, getUserId, getFavoriteDanceSong],
-  (weddingRsvp, userId, favoriteDanceSong) => ({
+  [getWeddingRsvp, getUserId, getFavoriteDanceSong, getAddress],
+  (weddingRsvp, userId, favoriteDanceSong, address) => ({
+    address,
     favoriteDanceSong,
     userId,
     weddingRsvp

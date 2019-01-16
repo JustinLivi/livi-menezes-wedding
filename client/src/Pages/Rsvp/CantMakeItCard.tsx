@@ -28,6 +28,7 @@ const styles = createStyles({
 
 export interface CantMakeItCardProps extends WithStyles<typeof styles> {
   updateAddress: (address: string) => void;
+  address?: string;
 }
 
 export class UnstyledCantMakeItCard extends React.Component<
@@ -46,7 +47,8 @@ export class UnstyledCantMakeItCard extends React.Component<
   public render() {
     const {
       classes: { content, topName, names, italic, standardCard },
-      updateAddress
+      updateAddress,
+      address
     } = this.props;
     return (
       <StandardCard className={standardCard}>
@@ -66,7 +68,7 @@ export class UnstyledCantMakeItCard extends React.Component<
           >
             We will miss you!
           </Typography>
-          <AddressInput handleSelect={updateAddress} />
+          <AddressInput handleSelect={updateAddress} value={address} />
         </CardContent>
       </StandardCard>
     );

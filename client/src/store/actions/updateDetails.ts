@@ -1,4 +1,4 @@
-import { Endpoints, ProfileData, UpdateDetailsPayload } from '../../common';
+import { Endpoints, UpdateDetailsPayload, UserData } from '../../common';
 import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
 import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 
@@ -9,7 +9,7 @@ export interface UpdateDetailsMeta
 
 export type UpdateDetailsActionSet = RsaaActionSet<
   UpdateDetailsMeta,
-  ProfileData,
+  UserData,
   {}
 >;
 

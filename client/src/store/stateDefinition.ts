@@ -1,4 +1,4 @@
-import { ProfileData } from '../common';
+import { UserData } from '../common';
 
 export enum CacheStatus {
   UP_TO_DATE = 'UP_TO_DATE',
@@ -8,11 +8,7 @@ export enum CacheStatus {
   ERRORED = 'ERRORED'
 }
 
-export interface ProfileState {
-  cacheStatus: CacheStatus;
-  data?: ProfileData;
-}
-
 export interface State {
-  profile: ProfileState;
+  userCacheStatus: CacheStatus;
+  user?: UserData;
 }
