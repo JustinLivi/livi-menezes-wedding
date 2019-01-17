@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { match } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { DetailsIcons } from '../../ButtonBar/Details';
 import { RsvpBar } from '../../ButtonBar/RsvpBar';
 import { DetailsUpdates } from '../../common';
 import { ProfileCard } from '../../Components/ProfileCard';
+import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
@@ -15,6 +15,7 @@ import { fetchUser } from '../../store/actions/user';
 import {
   getRelationshipId,
   getRelationshipName,
+  getRelationshipPhoto,
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../../store/selectors';
@@ -25,6 +26,7 @@ export interface RsvpRelationStateProps {
   userId?: string;
   weddingRsvp?: boolean;
   name?: string;
+  photo?: string;
 }
 
 export interface RsvpRelationDispatchProps {
@@ -73,20 +75,15 @@ export class UnconnectedRsvpRelation extends React.Component<
   };
 
   public render() {
-    const { weddingRsvp, name } = this.props;
+    const { weddingRsvp, name, photo } = this.props;
     return (
       <ColumnLayout>
         <ProfileCard
-          image={justinMarisa}
-          title={name || 'loading...'}
-          blurb={
-            <React.Fragment>
-              <Typography component='p'>
-                Sunday, October 13, 2019 at 4pm
-              </Typography>
-              <Typography component='p'>Baltimore, MD</Typography>
-            </React.Fragment>
+          image={
+            photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
           }
+          title={name ? `RSVP for ${name}` : 'loading...'}
+          blurb={`Is ${name} attending the ceremony and reception?`}
         />
         <RsvpBar
           detailsIconType={
@@ -105,11 +102,13 @@ export const mapStateToProps = createSelector(
     getRelationshipsCacheStatus,
     getRelationshipRsvp,
     getRelationshipId,
-    getRelationshipName
+    getRelationshipName,
+    getRelationshipPhoto
   ],
-  (cacheStatus, weddingRsvp, userId, name) => ({
+  (cacheStatus, weddingRsvp, userId, name, photo) => ({
     cacheStatus,
     name,
+    photo,
     userId,
     weddingRsvp
   })

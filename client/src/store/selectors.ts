@@ -72,3 +72,11 @@ export const getRelationshipName = (
   const relationship = getRelationship(state, params);
   return relationship && relationship.name;
 };
+
+export const getRelationshipPhoto = (
+  state: State,
+  params: { match: match<{ relationId: string }> }
+): string | undefined => {
+  const relationship = getRelationship(state, params);
+  return relationship && relationship.profile && relationship.profile.photo;
+};
