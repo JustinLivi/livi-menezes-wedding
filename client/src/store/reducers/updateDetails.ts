@@ -37,8 +37,7 @@ export const updateDetailsFailureReducer = createKeyableFailureReducer<
 
 export const changeDetailsReducer = createKeyableReducer<
   State,
-  ChangeDetailsAction,
-  CHANGE_DETAILS
+  ChangeDetailsAction
 >(CHANGE_DETAILS, (state, { updates }) => {
   if (state.user) {
     state.user = {

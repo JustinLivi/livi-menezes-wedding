@@ -4,7 +4,7 @@ import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 
 export interface FetchUserMeta
   extends RsaaMeta<'GET', Endpoints.GET_BY_USER_ID> {
-  params: { userId: string };
+  params: { userId: string; relationshipIndex?: number };
 }
 
 export type FetchUserActionSet = RsaaActionSet<FetchUserMeta, UserData, {}>;
@@ -17,3 +17,8 @@ export const fetchUser = createRsaaActionCreator<
   method: 'GET',
   params
 }));
+
+export interface FetchRelationshipMeta
+  extends RsaaMeta<'GET', Endpoints.GET_BY_USER_ID> {
+  params: { userId: string };
+}

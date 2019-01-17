@@ -8,7 +8,7 @@ import { getUserCacheStatus, getUserId, getWeddingRsvp } from '../store/selector
 import { CacheStatus } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';
-import { Details } from './Details';
+import { Details, DetailsIcons } from './Details';
 import { ImGoing } from './ImGoing';
 
 const styles = createStyles({
@@ -26,29 +26,30 @@ const styles = createStyles({
   }
 });
 
-export interface ButtonBarStateProps {
+export interface RsvpBarStateProps {
   cacheStatus: CacheStatus;
   userId?: string;
   weddingRsvp?: boolean;
 }
 
-export interface ButtonBarDetailsProps {
+export interface RsvpBarDetailsProps {
   rsvpCeremony: typeof rsvpCeremony;
+  detailsIconType?: DetailsIcons;
 }
 
-export interface ButtonBarParentProps extends WithStyles<typeof styles> {
+export interface RsvpBarParentProps extends WithStyles<typeof styles> {
   toDetails: string;
   onlyInfo?: true;
   hideHelp?: true;
   external?: boolean;
 }
 
-export type ButtonBarProps = ButtonBarStateProps &
-  ButtonBarDetailsProps &
-  ButtonBarParentProps;
+export type RsvpBarProps = RsvpBarStateProps &
+  RsvpBarDetailsProps &
+  RsvpBarParentProps;
 
-export class UnstyledButtonBar extends React.Component<ButtonBarProps> {
-  constructor(props: ButtonBarProps) {
+export class UnstyledRsvpBar extends React.Component<RsvpBarProps> {
+  constructor(props: RsvpBarProps) {
     super(props);
   }
 
@@ -69,7 +70,8 @@ export class UnstyledButtonBar extends React.Component<ButtonBarProps> {
       external,
       cacheStatus,
       weddingRsvp,
-      classes: { root, buttonBar }
+      classes: { root, buttonBar },
+      detailsIconType
     } = this.props;
     return (
       <div className={root}>
@@ -83,9 +85,15 @@ export class UnstyledButtonBar extends React.Component<ButtonBarProps> {
                 cacheStatus === CacheStatus.PERSISTING ||
                 !weddingRsvp
               }
+              selected={!weddingRsvp}
             />
           )}
-          <Details hideHelp={hideHelp} to={toDetails} external={external} />
+          <Details
+            hideHelp={hideHelp}
+            to={toDetails}
+            external={external}
+            iconType={detailsIconType}
+          />
           {!onlyInfo && (
             <ImGoing
               hideHelp={hideHelp}
@@ -103,7 +111,7 @@ export class UnstyledButtonBar extends React.Component<ButtonBarProps> {
   }
 }
 
-export const UnconnectedButtonBar = withStyles(styles)(UnstyledButtonBar);
+export const UnconnectedButtonBar = withStyles(styles)(UnstyledRsvpBar);
 
 export const mapStateToProps = createSelector(
   [getUserCacheStatus, getWeddingRsvp, getUserId],
@@ -118,7 +126,7 @@ export const actionCreators = {
   rsvpCeremony
 };
 
-export const ButtonBar = connect(
+export const RsvpBar = connect(
   mapStateToProps,
   actionCreators
 )(UnconnectedButtonBar);

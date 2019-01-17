@@ -2,11 +2,13 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { Details } from '../Pages/Details';
 import { Directions } from '../Pages/Directions';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
 import { Rsvp } from '../Pages/Rsvp';
-import { RsvpDetails } from '../Pages/Rsvp/Details';
+import { RsvpDetails } from '../Pages/Rsvp/RsvpDetails';
+import { RsvpRelation } from '../Pages/Rsvp/RsvpRelation';
 import { ThingsToDo } from '../Pages/ThingsToDo';
 import { Venue } from '../Pages/Venue';
 import { VenueDetails } from '../Pages/Venue/Details';
@@ -28,7 +30,9 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
 }) => (
   <Switch>
     <Route path='/' exact component={Rsvp} />
-    <Route path='/details' exact component={RsvpDetails} />
+    <Route path='/rsvp/u/:relationId' exact component={RsvpRelation} />
+    <Route path='/rsvp/details' exact component={RsvpDetails} />
+    <Route path='/details' exact component={Details} />
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/details' component={OurStoryDetails} />
     <Route path='/venue' exact component={Venue} />

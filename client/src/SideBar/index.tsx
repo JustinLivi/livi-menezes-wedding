@@ -1,8 +1,16 @@
 import { createStyles, Divider, Drawer, List, WithStyles, withStyles } from '@material-ui/core';
-import { EmailRounded, Hotel, LocalCafe, LocationCityRounded, LocationOn, People } from '@material-ui/icons';
+import { Description, EmailRounded, Hotel, LocalCafe, LocationCityRounded, LocationOn, People } from '@material-ui/icons';
 import * as React from 'react';
 
-import { DirectionsLink, OurStoryLink, RsvpLink, ThingsToDoLink, VenueLink, WhereToStayLink } from '../Components/MenuLinks';
+import {
+  DetailsLink,
+  DirectionsLink,
+  OurStoryLink,
+  RsvpLink,
+  ThingsToDoLink,
+  VenueLink,
+  WhereToStayLink,
+} from '../Components/MenuLinks';
 import { theme } from '../theme';
 import { ListItem } from './ListItem';
 
@@ -42,6 +50,11 @@ export const UnstyledSideBar: React.SFC<SideBarProps> = ({
         icon={<EmailRounded />}
         linkComponent={RsvpLink}
         primary='RSVP'
+      />
+      <ListItem
+        icon={<Description />}
+        linkComponent={DetailsLink}
+        primary='Details'
       />
       <ListItem
         icon={<People />}

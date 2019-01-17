@@ -9,6 +9,15 @@ export enum CacheStatus {
 }
 
 export interface State {
+  redirect?: string;
+  relationshipsCacheStatus: CacheStatus;
+  relationships: UserData[];
   userCacheStatus: CacheStatus;
   user?: UserData;
 }
+
+export const initialState = {
+  relationships: [],
+  relationshipsCacheStatus: CacheStatus.BEHIND,
+  userCacheStatus: CacheStatus.BEHIND
+};

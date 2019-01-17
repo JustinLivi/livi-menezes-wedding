@@ -5,7 +5,8 @@ import storage from 'redux-persist/lib/storage';
 
 import { combineKeyableReducers } from '../../Util/createKeyableReducer';
 import { combineKeyableRsaaReducers } from '../../Util/rsaaActionCreator';
-import { CacheStatus, State } from '../stateDefinition';
+import { initialState, State } from '../stateDefinition';
+import { redirectReducer } from './redirect';
 import { rsvpCeremonyFailureReducer, rsvpCeremonyRequestReducer, rsvpCeremonySuccessReducer } from './rsvpCeremony';
 import {
   changeDetailsReducer,
@@ -14,10 +15,6 @@ import {
   updateDetailsSuccessReducer,
 } from './updateDetails';
 import { getUserFailureReducer, getUserRequestReducer, getUserSuccessReducer } from './user';
-
-const initialState = {
-  userCacheStatus: CacheStatus.BEHIND
-};
 
 const apiReducers = combineKeyableRsaaReducers<State>(initialState)(
   getUserRequestReducer,
@@ -32,7 +29,8 @@ const apiReducers = combineKeyableRsaaReducers<State>(initialState)(
 );
 
 const standardReducers = combineKeyableReducers<State>(initialState)(
-  changeDetailsReducer
+  changeDetailsReducer,
+  redirectReducer
 );
 
 const rootReducer = reduceReducers<State>(standardReducers, apiReducers);

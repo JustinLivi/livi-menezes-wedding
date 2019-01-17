@@ -2,7 +2,6 @@ import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@
 import classnames from 'classnames';
 import * as React from 'react';
 
-import { ButtonBar } from '../../ButtonBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 
@@ -28,9 +27,9 @@ const styles = createStyles({
   }
 });
 
-export interface RsvpDetailsProps extends WithStyles<typeof styles> {}
+export interface DetailsProps extends WithStyles<typeof styles> {}
 
-export const UnstyledRsvpDetails: React.SFC<RsvpDetailsProps> = ({
+export const UnstyledDetails: React.SFC<DetailsProps> = ({
   classes: { root, topName, names, hr, italic }
 }) => (
   <ColumnLayout>
@@ -88,8 +87,7 @@ export const UnstyledRsvpDetails: React.SFC<RsvpDetailsProps> = ({
         </Typography>
       </CardContent>
     </StandardCard>
-    <ButtonBar toDetails='/details' />
   </ColumnLayout>
 );
 
-export const RsvpDetails = withStyles(styles)(UnstyledRsvpDetails);
+export const Details = withStyles(styles)(UnstyledDetails);

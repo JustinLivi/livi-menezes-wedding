@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ButtonBar } from '../../ButtonBar';
+import { RsvpBar } from '../../ButtonBar/RsvpBar';
 import { GoogleMap } from '../../Components/GoogleMap';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -34,6 +34,6 @@ export const Directions: React.SFC = () => (
         url={directionsUrl}
       />
     </ProfileCard>
-    <ButtonBar onlyInfo hideHelp external toDetails={directionsUrl} />
+    <RsvpBar onlyInfo hideHelp external toDetails={directionsUrl} />
   </ColumnLayout>
 );

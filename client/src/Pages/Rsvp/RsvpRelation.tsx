@@ -1,6 +1,7 @@
 import { Typography } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { DetailsIcons } from '../../ButtonBar/Details';
@@ -10,24 +11,55 @@ import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
-import { getRelationshipId, getUserId, getWeddingRsvp } from '../../store/selectors';
+import { fetchUser } from '../../store/actions/user';
+import {
+  getRelationshipId,
+  getRelationshipName,
+  getRelationshipRsvp,
+  getRelationshipsCacheStatus,
+} from '../../store/selectors';
+import { CacheStatus } from '../../store/stateDefinition';
 
-export interface RsvpStateProps {
+export interface RsvpRelationStateProps {
+  cacheStatus: CacheStatus;
   userId?: string;
-  relationId?: string;
   weddingRsvp?: boolean;
+  name?: string;
 }
 
-export interface RsvpDispatchProps {
+export interface RsvpRelationDispatchProps {
   updateDetails: typeof updateDetails;
   changeDetails: typeof changeDetails;
+  fetchUser: typeof fetchUser;
 }
 
-export type RsvpProps = RsvpStateProps & RsvpDispatchProps;
+export interface RsvpRelationParentProps {
+  match: match<{ relationId: string }>;
+}
 
-export class UnconnectedRsvp extends React.Component<RsvpProps> {
-  constructor(props: RsvpProps) {
+export type RsvpRelationProps = RsvpRelationStateProps &
+  RsvpRelationDispatchProps &
+  RsvpRelationParentProps;
+
+export class UnconnectedRsvpRelation extends React.Component<
+  RsvpRelationProps
+> {
+  constructor(props: RsvpRelationProps) {
     super(props);
+  }
+
+  public componentDidMount() {
+    const {
+      cacheStatus,
+      fetchUser: fetch,
+      userId,
+      match: {
+        params: { relationId }
+      }
+    } = this.props;
+    if (cacheStatus === CacheStatus.BEHIND && userId) {
+      fetch({ userId, relationshipIndex: parseInt(relationId, 10) });
+    }
   }
 
   public update = (value: DetailsUpdates) => {
@@ -41,12 +73,12 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
   };
 
   public render() {
-    const { weddingRsvp } = this.props;
+    const { weddingRsvp, name } = this.props;
     return (
       <ColumnLayout>
         <ProfileCard
           image={justinMarisa}
-          title="Justin and Marisa's Wedding"
+          title={name || 'loading...'}
           blurb={
             <React.Fragment>
               <Typography component='p'>
@@ -69,9 +101,15 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
 }
 
 export const mapStateToProps = createSelector(
-  [getWeddingRsvp, getUserId, getRelationshipId],
-  (weddingRsvp, userId, relationId) => ({
-    relationId,
+  [
+    getRelationshipsCacheStatus,
+    getRelationshipRsvp,
+    getRelationshipId,
+    getRelationshipName
+  ],
+  (cacheStatus, weddingRsvp, userId, name) => ({
+    cacheStatus,
+    name,
     userId,
     weddingRsvp
   })
@@ -79,10 +117,11 @@ export const mapStateToProps = createSelector(
 
 export const actionCreators = {
   changeDetails,
+  fetchUser,
   updateDetails
 };
 
-export const Rsvp = connect(
+export const RsvpRelation = connect(
   mapStateToProps,
   actionCreators
-)(UnconnectedRsvp);
+)(UnconnectedRsvpRelation);

@@ -22,6 +22,7 @@ export const rsvpCeremonySuccessReducer = createKeyableSuccessReducer<
   RsvpCeremonyActionSet
 >(Endpoints.RSVP_CEREMONY, 'POST', state => {
   state.userCacheStatus = CacheStatus.UP_TO_DATE;
+  state.redirect = '/rsvp/details';
 });
 
 export const rsvpCeremonyFailureReducer = createKeyableFailureReducer<

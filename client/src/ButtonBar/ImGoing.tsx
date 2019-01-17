@@ -6,18 +6,23 @@ import { theme } from '../theme';
 import { buttonHolderStyles, largeButtonStyles } from './commonStyles';
 
 const styles = createStyles({
-  fab: {
+  disabled: {},
+  label: {
+    textAlign: 'center'
+  },
+  root: {
     ...largeButtonStyles,
+    '&$disabled': {
+      backgroundColor: theme.imGoing.color,
+      color: theme.palette.primary.light
+    },
     '&:hover': {
       backgroundColor: theme.imGoing.color,
       color: theme.palette.primary.light
     },
     color: theme.imGoing.color
   },
-  label: {
-    textAlign: 'center'
-  },
-  root: buttonHolderStyles
+  rootDiv: buttonHolderStyles
 });
 
 export interface ImGoingProps extends WithStyles<typeof styles> {
@@ -29,15 +34,15 @@ export interface ImGoingProps extends WithStyles<typeof styles> {
 export const UnstyledImGoing: React.SFC<ImGoingProps> = ({
   hideHelp,
   onClick,
-  disabled,
-  classes: { fab, root, label }
+  disabled: isDisabled,
+  classes: { root, rootDiv, label, disabled }
 }) => (
-  <div className={root}>
+  <div className={rootDiv}>
     <Fab
       aria-label="I'm going"
-      classes={{ root: fab }}
+      classes={{ root, disabled }}
       onClick={onClick}
-      disabled={disabled}
+      disabled={isDisabled}
     >
       <Icon fontSize='large' color='inherit'>
         <SvgIcon
