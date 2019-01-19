@@ -5,6 +5,7 @@ import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 export interface RsvpCeremonyMeta
   extends RsaaMeta<'POST', Endpoints.RSVP_CEREMONY> {
   body: RsvpPayload;
+  params: { relationshipIndex?: number };
 }
 
 export type RsvpCeremonyActionSet = RsaaActionSet<
@@ -14,10 +15,14 @@ export type RsvpCeremonyActionSet = RsaaActionSet<
 >;
 
 export const rsvpCeremony = createRsaaActionCreator<
-  RsvpCeremonyMeta['body'],
+  {
+    body: RsvpCeremonyMeta['body'];
+    params: RsvpCeremonyMeta['params'];
+  },
   RsvpCeremonyActionSet
->(body => ({
+>(({ body, params }) => ({
   body,
   endpoint: Endpoints.RSVP_CEREMONY,
-  method: 'POST'
+  method: 'POST',
+  params
 }));

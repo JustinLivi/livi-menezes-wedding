@@ -1,7 +1,18 @@
 import { match } from 'react-router-dom';
+import { createSelector } from 'reselect';
 
 import { UserData } from '../common';
 import { State } from './stateDefinition';
+
+export interface RelationIdRouteProps {
+  match: match<{ relationId: string }>;
+}
+
+export const extractRelationId = ({
+  match: {
+    params: { relationId }
+  }
+}: RelationIdRouteProps) => parseInt(relationId, 10);
 
 export const getUserCacheStatus = ({ userCacheStatus }: State) =>
   userCacheStatus;
@@ -28,38 +39,43 @@ export const getRedirect = ({ redirect }: State) => redirect;
 export const getRelationships = ({ user }: State): string[] | undefined =>
   (user && user.relationships) || undefined;
 
+export const getRelationshipsCount = ({ user }: State): number =>
+  (user && user.relationships && user.relationships.length) || 0;
+
+export const getHasMoreRelations = (
+  state: State,
+  props: RelationIdRouteProps
+): true | undefined =>
+  createSelector(
+    [getRelationshipRsvp, getRelationshipsCount],
+    (weddingRsvp, relationshipsCount) =>
+      extractRelationId(props) < relationshipsCount - 1 ||
+      weddingRsvp !== undefined ||
+      undefined
+  )(state, props);
+
 export const getRelationshipsCacheStatus = ({
   relationshipsCacheStatus
 }: State) => relationshipsCacheStatus;
 
 export const getRelationship = (
   { relationships }: State,
-  {
-    match: {
-      params: { relationId }
-    }
-  }: { match: match<{ relationId: string }> }
+  props: RelationIdRouteProps
 ): UserData | undefined =>
-  (relationId && relationships && relationships[parseInt(relationId, 10)]) ||
-  undefined;
+  (relationships && relationships[extractRelationId(props)]) || undefined;
 
 export const getRelationshipId = (
   { user }: State,
-  {
-    match: {
-      params: { relationId }
-    }
-  }: { match: match<{ relationId: string }> }
+  props: RelationIdRouteProps
 ): string | undefined =>
-  (relationId !== undefined &&
-    user &&
+  (user &&
     user.relationships &&
-    user.relationships[parseInt(relationId, 10)]) ||
+    user.relationships[extractRelationId(props)]) ||
   undefined;
 
 export const getRelationshipRsvp = (
   state: State,
-  params: { match: match<{ relationId: string }> }
+  params: RelationIdRouteProps
 ): boolean | undefined => {
   const relationship = getRelationship(state, params);
   return relationship && relationship.attendingWedding;
@@ -67,7 +83,7 @@ export const getRelationshipRsvp = (
 
 export const getRelationshipName = (
   state: State,
-  params: { match: match<{ relationId: string }> }
+  params: RelationIdRouteProps
 ): string | undefined => {
   const relationship = getRelationship(state, params);
   return relationship && relationship.name;
@@ -75,7 +91,7 @@ export const getRelationshipName = (
 
 export const getRelationshipPhoto = (
   state: State,
-  params: { match: match<{ relationId: string }> }
+  params: RelationIdRouteProps
 ): string | undefined => {
   const relationship = getRelationship(state, params);
   return relationship && relationship.profile && relationship.profile.photo;

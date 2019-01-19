@@ -33,9 +33,9 @@ export enum DetailsIcons {
 }
 
 export interface DetailsProps extends WithStyles<typeof styles> {
-  iconType?: DetailsIcons;
-  hideHelp?: true;
   to: string;
+  iconType?: DetailsIcons;
+  help?: string;
   external?: boolean;
 }
 
@@ -46,7 +46,7 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
 
   public render() {
     const {
-      hideHelp,
+      help,
       external,
       to,
       classes: { fab, root, label },
@@ -65,7 +65,7 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
             <DetailsIcon iconType={iconType} />
           </Icon>
         </Fab>
-        {!hideHelp && <span className={label}>details</span>}
+        {help && <span className={label}>{help}</span>}
       </div>
     );
   }

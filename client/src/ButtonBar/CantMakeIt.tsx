@@ -10,17 +10,19 @@ const styles = createStyles({
   label: {
     textAlign: 'center'
   },
-  root: {
+  largeButton: {
     ...largeButtonStyles,
-    '&$disabled': {
-      backgroundColor: theme.cantMakeIt.color,
-      color: theme.palette.primary.light
-    },
     '&:hover': {
       backgroundColor: theme.cantMakeIt.color,
       color: theme.palette.primary.light
     },
     color: theme.cantMakeIt.color
+  },
+  root: {
+    '&$disabled': {
+      backgroundColor: theme.cantMakeIt.color,
+      color: theme.palette.primary.light
+    }
   },
   rootDiv: buttonHolderStyles
 });
@@ -37,12 +39,16 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
   hideHelp,
   onClick,
   selected,
-  classes: { root, rootDiv, label, disabled }
+  classes: { root, rootDiv, label, disabled, largeButton }
 }) => (
   <div className={rootDiv}>
     <Fab
       aria-label="Can't make it"
-      classes={{ root, disabled }}
+      className={largeButton}
+      classes={{
+        disabled,
+        root: selected ? root : undefined
+      }}
       onClick={onClick}
       disabled={isDisabled}
     >

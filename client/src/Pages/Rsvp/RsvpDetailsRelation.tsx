@@ -27,7 +27,7 @@ const styles = createStyles({
   }
 });
 
-export interface RsvpDetailsStateProps {
+export interface RsvpDetailsRelationStateProps {
   userId?: string;
   weddingRsvpDetails?: boolean;
   favoriteDanceSong?: string;
@@ -36,19 +36,22 @@ export interface RsvpDetailsStateProps {
   relationships?: string[];
 }
 
-export interface RsvpDetailsDispatchProps {
+export interface RsvpDetailsRelationDispatchProps {
   updateDetails: typeof updateDetails;
   changeDetails: typeof changeDetails;
 }
 
-export interface RsvpDetailsParentProps extends WithStyles<typeof styles> {}
+export interface RsvpDetailsRelationParentProps
+  extends WithStyles<typeof styles> {}
 
-export type RsvpDetailsProps = RsvpDetailsStateProps &
-  RsvpDetailsDispatchProps &
-  RsvpDetailsParentProps;
+export type RsvpDetailsRelationProps = RsvpDetailsRelationStateProps &
+  RsvpDetailsRelationDispatchProps &
+  RsvpDetailsRelationParentProps;
 
-export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
-  constructor(props: RsvpDetailsProps) {
+export class UnstyledRsvpDetailsRelation extends React.Component<
+  RsvpDetailsRelationProps
+> {
+  constructor(props: RsvpDetailsRelationProps) {
     super(props);
   }
 
@@ -104,7 +107,9 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
   }
 }
 
-export const UnconnectedRsvpDetails = withStyles(styles)(UnstyledRsvpDetails);
+export const UnconnectedRsvpDetailsRelation = withStyles(styles)(
+  UnstyledRsvpDetailsRelation
+);
 
 export const mapStateToProps = createSelector(
   [
@@ -137,7 +142,7 @@ export const actionCreators = {
   updateDetails
 };
 
-export const RsvpDetails = connect(
+export const RsvpDetailsRelation = connect(
   mapStateToProps,
   actionCreators
-)(UnconnectedRsvpDetails);
+)(UnconnectedRsvpDetailsRelation);

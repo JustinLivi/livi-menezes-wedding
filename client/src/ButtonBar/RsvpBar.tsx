@@ -58,7 +58,7 @@ export class UnstyledRsvpBar extends React.Component<RsvpBarProps> {
   ) => React.MouseEventHandler<HTMLElement> = response => event => {
     const { rsvpCeremony: rsvp, userId } = this.props;
     if (userId) {
-      rsvp({ userId, rsvp: response });
+      rsvp({ body: { userId, rsvp: response }, params: {} });
     }
   };
 
@@ -83,26 +83,27 @@ export class UnstyledRsvpBar extends React.Component<RsvpBarProps> {
               disabled={
                 cacheStatus === CacheStatus.FETCHING ||
                 cacheStatus === CacheStatus.PERSISTING ||
-                !weddingRsvp
+                weddingRsvp === false
               }
-              selected={!weddingRsvp}
+              selected={weddingRsvp === false}
             />
           )}
           <Details
-            hideHelp={hideHelp}
+            help={hideHelp ? undefined : 'details'}
             to={toDetails}
             external={external}
             iconType={detailsIconType}
           />
           {!onlyInfo && (
             <ImGoing
-              hideHelp={hideHelp}
+              help={hideHelp ? undefined : "I'm going!"}
               onClick={this.handleClick(true)}
               disabled={
                 cacheStatus === CacheStatus.FETCHING ||
                 cacheStatus === CacheStatus.PERSISTING ||
                 weddingRsvp
               }
+              selected={weddingRsvp === true}
             />
           )}
         </div>

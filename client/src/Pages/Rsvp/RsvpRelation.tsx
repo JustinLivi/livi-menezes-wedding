@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
-import { DetailsIcons } from '../../ButtonBar/Details';
-import { RsvpBar } from '../../ButtonBar/RsvpBar';
+import { RsvpContinueBar } from '../../ButtonBar/RsvpContinueBar';
 import { DetailsUpdates } from '../../common';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
@@ -75,7 +74,10 @@ export class UnconnectedRsvpRelation extends React.Component<
   };
 
   public render() {
-    const { weddingRsvp, name, photo } = this.props;
+    const { name, photo, match: matched } = this.props;
+    const {
+      params: { relationId }
+    } = matched;
     return (
       <ColumnLayout>
         <ProfileCard
@@ -85,13 +87,7 @@ export class UnconnectedRsvpRelation extends React.Component<
           title={name ? `RSVP for ${name}` : 'loading...'}
           blurb={`Is ${name} attending the ceremony and reception?`}
         />
-        <RsvpBar
-          detailsIconType={
-            weddingRsvp === undefined ? undefined : DetailsIcons.nextArrow
-          }
-          hideHelp
-          toDetails={weddingRsvp === undefined ? '/details' : '/rsvp/details'}
-        />
+        <RsvpContinueBar match={matched} />
       </ColumnLayout>
     );
   }
