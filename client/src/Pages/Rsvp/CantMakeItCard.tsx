@@ -1,4 +1,4 @@
-import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { Avatar, CardContent, createStyles, Grid, Typography, WithStyles, withStyles } from '@material-ui/core';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
@@ -8,15 +8,20 @@ import { AddressInput } from '../../Components/AddressInput';
 import { StandardCard } from '../../Components/StandardCard';
 
 const styles = createStyles({
-  content: {
-    paddingTop: 25,
+  avatar: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 5,
+    width: '100%'
+  },
+  centered: {
     textAlign: 'center'
+  },
+  content: {
+    paddingTop: 25
   },
   italic: {
     fontStyle: 'italic'
-  },
-  names: {
-    letterSpacing: 5
   },
   standardCard: {
     overflow: 'initial',
@@ -30,7 +35,10 @@ const styles = createStyles({
 export interface CantMakeItCardProps extends WithStyles<typeof styles> {
   changeDetails: (updates: DetailsUpdates) => void;
   updateDetails: (update: DetailsUpdates) => void;
+  username?: string;
   address?: string;
+  name?: string;
+  photo?: string;
 }
 
 export class UnstyledCantMakeItCard extends React.Component<
@@ -54,31 +62,43 @@ export class UnstyledCantMakeItCard extends React.Component<
 
   public render() {
     const {
-      classes: { content, topName, names, italic, standardCard },
+      classes: { avatar, content, topName, italic, standardCard, centered },
+      photo,
+      username,
       address
     } = this.props;
     return (
       <StandardCard className={standardCard}>
         <CardContent className={content}>
+          <Grid className={avatar}>
+            <Avatar alt={username || 'Me'} src={photo}>
+              {username || name}
+            </Avatar>
+          </Grid>
           <Typography
-            className={italic}
+            className={classnames(italic, centered)}
             gutterBottom
             variant='body1'
             component='p'
           >
-            Can't Make It
+            {username ? `${username} C` : 'C'}an't Make It
           </Typography>
           <Typography
-            className={classnames(names, topName)}
+            className={classnames(topName, centered)}
             variant='h6'
             component='p'
           >
-            We will miss you!
+            We will miss {username ? 'them' : 'you'}!
+          </Typography>
+          <Typography className={topName} component='p'>
+            {username
+              ? `Can you fill out these details for ${username}?`
+              : "If you wouldn't mind, we'd like to collect just a few more details from you"}
           </Typography>
           <AddressInput
             onChange={this.handleChange('address')}
             onSelect={this.handleSelect}
-            value={address}
+            value={address || ''}
           />
         </CardContent>
       </StandardCard>

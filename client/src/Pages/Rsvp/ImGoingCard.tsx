@@ -1,4 +1,4 @@
-import { CardContent, createStyles, TextField, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { Avatar, CardContent, createStyles, Grid, TextField, Typography, WithStyles, withStyles } from '@material-ui/core';
 import classnames from 'classnames';
 import { get } from 'lodash';
 import * as React from 'react';
@@ -8,6 +8,12 @@ import { AddressInput } from '../../Components/AddressInput';
 import { StandardCard } from '../../Components/StandardCard';
 
 const styles = createStyles({
+  avatar: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 5,
+    width: '100%'
+  },
   centered: {
     textAlign: 'center'
   },
@@ -30,6 +36,8 @@ export interface ImGoingCardParentProps extends WithStyles<typeof styles> {
   updateDetails: (updates: DetailsUpdates) => void;
   changeDetails: (updates: DetailsUpdates) => void;
   username?: string;
+  name?: string;
+  photo?: string;
 }
 
 export type ImGoingCardProps = DetailsUpdates & ImGoingCardParentProps;
@@ -61,14 +69,21 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
   public render() {
     const {
       username,
-      classes: { content, topName, italic, standardCard, centered },
+      name,
+      classes: { avatar, content, topName, italic, standardCard, centered },
       address,
       favoriteDanceSong,
-      dietaryRestrictions
+      dietaryRestrictions,
+      photo
     } = this.props;
     return (
       <StandardCard className={standardCard}>
         <CardContent className={content}>
+          <Grid className={avatar}>
+            <Avatar alt={username || 'Me'} src={photo}>
+              {username || name}
+            </Avatar>
+          </Grid>
           <Typography
             className={classnames(italic, centered)}
             gutterBottom
@@ -94,7 +109,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
           <AddressInput
             onChange={this.handleChange('address')}
             onSelect={this.handleSelect}
-            value={address}
+            value={address || ''}
           />
           <TextField
             id='standard-name'

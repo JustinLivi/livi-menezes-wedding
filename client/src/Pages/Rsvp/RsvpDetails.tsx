@@ -6,12 +6,15 @@ import { createSelector } from 'reselect';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
+import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
 import {
   getAddress,
   getDietaryRestrictions,
   getFavoriteDanceSong,
+  getName,
+  getPhoto,
   getRelationships,
   getUserId,
   getWeddingRsvp,
@@ -34,6 +37,8 @@ export interface RsvpDetailsStateProps {
   address?: string;
   dietaryRestrictions?: string;
   relationships?: string[];
+  name?: string;
+  photo?: string;
 }
 
 export interface RsvpDetailsDispatchProps {
@@ -70,12 +75,16 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
       weddingRsvpDetails,
       dietaryRestrictions,
       relationships,
+      photo,
+      name,
       classes: { help }
     } = this.props;
     return (
       <ColumnLayout>
         {weddingRsvpDetails ? (
           <ImGoingCard
+            name={name}
+            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
             address={address}
             changeDetails={change}
             dietaryRestrictions={dietaryRestrictions}
@@ -84,6 +93,8 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
           />
         ) : (
           <CantMakeItCard
+            name={name}
+            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
             changeDetails={change}
             updateDetails={this.update}
             address={address}
@@ -113,7 +124,9 @@ export const mapStateToProps = createSelector(
     getFavoriteDanceSong,
     getAddress,
     getDietaryRestrictions,
-    getRelationships
+    getRelationships,
+    getName,
+    getPhoto
   ],
   (
     weddingRsvpDetails,
@@ -121,11 +134,15 @@ export const mapStateToProps = createSelector(
     favoriteDanceSong,
     address,
     dietaryRestrictions,
-    relationships
+    relationships,
+    name,
+    photo
   ) => ({
     address,
     dietaryRestrictions,
     favoriteDanceSong,
+    name,
+    photo,
     relationships,
     userId,
     weddingRsvpDetails

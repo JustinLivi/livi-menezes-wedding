@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
+import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import { changeDetailsRelation, updateDetails } from '../../store/actions/updateDetails';
 import { fetchUser } from '../../store/actions/user';
@@ -16,6 +17,7 @@ import {
   getRelationshipFavoriteDanceSong,
   getRelationshipId,
   getRelationshipName,
+  getRelationshipPhoto,
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
@@ -41,6 +43,7 @@ export interface RsvpDetailsRelationStateProps {
   hasMoreRelations?: true;
   username?: string;
   cacheStatus: CacheStatus;
+  photo?: string;
 }
 
 export interface RsvpDetailsRelationDispatchProps {
@@ -100,6 +103,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
       dietaryRestrictions,
       hasMoreRelations,
       username,
+      photo,
       classes: { help }
     } = this.props;
     const back = `/rsvp/u/${this.relationId}`;
@@ -108,6 +112,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
       <ColumnLayout>
         {weddingRsvpDetails ? (
           <ImGoingCard
+            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
             username={username}
             address={address}
             changeDetails={this.change}
@@ -117,6 +122,8 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
           />
         ) : (
           <CantMakeItCard
+            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+            username={username}
             changeDetails={this.change}
             updateDetails={this.update}
             address={address}
@@ -150,7 +157,8 @@ export const mapStateToProps = createSelector(
     getRelationshipAddress,
     getRelationshipDietaryRestrictions,
     getHasMoreRelations,
-    getRelationshipName
+    getRelationshipName,
+    getRelationshipPhoto
   ],
   (
     cacheStatus,
@@ -160,13 +168,15 @@ export const mapStateToProps = createSelector(
     address,
     dietaryRestrictions,
     hasMoreRelations,
-    username
+    username,
+    photo
   ) => ({
     address,
     cacheStatus,
     dietaryRestrictions,
     favoriteDanceSong,
     hasMoreRelations,
+    photo,
     userId,
     username,
     weddingRsvpDetails

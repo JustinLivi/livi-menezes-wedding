@@ -18,6 +18,13 @@ export const getAddress = ({ user }: State) => user && user.address;
 
 export const getProfile = ({ user }: State) => user && user.profile;
 
+export const getPhoto = (state: State) => {
+  const profile = getProfile(state);
+  return profile && profile.photo;
+};
+
+export const getName = ({ user }: State) => user && user.name;
+
 export const getDietaryRestrictions = ({ user }: State) =>
   user && user.dietaryRestrictions;
 
