@@ -3,12 +3,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+import { Breadcrumbs } from '../../Breadcrumbs';
 import { DetailsIcons } from '../../ButtonBar/Details';
 import { RsvpBar } from '../../ButtonBar/RsvpBar';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
-import { changeDetailsRelation, updateDetails } from '../../store/actions/updateDetails';
 import { getWeddingRsvp } from '../../store/selectors/user';
 
 export interface RsvpStateProps {
@@ -36,6 +36,7 @@ export class UnconnectedRsvp extends React.Component<RsvpStateProps> {
             </React.Fragment>
           }
         />
+        <Breadcrumbs activeStep={0} />
         <RsvpBar
           detailsIconType={
             weddingRsvp === undefined ? undefined : DetailsIcons.nextArrow
@@ -54,12 +55,4 @@ export const mapStateToProps = createSelector(
   })
 );
 
-export const actionCreators = {
-  changeDetails: changeDetailsRelation,
-  updateDetails
-};
-
-export const Rsvp = connect(
-  mapStateToProps,
-  actionCreators
-)(UnconnectedRsvp);
+export const Rsvp = connect(mapStateToProps)(UnconnectedRsvp);

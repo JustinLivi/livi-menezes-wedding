@@ -1,8 +1,10 @@
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
+import { forEach, range } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+import { Breadcrumbs } from '../../Breadcrumbs';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
@@ -22,7 +24,7 @@ import {
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
-import { getHasMoreRelations } from '../../store/selectors/user';
+import { getHasMoreRelations, getInvitedRehearsal } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
@@ -37,6 +39,7 @@ const styles = createStyles({
 });
 
 export interface RsvpDetailsRelationStateProps {
+  activeStep: number;
   userId?: string;
   weddingRsvpDetails?: boolean;
   favoriteDanceSong?: string;
@@ -101,6 +104,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
 
   public render() {
     const {
+      activeStep,
       favoriteDanceSong,
       address,
       cacheStatus,
@@ -138,6 +142,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
                 address={address}
               />
             )}
+            <Breadcrumbs activeStep={activeStep} />
             {address ? (
               <ContinueBar back={back} next={next} />
             ) : (
@@ -159,6 +164,36 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
 export const UnconnectedRsvpDetailsRelation = withStyles(styles)(
   UnstyledRsvpDetailsRelation
 );
+
+const activeStepSelector = (state: State, props: RelationIdRouteProps) =>
+  createSelector(
+    [getInvitedRehearsal],
+    invitedRehearsal => {
+      let activeStep = 3;
+      const relationId = extractRelationId(props);
+      activeStep += relationId * 2;
+      if (invitedRehearsal) {
+        activeStep += 1;
+      }
+      forEach(range(relationId), index => {
+        const relationInvitedRehearsal = getRelationshipInvitedRehearsal(
+          state,
+          {
+            match: {
+              ...props.match,
+              params: {
+                relationId: `${index}`
+              }
+            }
+          }
+        );
+        if (relationInvitedRehearsal) {
+          activeStep += 1;
+        }
+      });
+      return activeStep;
+    }
+  )(state);
 
 export const nextSelector = (
   state: State,
@@ -202,6 +237,7 @@ export const mapStateToProps = (
       username,
       photo
     ) => ({
+      activeStep: activeStepSelector(state, props),
       address,
       cacheStatus,
       dietaryRestrictions,

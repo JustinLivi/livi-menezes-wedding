@@ -3,6 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
+import { Breadcrumbs } from '../../Breadcrumbs';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
@@ -13,12 +14,15 @@ import {
   getAddress,
   getDietaryRestrictions,
   getFavoriteDanceSong,
+  getInvitedRehearsal,
   getName,
   getPhoto,
   getRelationships,
+  getRelationshipsCount,
   getUserId,
   getWeddingRsvp,
 } from '../../store/selectors/user';
+import { State } from '../../store/stateDefinition';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
 
@@ -39,6 +43,7 @@ export interface RsvpDetailsStateProps {
   relationships?: string[];
   name?: string;
   photo?: string;
+  next: string;
 }
 
 export interface RsvpDetailsDispatchProps {
@@ -77,6 +82,7 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
       relationships,
       photo,
       name,
+      next,
       classes: { help }
     } = this.props;
     return (
@@ -100,11 +106,12 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
             address={address}
           />
         )}
+        <Breadcrumbs activeStep={1} />
         {address && (
           <div className={help}>Continue to RSVP for friends and family</div>
         )}
         {address && relationships ? (
-          <ContinueBar back='/' next='/rsvp/u/0' />
+          <ContinueBar back='/' next={next} />
         ) : (
           <div className={help}>
             <Details to='/' iconType={DetailsIcons.backArrow} />
@@ -117,37 +124,52 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
 
 export const UnconnectedRsvpDetails = withStyles(styles)(UnstyledRsvpDetails);
 
-export const mapStateToProps = createSelector(
-  [
-    getWeddingRsvp,
-    getUserId,
-    getFavoriteDanceSong,
-    getAddress,
-    getDietaryRestrictions,
-    getRelationships,
-    getName,
-    getPhoto
-  ],
-  (
-    weddingRsvpDetails,
-    userId,
-    favoriteDanceSong,
-    address,
-    dietaryRestrictions,
-    relationships,
-    name,
-    photo
-  ) => ({
-    address,
-    dietaryRestrictions,
-    favoriteDanceSong,
-    name,
-    photo,
-    relationships,
-    userId,
-    weddingRsvpDetails
-  })
+export const nextSelector = createSelector(
+  [getInvitedRehearsal, getRelationshipsCount, getWeddingRsvp],
+  (invitedRehearsal, relationshipsCount, weddingRsvp) => {
+    if (invitedRehearsal && weddingRsvp) {
+      return '/rsvp/rehearsal/';
+    }
+    if (relationshipsCount > 0) {
+      return '/rsvp/u/0';
+    }
+    return '/rsvp/complete';
+  }
 );
+
+export const mapStateToProps = (state: State) =>
+  createSelector(
+    [
+      getWeddingRsvp,
+      getUserId,
+      getFavoriteDanceSong,
+      getAddress,
+      getDietaryRestrictions,
+      getRelationships,
+      getName,
+      getPhoto
+    ],
+    (
+      weddingRsvpDetails,
+      userId,
+      favoriteDanceSong,
+      address,
+      dietaryRestrictions,
+      relationships,
+      name,
+      photo
+    ) => ({
+      address,
+      dietaryRestrictions,
+      favoriteDanceSong,
+      name,
+      next: nextSelector(state),
+      photo,
+      relationships,
+      userId,
+      weddingRsvpDetails
+    })
+  )(state);
 
 export const actionCreators = {
   changeDetails,

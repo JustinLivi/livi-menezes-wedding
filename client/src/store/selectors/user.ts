@@ -12,6 +12,11 @@ export const getUser = ({ user }: State) => user;
 
 export const getUserId = ({ user }: State) => user && user.id;
 
+export const getInvitedRehearsal = ({ user }: State) => user && user.rehearsal;
+
+export const getRehearsalRsvp = ({ user }: State) =>
+  user && user.attendingRehearsal;
+
 export const getWeddingRsvp = ({ user }: State) =>
   user && user.attendingWedding;
 

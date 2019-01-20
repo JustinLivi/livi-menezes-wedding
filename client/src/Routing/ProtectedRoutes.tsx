@@ -10,6 +10,7 @@ import { Rsvp } from '../Pages/Rsvp';
 import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
 import { RsvpDetails } from '../Pages/Rsvp/RsvpDetails';
 import { RsvpDetailsRelation } from '../Pages/Rsvp/RsvpDetailsRelation';
+import { RsvpRehearsal } from '../Pages/Rsvp/RsvpRehearsal';
 import { RsvpRehearsalRelation } from '../Pages/Rsvp/RsvpRehearsalRelation';
 import { RsvpRelation } from '../Pages/Rsvp/RsvpRelation';
 import { ThingsToDo } from '../Pages/ThingsToDo';
@@ -33,6 +34,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
 }) => (
   <Switch>
     <Route path='/rsvp/u/:relationId' exact component={RsvpRelation} />
+    <Route path='/rsvp/rehearsal/' exact component={RsvpRehearsal} />
     <Route
       path='/rsvp/rehearsal/:relationId'
       exact

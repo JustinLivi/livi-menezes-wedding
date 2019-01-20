@@ -5,8 +5,14 @@ import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { rsvpCeremony } from '../store/actions/rsvpCeremony';
-import { getRelationshipId, getRelationshipRsvp, getRelationshipsCacheStatus } from '../store/selectors/relationships';
-import { getHasMoreRelations } from '../store/selectors/user';
+import { extractRelationId } from '../store/selectors/common';
+import {
+  getRelationshipId,
+  getRelationshipInvitedRehearsal,
+  getRelationshipRsvp,
+  getRelationshipsCacheStatus,
+} from '../store/selectors/relationships';
+import { getHasMoreRelations, getInvitedRehearsal } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';
@@ -34,6 +40,7 @@ export interface RsvpRelationBarStateProps {
   disableImGoing: boolean;
   userId?: string;
   weddingRsvp?: boolean;
+  back: string;
 }
 
 export interface RsvpRelationBarDetailsProps {
@@ -52,24 +59,21 @@ export type RsvpRelationBarProps = RsvpRelationBarStateProps &
 export class UnconnectedRsvpRelationBar extends React.Component<
   RsvpRelationBarProps
 > {
+  private relationIndex: number;
+
   constructor(props: RsvpRelationBarProps) {
     super(props);
+    this.relationIndex = extractRelationId(props);
   }
 
   public handleClick: (
     response: boolean
   ) => React.MouseEventHandler<HTMLElement> = response => event => {
-    const {
-      rsvpCeremony: rsvp,
-      userId,
-      match: {
-        params: { relationId }
-      }
-    } = this.props;
+    const { rsvpCeremony: rsvp, userId } = this.props;
     if (userId) {
       rsvp({
         body: { userId, rsvp: response },
-        params: { relationshipIndex: parseInt(relationId, 10) }
+        params: { relationshipIndex: this.relationIndex }
       });
     }
   };
@@ -80,12 +84,9 @@ export class UnconnectedRsvpRelationBar extends React.Component<
       disableCantMakeIt,
       disableImGoing,
       weddingRsvp,
-      match: {
-        params: { relationId }
-      },
+      back,
       classes: { root, buttonBar }
     } = this.props;
-    const relationIndex = parseInt(relationId, 10);
     return (
       <div className={root}>
         <div className={buttonBar}>
@@ -94,21 +95,13 @@ export class UnconnectedRsvpRelationBar extends React.Component<
             disabled={disableCantMakeIt}
             selected={weddingRsvp === false}
           />
-          <Details
-            to={
-              relationIndex > 0
-                ? `/rsvp/details/${relationIndex - 1}`
-                : '/rsvp/details/'
-            }
-            iconType={DetailsIcons.backArrow}
-            help='back'
-          />
+          <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
           {displaySkip && (
             <Details
               to={
                 weddingRsvp === undefined
-                  ? `/rsvp/u/${relationIndex + 1}`
-                  : `/rsvp/details/${relationIndex}`
+                  ? `/rsvp/u/${this.relationIndex + 1}`
+                  : `/rsvp/details/${this.relationIndex}`
               }
               iconType={DetailsIcons.nextArrow}
               help={weddingRsvp === undefined ? 'skip' : 'next'}
@@ -127,6 +120,33 @@ export class UnconnectedRsvpRelationBar extends React.Component<
     );
   }
 }
+
+export const backSelector = (state: State, props: RsvpRelationBarParentProps) =>
+  createSelector(
+    [getInvitedRehearsal, getRelationshipRsvp],
+    invitedRehearsal => {
+      const relationId = extractRelationId(props);
+      if (relationId === 0) {
+        if (invitedRehearsal) {
+          return '/rsvp/rehearsal/';
+        }
+        return '/rsvp/details/';
+      }
+      const prevRelation = relationId - 1;
+      if (
+        getRelationshipInvitedRehearsal(state, {
+          ...props,
+          match: {
+            ...props.match,
+            params: { relationId: `${prevRelation}` }
+          }
+        })
+      ) {
+        return `/rsvp/rehearsal/${prevRelation}`;
+      }
+      return `/rsvp/details/${prevRelation}`;
+    }
+  )(state, props);
 
 export const disableImGoingSelector = (
   state: State,
@@ -169,6 +189,7 @@ export const mapStateToProps = (
   createSelector(
     [getRelationshipRsvp, getRelationshipId],
     (weddingRsvp, userId) => ({
+      back: backSelector(state, props),
       disableCantMakeIt: disableCantMakeItSelector(state, props),
       disableImGoing: disableImGoingSelector(state, props),
       displaySkip: displaySkipSelector(state, props),

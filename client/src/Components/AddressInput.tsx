@@ -2,6 +2,7 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import MUIPlacesAutocomplete, { Suggestion } from 'mui-places-autocomplete';
 import * as React from 'react';
 
+import { Loading } from '../Pages/Rsvp/Loading';
 import { loadMapApi } from '../Util/loadMapsApi';
 
 const styles = createStyles({
@@ -74,7 +75,7 @@ export class UnstyledAddressInput extends React.Component<
         }}
       />
     ) : (
-      <React.Fragment />
+      <Loading />
     );
   }
 
