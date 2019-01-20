@@ -72,8 +72,8 @@ export const UnconnectedRsvpComplete: React.SFC<CantMakeItCardProps> = ({
           Thanks for responding!
         </Typography>
         <Typography className={topName} component='p'>
-          Check out some of the links to the left or continue to learn our
-          story.
+          Check out some of the menu options or continue below to test your
+          knowledge of our story.
         </Typography>
       </CardContent>
     </StandardCard>

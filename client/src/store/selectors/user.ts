@@ -1,8 +1,12 @@
-import { State } from '../stateDefinition';
+import { CacheStatus, State } from '../stateDefinition';
 import { extractRelationId, RelationIdRouteProps } from './common';
 
 export const getUserCacheStatus = ({ userCacheStatus }: State) =>
   userCacheStatus;
+
+export const getIsLoading = ({ userCacheStatus }: State) =>
+  userCacheStatus === CacheStatus.BEHIND ||
+  userCacheStatus === CacheStatus.FETCHING;
 
 export const getUser = ({ user }: State) => user;
 

@@ -26,6 +26,7 @@ import { getHasMoreRelations } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
+import { Loading } from './Loading';
 
 const styles = createStyles({
   help: {
@@ -102,6 +103,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
     const {
       favoriteDanceSong,
       address,
+      cacheStatus,
       weddingRsvpDetails,
       dietaryRestrictions,
       next,
@@ -112,31 +114,42 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
     const back = `/rsvp/u/${this.relationId}`;
     return (
       <ColumnLayout>
-        {weddingRsvpDetails ? (
-          <ImGoingCard
-            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
-            username={username}
-            address={address}
-            changeDetails={this.change}
-            dietaryRestrictions={dietaryRestrictions}
-            favoriteDanceSong={favoriteDanceSong}
-            updateDetails={this.update}
-          />
+        {cacheStatus === CacheStatus.BEHIND ||
+        cacheStatus === CacheStatus.FETCHING ? (
+          <Loading />
         ) : (
-          <CantMakeItCard
-            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
-            username={username}
-            changeDetails={this.change}
-            updateDetails={this.update}
-            address={address}
-          />
-        )}
-        {address ? (
-          <ContinueBar back={back} next={next} />
-        ) : (
-          <div className={help}>
-            <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
-          </div>
+          <React.Fragment>
+            {weddingRsvpDetails ? (
+              <ImGoingCard
+                photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                username={username}
+                address={address}
+                changeDetails={this.change}
+                dietaryRestrictions={dietaryRestrictions}
+                favoriteDanceSong={favoriteDanceSong}
+                updateDetails={this.update}
+              />
+            ) : (
+              <CantMakeItCard
+                photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                username={username}
+                changeDetails={this.change}
+                updateDetails={this.update}
+                address={address}
+              />
+            )}
+            {address ? (
+              <ContinueBar back={back} next={next} />
+            ) : (
+              <div className={help}>
+                <Details
+                  to={back}
+                  iconType={DetailsIcons.backArrow}
+                  help='back'
+                />
+              </div>
+            )}
+          </React.Fragment>
         )}
       </ColumnLayout>
     );

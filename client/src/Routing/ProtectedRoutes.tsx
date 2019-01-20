@@ -32,7 +32,6 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
   classes: { root }
 }) => (
   <Switch>
-    <Route path='/' exact component={Rsvp} />
     <Route path='/rsvp/u/:relationId' exact component={RsvpRelation} />
     <Route
       path='/rsvp/rehearsal/:relationId'
@@ -54,6 +53,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/directions' exact component={Directions} />
     <Route path='/where-to-stay' exact component={WhereToStay} />
     <Route path='/things-to-do' exact component={ThingsToDo} />
+    <Route path='/' exact component={Rsvp} />
   </Switch>
 );
 

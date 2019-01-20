@@ -17,6 +17,7 @@ import {
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
 import { CacheStatus } from '../../store/stateDefinition';
+import { Loading } from './Loading';
 
 export interface RsvpRehearsalRelationStateProps {
   cacheStatus: CacheStatus;
@@ -48,17 +49,24 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
   }
 
   public render() {
-    const { name, photo, match: matched } = this.props;
+    const { name, photo, match: matched, cacheStatus } = this.props;
     return (
       <ColumnLayout>
-        <ProfileCard
-          image={
-            photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
-          }
-          title={name ? `RSVP for Rehearsal Dinner` : 'loading...'}
-          blurb={`Is ${name} attending the Rehearsal Dinner?`}
-        />
-        <RsvpRehearsalRelationBar match={matched} />
+        {cacheStatus === CacheStatus.UP_TO_DATE ||
+        cacheStatus === CacheStatus.PERSISTING ? (
+          <React.Fragment>
+            <ProfileCard
+              image={
+                photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
+              }
+              title={name ? `RSVP for Rehearsal Dinner` : 'loading...'}
+              blurb={`Is ${name} attending the Rehearsal Dinner?`}
+            />
+            <RsvpRehearsalRelationBar match={matched} />
+          </React.Fragment>
+        ) : (
+          <Loading />
+        )}
       </ColumnLayout>
     );
   }
