@@ -5,6 +5,7 @@ import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 export interface RsvpRehearsalMeta
   extends RsaaMeta<'POST', Endpoints.RSVP_REHEARSAL> {
   body: RsvpPayload;
+  params: { relationshipIndex?: number };
 }
 
 export type RsvpRehearsalActionSet = RsaaActionSet<
@@ -14,9 +15,13 @@ export type RsvpRehearsalActionSet = RsaaActionSet<
 >;
 
 export const rsvpRehearsal = createRsaaActionCreator<
-  RsvpRehearsalMeta['body'],
+  {
+    body: RsvpRehearsalMeta['body'];
+    params: RsvpRehearsalMeta['params'];
+  },
   RsvpRehearsalActionSet
->(params => ({
+>(({ body, params }) => ({
+  body,
   endpoint: Endpoints.RSVP_REHEARSAL,
   method: 'POST',
   params

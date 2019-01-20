@@ -8,6 +8,7 @@ import { combineKeyableRsaaReducers } from '../../Util/rsaaActionCreator';
 import { initialState, State } from '../stateDefinition';
 import { redirectReducer } from './redirect';
 import { rsvpCeremonyFailureReducer, rsvpCeremonyRequestReducer, rsvpCeremonySuccessReducer } from './rsvpCeremony';
+import { rsvpRehearsalFailureReducer, rsvpRehearsalRequestReducer, rsvpRehearsalSuccessReducer } from './rsvpRehearsal';
 import {
   changeDetailsReducer,
   changeDetailsRelationReducer,
@@ -24,6 +25,9 @@ const apiReducers = combineKeyableRsaaReducers<State>(initialState)(
   rsvpCeremonyRequestReducer,
   rsvpCeremonySuccessReducer,
   rsvpCeremonyFailureReducer,
+  rsvpRehearsalRequestReducer,
+  rsvpRehearsalSuccessReducer,
+  rsvpRehearsalFailureReducer,
   updateDetailsRequestReducer,
   updateDetailsSuccessReducer,
   updateDetailsFailureReducer

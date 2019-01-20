@@ -16,13 +16,14 @@ import {
   getRelationshipDietaryRestrictions,
   getRelationshipFavoriteDanceSong,
   getRelationshipId,
+  getRelationshipInvitedRehearsal,
   getRelationshipName,
   getRelationshipPhoto,
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
 import { getHasMoreRelations } from '../../store/selectors/user';
-import { CacheStatus } from '../../store/stateDefinition';
+import { CacheStatus, State } from '../../store/stateDefinition';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
 
@@ -40,7 +41,7 @@ export interface RsvpDetailsRelationStateProps {
   favoriteDanceSong?: string;
   address?: string;
   dietaryRestrictions?: string;
-  hasMoreRelations?: true;
+  next: string;
   username?: string;
   cacheStatus: CacheStatus;
   photo?: string;
@@ -52,11 +53,13 @@ export interface RsvpDetailsRelationDispatchProps {
   changeDetails: typeof changeDetailsRelation;
 }
 
-export interface RsvpDetailsRelationParentProps
+export interface RsvpDetailsRelationStyleProps
   extends WithStyles<typeof styles> {}
 
+export type RsvpDetailsRelationParentProps = RsvpDetailsRelationStyleProps &
+  RelationIdRouteProps;
+
 export type RsvpDetailsRelationProps = RsvpDetailsRelationStateProps &
-  RelationIdRouteProps &
   RsvpDetailsRelationDispatchProps &
   RsvpDetailsRelationParentProps;
 
@@ -101,13 +104,12 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
       address,
       weddingRsvpDetails,
       dietaryRestrictions,
-      hasMoreRelations,
+      next,
       username,
       photo,
       classes: { help }
     } = this.props;
     const back = `/rsvp/u/${this.relationId}`;
-    const next = `/rsvp/u/${this.relationId + 1}`;
     return (
       <ColumnLayout>
         {weddingRsvpDetails ? (
@@ -129,10 +131,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
             address={address}
           />
         )}
-        {address && hasMoreRelations && (
-          <div className={help}>Continue to RSVP for friends and family</div>
-        )}
-        {address && hasMoreRelations ? (
+        {address ? (
           <ContinueBar back={back} next={next} />
         ) : (
           <div className={help}>
@@ -148,40 +147,59 @@ export const UnconnectedRsvpDetailsRelation = withStyles(styles)(
   UnstyledRsvpDetailsRelation
 );
 
-export const mapStateToProps = createSelector(
-  [
-    getRelationshipsCacheStatus,
-    getRelationshipRsvp,
-    getRelationshipId,
-    getRelationshipFavoriteDanceSong,
-    getRelationshipAddress,
-    getRelationshipDietaryRestrictions,
-    getHasMoreRelations,
-    getRelationshipName,
-    getRelationshipPhoto
-  ],
-  (
-    cacheStatus,
-    weddingRsvpDetails,
-    userId,
-    favoriteDanceSong,
-    address,
-    dietaryRestrictions,
-    hasMoreRelations,
-    username,
-    photo
-  ) => ({
-    address,
-    cacheStatus,
-    dietaryRestrictions,
-    favoriteDanceSong,
-    hasMoreRelations,
-    photo,
-    userId,
-    username,
-    weddingRsvpDetails
-  })
-);
+export const nextSelector = (
+  state: State,
+  props: RsvpDetailsRelationParentProps
+) =>
+  createSelector(
+    [getRelationshipInvitedRehearsal, getHasMoreRelations, getRelationshipRsvp],
+    (invitedRehearsal, hasMoreRelations, weddingRsvp) => {
+      if (invitedRehearsal && weddingRsvp) {
+        return `/rsvp/rehearsal/${extractRelationId(props)}`;
+      }
+      if (hasMoreRelations) {
+        return `/rsvp/u/${extractRelationId(props) + 1}`;
+      }
+      return '/rsvp/complete';
+    }
+  )(state, props);
+
+export const mapStateToProps = (
+  state: State,
+  props: RsvpDetailsRelationParentProps
+) =>
+  createSelector(
+    [
+      getRelationshipsCacheStatus,
+      getRelationshipRsvp,
+      getRelationshipId,
+      getRelationshipFavoriteDanceSong,
+      getRelationshipAddress,
+      getRelationshipDietaryRestrictions,
+      getRelationshipName,
+      getRelationshipPhoto
+    ],
+    (
+      cacheStatus,
+      weddingRsvpDetails,
+      userId,
+      favoriteDanceSong,
+      address,
+      dietaryRestrictions,
+      username,
+      photo
+    ) => ({
+      address,
+      cacheStatus,
+      dietaryRestrictions,
+      favoriteDanceSong,
+      next: nextSelector(state, props),
+      photo,
+      userId,
+      username,
+      weddingRsvpDetails
+    })
+  )(state, props);
 
 export const actionCreators = {
   changeDetails: changeDetailsRelation,

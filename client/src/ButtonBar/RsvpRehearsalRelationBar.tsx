@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
-import { rsvpCeremony } from '../store/actions/rsvpCeremony';
-import { getRelationshipId, getRelationshipRsvp, getRelationshipsCacheStatus } from '../store/selectors/relationships';
+import { rsvpRehearsal } from '../store/actions/rsvpRehearsal';
+import { extractRelationId } from '../store/selectors/common';
+import {
+  getRelationshipId,
+  getRelationshipRsvpRehearsal,
+  getRelationshipsCacheStatus,
+} from '../store/selectors/relationships';
 import { getHasMoreRelations } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
 import { theme } from '../theme';
@@ -28,30 +33,31 @@ const styles = createStyles({
   }
 });
 
-export interface RsvpContinueBarStateProps {
-  displaySkip?: true;
+export interface RsvpRehearsalRelationBarStateProps {
+  next: string;
   disableCantMakeIt: boolean;
   disableImGoing: boolean;
   userId?: string;
   weddingRsvp?: boolean;
 }
 
-export interface RsvpContinueBarDetailsProps {
-  rsvpCeremony: typeof rsvpCeremony;
+export interface RsvpRehearsalRelationBarDetailsProps {
+  rsvpRehearsal: typeof rsvpRehearsal;
 }
 
-export interface RsvpContinueBarParentProps extends WithStyles<typeof styles> {
+export interface RsvpRehearsalRelationBarParentProps
+  extends WithStyles<typeof styles> {
   match: match<{ relationId: string }>;
 }
 
-export type RsvpContinueBarProps = RsvpContinueBarStateProps &
-  RsvpContinueBarDetailsProps &
-  RsvpContinueBarParentProps;
+export type RsvpRehearsalRelationBarProps = RsvpRehearsalRelationBarStateProps &
+  RsvpRehearsalRelationBarDetailsProps &
+  RsvpRehearsalRelationBarParentProps;
 
-export class UnconnectedRsvpContinueBar extends React.Component<
-  RsvpContinueBarProps
+export class UnconnectedRsvpRehearsalRelationBar extends React.Component<
+  RsvpRehearsalRelationBarProps
 > {
-  constructor(props: RsvpContinueBarProps) {
+  constructor(props: RsvpRehearsalRelationBarProps) {
     super(props);
   }
 
@@ -59,7 +65,7 @@ export class UnconnectedRsvpContinueBar extends React.Component<
     response: boolean
   ) => React.MouseEventHandler<HTMLElement> = response => event => {
     const {
-      rsvpCeremony: rsvp,
+      rsvpRehearsal: rsvp,
       userId,
       match: {
         params: { relationId }
@@ -75,7 +81,7 @@ export class UnconnectedRsvpContinueBar extends React.Component<
 
   public render() {
     const {
-      displaySkip,
+      next,
       disableCantMakeIt,
       disableImGoing,
       weddingRsvp,
@@ -94,33 +100,21 @@ export class UnconnectedRsvpContinueBar extends React.Component<
             selected={weddingRsvp === false}
           />
           <Details
-            to={
-              relationIndex > 0
-                ? `/rsvp/details/${relationIndex - 1}`
-                : '/rsvp/details/'
-            }
+            to={`/rsvp/details/${relationIndex}`}
             iconType={DetailsIcons.backArrow}
             help='back'
           />
-          {displaySkip && (
-            <Details
-              to={
-                weddingRsvp === undefined
-                  ? `/rsvp/u/${relationIndex + 1}`
-                  : `/rsvp/details/${relationIndex}`
-              }
-              iconType={DetailsIcons.nextArrow}
-              help={weddingRsvp === undefined ? 'skip' : 'next'}
-            />
-          )}
-          {
-            <ImGoing
-              help="they're going!"
-              selected={weddingRsvp}
-              onClick={this.handleClick(true)}
-              disabled={disableImGoing}
-            />
-          }
+          <Details
+            to={next}
+            iconType={DetailsIcons.nextArrow}
+            help={weddingRsvp === undefined ? 'skip' : 'next'}
+          />
+          <ImGoing
+            help="they're going!"
+            selected={weddingRsvp}
+            onClick={this.handleClick(true)}
+            disabled={disableImGoing}
+          />
         </div>
       </div>
     );
@@ -129,10 +123,10 @@ export class UnconnectedRsvpContinueBar extends React.Component<
 
 export const disableImGoingSelector = (
   state: State,
-  props: RsvpContinueBarParentProps
+  props: RsvpRehearsalRelationBarParentProps
 ) =>
   createSelector(
-    [getRelationshipsCacheStatus, getRelationshipRsvp],
+    [getRelationshipsCacheStatus, getRelationshipRsvpRehearsal],
     (cacheStatus, weddingRsvp) =>
       cacheStatus === CacheStatus.FETCHING ||
       cacheStatus === CacheStatus.PERSISTING ||
@@ -141,48 +135,52 @@ export const disableImGoingSelector = (
 
 export const disableCantMakeItSelector = (
   state: State,
-  props: RsvpContinueBarParentProps
+  props: RsvpRehearsalRelationBarParentProps
 ) =>
   createSelector(
-    [getRelationshipsCacheStatus, getRelationshipRsvp],
+    [getRelationshipsCacheStatus, getRelationshipRsvpRehearsal],
     (cacheStatus, weddingRsvp) =>
       cacheStatus === CacheStatus.FETCHING ||
       cacheStatus === CacheStatus.PERSISTING ||
       weddingRsvp === false
   )(state, props);
 
-export const displaySkipSelector = (
+export const nextSelector = (
   state: State,
-  props: RsvpContinueBarParentProps
-): true | undefined =>
+  props: RsvpRehearsalRelationBarParentProps
+): string =>
   createSelector(
-    [getRelationshipRsvp, getHasMoreRelations],
+    [getRelationshipRsvpRehearsal, getHasMoreRelations],
     (weddingRsvp, hasMoreRelations) =>
-      hasMoreRelations || weddingRsvp !== undefined || undefined
+      hasMoreRelations && weddingRsvp === undefined
+        ? `/rsvp/u/${extractRelationId(props) + 1}`
+        : '/rsvp/complete'
   )(state, props);
 
 export const mapStateToProps = (
   state: State,
-  props: RsvpContinueBarParentProps
+  props: RsvpRehearsalRelationBarParentProps
 ) =>
   createSelector(
-    [getRelationshipRsvp, getRelationshipId],
+    [getRelationshipRsvpRehearsal, getRelationshipId],
     (weddingRsvp, userId) => ({
       disableCantMakeIt: disableCantMakeItSelector(state, props),
       disableImGoing: disableImGoingSelector(state, props),
-      displaySkip: displaySkipSelector(state, props),
+      next: nextSelector(state, props),
       userId,
       weddingRsvp
     })
   )(state, props);
 
 export const actionCreators = {
-  rsvpCeremony
+  rsvpRehearsal
 };
 
-export const UnstyledRsvpContinueBar = connect(
+export const UnstyledRsvpRehearsalRelationBar = connect(
   mapStateToProps,
   actionCreators
-)(UnconnectedRsvpContinueBar);
+)(UnconnectedRsvpRehearsalRelationBar);
 
-export const RsvpContinueBar = withStyles(styles)(UnstyledRsvpContinueBar);
+export const RsvpRehearsalRelationBar = withStyles(styles)(
+  UnstyledRsvpRehearsalRelationBar
+);

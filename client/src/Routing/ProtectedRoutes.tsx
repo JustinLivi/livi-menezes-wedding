@@ -7,8 +7,10 @@ import { Directions } from '../Pages/Directions';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
 import { Rsvp } from '../Pages/Rsvp';
+import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
 import { RsvpDetails } from '../Pages/Rsvp/RsvpDetails';
 import { RsvpDetailsRelation } from '../Pages/Rsvp/RsvpDetailsRelation';
+import { RsvpRehearsalRelation } from '../Pages/Rsvp/RsvpRehearsalRelation';
 import { RsvpRelation } from '../Pages/Rsvp/RsvpRelation';
 import { ThingsToDo } from '../Pages/ThingsToDo';
 import { Venue } from '../Pages/Venue';
@@ -32,12 +34,18 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
   <Switch>
     <Route path='/' exact component={Rsvp} />
     <Route path='/rsvp/u/:relationId' exact component={RsvpRelation} />
+    <Route
+      path='/rsvp/rehearsal/:relationId'
+      exact
+      component={RsvpRehearsalRelation}
+    />
     <Route path='/rsvp/details' exact component={RsvpDetails} />
     <Route
       path='/rsvp/details/:relationId'
       exact
       component={RsvpDetailsRelation}
     />
+    <Route path='/rsvp/complete' exact component={RsvpComplete} />
     <Route path='/details' exact component={Details} />
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/details' component={OurStoryDetails} />

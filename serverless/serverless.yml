@@ -78,6 +78,10 @@ functions:
           method: post
           cors: true
       - http:
+          path: /rsvp/rehearsal
+          method: post
+          cors: true
+      - http:
           path: /rsvp/details
           method: post
           cors: true

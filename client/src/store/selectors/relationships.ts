@@ -29,6 +29,22 @@ export const getRelationshipRsvp = (
   return relationship && relationship.attendingWedding;
 };
 
+export const getRelationshipInvitedRehearsal = (
+  state: State,
+  params: RelationIdRouteProps
+): boolean | undefined => {
+  const relationship = getRelationship(state, params);
+  return relationship && relationship.rehearsal;
+};
+
+export const getRelationshipRsvpRehearsal = (
+  state: State,
+  params: RelationIdRouteProps
+): boolean | undefined => {
+  const relationship = getRelationship(state, params);
+  return relationship && relationship.attendingRehearsal;
+};
+
 export const getRelationshipName = (
   state: State,
   params: RelationIdRouteProps

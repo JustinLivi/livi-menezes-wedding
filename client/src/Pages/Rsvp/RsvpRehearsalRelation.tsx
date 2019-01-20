@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
-import { RsvpRelationBar } from '../../ButtonBar/RsvpRelationBar';
+import { RsvpRehearsalRelationBar } from '../../ButtonBar/RsvpRehearsalRelationBar';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -18,25 +18,25 @@ import {
 } from '../../store/selectors/relationships';
 import { CacheStatus } from '../../store/stateDefinition';
 
-export interface RsvpRelationStateProps {
+export interface RsvpRehearsalRelationStateProps {
   cacheStatus: CacheStatus;
   userId?: string;
   name?: string;
   photo?: string;
 }
 
-export interface RsvpRelationDispatchProps {
+export interface RsvpRehearsalRelationDispatchProps {
   fetchUser: typeof fetchUser;
 }
 
-export type RsvpRelationProps = RsvpRelationStateProps &
-  RsvpRelationDispatchProps &
+export type RsvpRehearsalRelationProps = RsvpRehearsalRelationStateProps &
+  RsvpRehearsalRelationDispatchProps &
   RelationIdRouteProps;
 
-export class UnconnectedRsvpRelation extends React.Component<
-  RsvpRelationProps
+export class UnconnectedRsvpRehearsalRelation extends React.Component<
+  RsvpRehearsalRelationProps
 > {
-  constructor(props: RsvpRelationProps) {
+  constructor(props: RsvpRehearsalRelationProps) {
     super(props);
   }
 
@@ -55,10 +55,10 @@ export class UnconnectedRsvpRelation extends React.Component<
           image={
             photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
           }
-          title={name ? `RSVP for ${name}` : 'loading...'}
-          blurb={`Is ${name} attending the ceremony and reception?`}
+          title={name ? `RSVP for Rehearsal Dinner` : 'loading...'}
+          blurb={`Is ${name} attending the Rehearsal Dinner?`}
         />
-        <RsvpRelationBar match={matched} />
+        <RsvpRehearsalRelationBar match={matched} />
       </ColumnLayout>
     );
   }
@@ -83,7 +83,7 @@ export const actionCreators = {
   fetchUser
 };
 
-export const RsvpRelation = connect(
+export const RsvpRehearsalRelation = connect(
   mapStateToProps,
   actionCreators
-)(UnconnectedRsvpRelation);
+)(UnconnectedRsvpRehearsalRelation);
