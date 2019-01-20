@@ -40,7 +40,6 @@ export class UnconnectedRsvp extends React.Component<RsvpStateProps> {
           detailsIconType={
             weddingRsvp === undefined ? undefined : DetailsIcons.nextArrow
           }
-          hideHelp
           toDetails={weddingRsvp === undefined ? '/details' : '/rsvp/details'}
         />
       </ColumnLayout>

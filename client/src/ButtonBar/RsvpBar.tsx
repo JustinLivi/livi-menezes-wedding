@@ -89,7 +89,13 @@ export class UnstyledRsvpBar extends React.Component<RsvpBarProps> {
             />
           )}
           <Details
-            help={hideHelp ? undefined : 'details'}
+            help={
+              hideHelp
+                ? undefined
+                : weddingRsvp === undefined
+                ? 'details'
+                : 'next'
+            }
             to={toDetails}
             external={external}
             iconType={detailsIconType}

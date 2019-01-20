@@ -39,8 +39,8 @@ export class UnstyledContinueBar extends React.Component<ContinueBarProps> {
     return (
       <div className={root}>
         <div className={buttonBar}>
-          <Details to={back} iconType={DetailsIcons.backArrow} />
-          <Details to={next} iconType={DetailsIcons.nextArrow} />
+          <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
+          <Details to={next} iconType={DetailsIcons.nextArrow} help='next' />
         </div>
       </div>
     );

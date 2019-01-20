@@ -136,7 +136,7 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
           <ContinueBar back={back} next={next} />
         ) : (
           <div className={help}>
-            <Details to={back} iconType={DetailsIcons.backArrow} />
+            <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
           </div>
         )}
       </ColumnLayout>

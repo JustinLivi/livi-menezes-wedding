@@ -8,6 +8,9 @@ import { buttonHolderStyles, largeButtonStyles } from './commonStyles';
 const styles = createStyles({
   disabled: {},
   label: {
+    color: theme.palette.secondary.main,
+    fontSize: '0.9em',
+    marginTop: 5,
     textAlign: 'center'
   },
   largeButton: {
