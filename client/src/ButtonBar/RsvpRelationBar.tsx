@@ -12,7 +12,7 @@ import {
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../store/selectors/relationships';
-import { getHasMoreRelations, getInvitedRehearsal } from '../store/selectors/user';
+import { getHasMoreRelations, getInvitedRehearsal, getWeddingRsvp } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';
@@ -29,6 +29,7 @@ export const buttonBarStyles = createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 0,
+    height: 132,
     justifyContent: 'center',
     margin: theme.spacing.unit
   }
@@ -123,30 +124,32 @@ export class UnconnectedRsvpRelationBar extends React.Component<
 
 export const backSelector = (state: State, props: RsvpRelationBarParentProps) =>
   createSelector(
-    [getInvitedRehearsal, getRelationshipRsvp],
-    invitedRehearsal => {
+    [getInvitedRehearsal, getWeddingRsvp],
+    (invitedRehearsal, weddingRsvp) => {
       const relationId = extractRelationId(props);
       if (relationId === 0) {
-        if (invitedRehearsal) {
+        if (invitedRehearsal && weddingRsvp) {
           return '/rsvp/rehearsal/';
         }
         return '/rsvp/details/';
       }
       const prevRelation = relationId - 1;
+      const prevParams = {
+        ...props,
+        match: {
+          ...props.match,
+          params: { relationId: `${prevRelation}` }
+        }
+      };
       if (
-        getRelationshipInvitedRehearsal(state, {
-          ...props,
-          match: {
-            ...props.match,
-            params: { relationId: `${prevRelation}` }
-          }
-        })
+        getRelationshipInvitedRehearsal(state, prevParams) &&
+        getRelationshipRsvp(state, prevParams)
       ) {
         return `/rsvp/rehearsal/${prevRelation}`;
       }
       return `/rsvp/details/${prevRelation}`;
     }
-  )(state, props);
+  )(state);
 
 export const disableImGoingSelector = (
   state: State,

@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -11,20 +11,37 @@ import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { getWeddingRsvp } from '../../store/selectors/user';
 
+export const styles = createStyles({
+  standardCard: {
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
+    position: 'relative'
+  }
+});
+
 export interface RsvpStateProps {
   weddingRsvp?: boolean;
 }
 
-export class UnconnectedRsvp extends React.Component<RsvpStateProps> {
-  constructor(props: RsvpStateProps) {
+export interface RsvpParentProps extends WithStyles<typeof styles> {}
+
+export type RsvpProps = RsvpParentProps & RsvpStateProps;
+
+export class UnconnectedRsvp extends React.Component<RsvpProps> {
+  constructor(props: RsvpProps) {
     super(props);
   }
 
   public render() {
-    const { weddingRsvp } = this.props;
+    const {
+      weddingRsvp,
+      classes: { standardCard }
+    } = this.props;
     return (
       <ColumnLayout>
         <ProfileCard
+          className={standardCard}
           image={justinMarisa}
           title="Justin and Marisa's Wedding"
           blurb={
@@ -55,4 +72,6 @@ export const mapStateToProps = createSelector(
   })
 );
 
-export const Rsvp = connect(mapStateToProps)(UnconnectedRsvp);
+export const UnstyledRsvp = connect(mapStateToProps)(UnconnectedRsvp);
+
+export const Rsvp = withStyles(styles)(UnstyledRsvp);

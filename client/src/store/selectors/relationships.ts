@@ -6,6 +6,8 @@ export const getRelationshipsCacheStatus = ({
   relationshipsCacheStatus
 }: State) => relationshipsCacheStatus;
 
+export const getAllRelationships = ({ relationships }: State) => relationships;
+
 export const getRelationship = (
   { relationships }: State,
   props: RelationIdRouteProps

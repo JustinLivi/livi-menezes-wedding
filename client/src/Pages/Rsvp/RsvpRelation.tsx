@@ -1,3 +1,4 @@
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import { forEach, range } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -23,6 +24,15 @@ import { getInvitedRehearsal } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { Loading } from './Loading';
 
+export const styles = createStyles({
+  standardCard: {
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
+    position: 'relative'
+  }
+});
+
 export interface RsvpRelationStateProps {
   cacheStatus: CacheStatus;
   userId?: string;
@@ -35,9 +45,12 @@ export interface RsvpRelationDispatchProps {
   fetchUser: typeof fetchUser;
 }
 
+export type RsvpRelationParentProps = WithStyles<typeof styles> &
+  RelationIdRouteProps;
+
 export type RsvpRelationProps = RsvpRelationStateProps &
   RsvpRelationDispatchProps &
-  RelationIdRouteProps;
+  RsvpRelationParentProps;
 
 export class UnconnectedRsvpRelation extends React.Component<
   RsvpRelationProps
@@ -57,13 +70,21 @@ export class UnconnectedRsvpRelation extends React.Component<
   }
 
   public render() {
-    const { name, photo, match: matched, cacheStatus, activeStep } = this.props;
+    const {
+      name,
+      photo,
+      match: matched,
+      cacheStatus,
+      activeStep,
+      classes: { standardCard }
+    } = this.props;
     return (
       <ColumnLayout>
         {cacheStatus === CacheStatus.UP_TO_DATE ||
         cacheStatus === CacheStatus.PERSISTING ? (
           <React.Fragment>
             <ProfileCard
+              className={standardCard}
               image={
                 photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
               }
@@ -81,7 +102,7 @@ export class UnconnectedRsvpRelation extends React.Component<
   }
 }
 
-const activeStepSelector = (state: State, props: RelationIdRouteProps) =>
+const activeStepSelector = (state: State, props: RsvpRelationParentProps) =>
   createSelector(
     [getInvitedRehearsal],
     invitedRehearsal => {
@@ -111,7 +132,7 @@ const activeStepSelector = (state: State, props: RelationIdRouteProps) =>
     }
   )(state);
 
-export const mapStateToProps = (state: State, props: RelationIdRouteProps) =>
+export const mapStateToProps = (state: State, props: RsvpRelationParentProps) =>
   createSelector(
     [
       getRelationshipsCacheStatus,
@@ -132,7 +153,9 @@ export const actionCreators = {
   fetchUser
 };
 
-export const RsvpRelation = connect(
+export const UnstyledRsvpRelation = connect(
   mapStateToProps,
   actionCreators
 )(UnconnectedRsvpRelation);
+
+export const RsvpRelation = withStyles(styles)(UnstyledRsvpRelation);

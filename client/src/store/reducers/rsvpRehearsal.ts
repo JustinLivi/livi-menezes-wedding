@@ -56,11 +56,11 @@ export const rsvpRehearsalSuccessReducer = createKeyableSuccessReducer<
       state.redirect =
         relationshipIndex < getRelationshipsCount(state) - 1
           ? `/rsvp/u/${relationshipIndex}`
-          : '/rsvp/complete';
+          : '/rsvp/review';
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
       state.redirect =
-        getRelationshipsCount(state) > 0 ? '/rsvp/u/0' : '/rsvp/complete';
+        getRelationshipsCount(state) > 0 ? '/rsvp/u/0' : '/rsvp/review';
     }
   }
 );

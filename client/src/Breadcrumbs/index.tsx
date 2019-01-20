@@ -48,7 +48,7 @@ export const UnconnectedBreadcrumbs: React.SFC<BreadcrumbsProps> = ({
       variant='progress'
       steps={maxSteps}
       position='static'
-      activeStep={activeStep}
+      activeStep={activeStep === -1 ? maxSteps : activeStep}
       nextButton={<React.Fragment />}
       backButton={<React.Fragment />}
     />

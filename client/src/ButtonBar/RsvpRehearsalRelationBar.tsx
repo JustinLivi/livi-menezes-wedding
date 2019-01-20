@@ -28,6 +28,7 @@ const styles = createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 0,
+    height: 132,
     justifyContent: 'center',
     margin: theme.spacing.unit
   }
@@ -154,7 +155,7 @@ export const nextSelector = (
     (weddingRsvp, hasMoreRelations) =>
       hasMoreRelations && weddingRsvp === undefined
         ? `/rsvp/u/${extractRelationId(props) + 1}`
-        : '/rsvp/complete'
+        : '/rsvp/review'
   )(state, props);
 
 export const mapStateToProps = (

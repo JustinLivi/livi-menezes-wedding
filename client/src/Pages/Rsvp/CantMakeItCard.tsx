@@ -24,7 +24,9 @@ const styles = createStyles({
     fontStyle: 'italic'
   },
   standardCard: {
-    overflow: 'initial',
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
     position: 'relative'
   },
   topName: {

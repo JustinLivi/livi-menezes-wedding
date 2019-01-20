@@ -5,7 +5,7 @@ import { StandardCard } from './StandardCard';
 
 const styles = createStyles({
   media: {
-    height: 360,
+    height: 350,
     maxHeight: 'calc(100vh - 350px)',
     maxWidth: '100%'
   },
@@ -19,6 +19,7 @@ export interface ProfileCardProps extends WithStyles<typeof styles> {
   image: string;
   title: string;
   blurb?: React.ReactNode;
+  className?: string;
 }
 
 export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
@@ -26,9 +27,10 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   title,
   blurb,
   children,
+  className,
   classes: { media, root }
 }) => (
-  <StandardCard>
+  <StandardCard className={className}>
     {children ? (
       <CardMedia className={media} title={title} image={image}>
         {children}

@@ -7,7 +7,8 @@ import { DetailsIcons } from './DetailsIcon';
 
 const styles = createStyles({
   buttonBar: {
-    flexGrow: 0
+    flexGrow: 0,
+    marginTop: 12
   },
   root: {
     alignItems: 'center',
@@ -15,6 +16,7 @@ const styles = createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 0,
+    height: 132,
     justifyContent: 'center',
     margin: theme.spacing.unit
   }

@@ -208,7 +208,7 @@ export const nextSelector = (
       if (hasMoreRelations) {
         return `/rsvp/u/${extractRelationId(props) + 1}`;
       }
-      return '/rsvp/complete';
+      return '/rsvp/review';
     }
   )(state, props);
 

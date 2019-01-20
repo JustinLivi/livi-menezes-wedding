@@ -24,7 +24,9 @@ const styles = createStyles({
     fontStyle: 'italic'
   },
   standardCard: {
-    overflow: 'initial',
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
     position: 'relative'
   },
   topName: {
@@ -80,8 +82,8 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
       <StandardCard className={standardCard}>
         <CardContent className={content}>
           <Grid className={avatar}>
-            <Avatar alt={username || 'Me'} src={photo}>
-              {username || name}
+            <Avatar alt={username || name || 'Loading...'} src={photo}>
+              {username || name || 'Loading...'}
             </Avatar>
           </Grid>
           <Typography

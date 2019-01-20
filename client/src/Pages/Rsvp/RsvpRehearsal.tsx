@@ -26,7 +26,9 @@ const styles = createStyles({
     paddingTop: 25
   },
   standardCard: {
-    overflow: 'initial',
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
     position: 'relative'
   },
   topName: {

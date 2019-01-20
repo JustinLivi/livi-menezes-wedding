@@ -1,5 +1,6 @@
 import { createStyles, Icon, SvgIcon, WithStyles, withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
+import classnames from 'classnames';
 import * as React from 'react';
 
 import { theme } from '../theme';
@@ -32,9 +33,11 @@ const styles = createStyles({
 
 export interface CantMakeItProps extends WithStyles<typeof styles> {
   onClick: React.MouseEventHandler;
+  className?: string;
   selected?: boolean;
   disabled?: boolean;
   hideHelp?: true;
+  fontSize?: 'small' | 'inherit' | 'default' | 'large';
 }
 
 export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
@@ -42,12 +45,14 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
   hideHelp,
   onClick,
   selected,
+  className,
+  fontSize,
   classes: { root, rootDiv, label, disabled, largeButton }
 }) => (
   <div className={rootDiv}>
     <Fab
       aria-label="Can't make it"
-      className={largeButton}
+      className={classnames(largeButton, className)}
       classes={{
         disabled,
         root: selected ? root : undefined
@@ -55,7 +60,7 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
       onClick={onClick}
       disabled={isDisabled}
     >
-      <Icon fontSize='large' color='inherit'>
+      <Icon fontSize={fontSize || 'large'} color='inherit'>
         <SvgIcon
           fontSize='inherit'
           titleAccess="Can't make it"

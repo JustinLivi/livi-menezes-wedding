@@ -107,9 +107,6 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
           />
         )}
         <Breadcrumbs activeStep={1} />
-        {address && (
-          <div className={help}>Continue to RSVP for friends and family</div>
-        )}
         {address && relationships ? (
           <ContinueBar back='/' next={next} />
         ) : (
@@ -133,7 +130,7 @@ export const nextSelector = createSelector(
     if (relationshipsCount > 0) {
       return '/rsvp/u/0';
     }
-    return '/rsvp/complete';
+    return '/rsvp/review';
   }
 );
 

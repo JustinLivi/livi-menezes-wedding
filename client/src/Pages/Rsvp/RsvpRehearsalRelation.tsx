@@ -37,10 +37,6 @@ const styles = createStyles({
   content: {
     paddingTop: 25
   },
-  standardCard: {
-    overflow: 'initial',
-    position: 'relative'
-  },
   topName: {
     marginBottom: 15
   }

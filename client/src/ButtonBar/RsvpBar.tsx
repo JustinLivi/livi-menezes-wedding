@@ -21,6 +21,7 @@ const styles = createStyles({
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 0,
+    height: 132,
     justifyContent: 'center',
     margin: theme.spacing.unit
   }
