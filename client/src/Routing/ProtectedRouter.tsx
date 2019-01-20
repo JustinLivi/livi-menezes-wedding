@@ -7,7 +7,7 @@ import { Profile } from '../common';
 import { NavBar } from '../NavBar';
 import { LoginPage } from '../Pages/Login';
 import { SideBar } from '../SideBar';
-import { getProfile } from '../store/selectors';
+import { getProfile } from '../store/selectors/user';
 import { ProtectedRoutes } from './ProtectedRoutes';
 
 export const styles = createStyles({

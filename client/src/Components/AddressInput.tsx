@@ -67,9 +67,9 @@ export class UnstyledAddressInput extends React.Component<
         textFieldProps={{
           autoFocus: false,
           fullWidth: true,
-          label: 'Your home address (for thank yous!)',
+          label: 'Home address (for thank yous!)',
           onChange,
-          placeholder: 'Your home address',
+          placeholder: 'Home address',
           value
         }}
       />

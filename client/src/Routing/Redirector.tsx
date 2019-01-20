@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { redirected } from '../store/actions/redirect';
-import { getRedirect } from '../store/selectors';
+import { getRedirect } from '../store/selectors/user';
 
 export interface RedirectorStateProps {
   to?: string;

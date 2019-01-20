@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { rsvpCeremony } from '../store/actions/rsvpCeremony';
-import { getUserCacheStatus, getUserId, getWeddingRsvp } from '../store/selectors';
+import { getUserCacheStatus, getUserId, getWeddingRsvp } from '../store/selectors/user';
 import { CacheStatus } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';

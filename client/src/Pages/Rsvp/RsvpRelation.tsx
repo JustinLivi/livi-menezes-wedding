@@ -4,20 +4,19 @@ import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { RsvpContinueBar } from '../../ButtonBar/RsvpContinueBar';
-import { DetailsUpdates } from '../../common';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
-import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
 import { fetchUser } from '../../store/actions/user';
+import { extractRelationId, RelationIdRouteProps } from '../../store/selectors/common';
 import {
   getRelationshipId,
   getRelationshipName,
   getRelationshipPhoto,
   getRelationshipRsvp,
   getRelationshipsCacheStatus,
-} from '../../store/selectors';
+} from '../../store/selectors/relationships';
 import { CacheStatus } from '../../store/stateDefinition';
 
 export interface RsvpRelationStateProps {
@@ -29,18 +28,12 @@ export interface RsvpRelationStateProps {
 }
 
 export interface RsvpRelationDispatchProps {
-  updateDetails: typeof updateDetails;
-  changeDetails: typeof changeDetails;
   fetchUser: typeof fetchUser;
-}
-
-export interface RsvpRelationParentProps {
-  match: match<{ relationId: string }>;
 }
 
 export type RsvpRelationProps = RsvpRelationStateProps &
   RsvpRelationDispatchProps &
-  RsvpRelationParentProps;
+  RelationIdRouteProps;
 
 export class UnconnectedRsvpRelation extends React.Component<
   RsvpRelationProps
@@ -50,34 +43,14 @@ export class UnconnectedRsvpRelation extends React.Component<
   }
 
   public componentDidMount() {
-    const {
-      cacheStatus,
-      fetchUser: fetch,
-      userId,
-      match: {
-        params: { relationId }
-      }
-    } = this.props;
+    const { cacheStatus, fetchUser: fetch, userId } = this.props;
     if (cacheStatus === CacheStatus.BEHIND && userId) {
-      fetch({ userId, relationshipIndex: parseInt(relationId, 10) });
+      fetch({ userId, relationshipIndex: extractRelationId(this.props) });
     }
   }
 
-  public update = (value: DetailsUpdates) => {
-    const { updateDetails: update, userId } = this.props;
-    if (userId) {
-      update({
-        ...value,
-        userId
-      });
-    }
-  };
-
   public render() {
     const { name, photo, match: matched } = this.props;
-    const {
-      params: { relationId }
-    } = matched;
     return (
       <ColumnLayout>
         <ProfileCard
@@ -111,9 +84,7 @@ export const mapStateToProps = createSelector(
 );
 
 export const actionCreators = {
-  changeDetails,
-  fetchUser,
-  updateDetails
+  fetchUser
 };
 
 export const RsvpRelation = connect(

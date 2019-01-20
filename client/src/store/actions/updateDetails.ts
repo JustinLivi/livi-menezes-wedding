@@ -1,13 +1,12 @@
-import { Action } from 'redux';
-
 import { DetailsUpdates, Endpoints, UpdateDetailsPayload, UserData } from '../../common';
-import { createActionCreator } from '../../Util/createKeyableReducer';
+import { createActionCreator, FluxStandardAction } from '../../Util/createKeyableReducer';
 import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
 import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 
 export interface UpdateDetailsMeta
   extends RsaaMeta<'POST', Endpoints.RSVP_DETAILS> {
   body: UpdateDetailsPayload;
+  params: { relationshipIndex?: number };
 }
 
 export type UpdateDetailsActionSet = RsaaActionSet<
@@ -17,25 +16,48 @@ export type UpdateDetailsActionSet = RsaaActionSet<
 >;
 
 export const updateDetails = createRsaaActionCreator<
-  UpdateDetailsMeta['body'],
+  {
+    body: UpdateDetailsMeta['body'];
+    params: UpdateDetailsMeta['params'];
+  },
   UpdateDetailsActionSet
->(body => ({
+>(({ body, params }) => ({
   body,
   endpoint: Endpoints.RSVP_DETAILS,
-  method: 'POST'
+  method: 'POST',
+  params
 }));
 
 export const CHANGE_DETAILS = 'CHANGE_DETAILS';
 export type CHANGE_DETAILS = 'CHANGE_DETAILS';
 
-export interface ChangeDetailsAction extends Action<CHANGE_DETAILS> {
-  updates: DetailsUpdates;
+export interface ChangeDetailsAction
+  extends FluxStandardAction<CHANGE_DETAILS> {
+  payload: DetailsUpdates;
 }
 
 export const changeDetails = createActionCreator<
   DetailsUpdates,
   ChangeDetailsAction
->(updates => ({
-  type: CHANGE_DETAILS,
-  updates
+>(payload => ({
+  payload,
+  type: CHANGE_DETAILS
+}));
+
+export const CHANGE_DETAILS_RELATION = 'CHANGE_DETAILS_RELATION';
+export type CHANGE_DETAILS_RELATION = 'CHANGE_DETAILS_RELATION';
+
+export interface ChangeDetailsRelationAction
+  extends FluxStandardAction<CHANGE_DETAILS_RELATION> {
+  payload: DetailsUpdates;
+  meta: { relationIndex: number };
+}
+
+export const changeDetailsRelation = createActionCreator<
+  { updates: DetailsUpdates; relationIndex: number },
+  ChangeDetailsRelationAction
+>(({ updates, relationIndex }) => ({
+  meta: { relationIndex },
+  payload: updates,
+  type: CHANGE_DETAILS_RELATION
 }));

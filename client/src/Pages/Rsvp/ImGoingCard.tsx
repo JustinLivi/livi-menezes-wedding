@@ -29,6 +29,7 @@ const styles = createStyles({
 export interface ImGoingCardParentProps extends WithStyles<typeof styles> {
   updateDetails: (updates: DetailsUpdates) => void;
   changeDetails: (updates: DetailsUpdates) => void;
+  username?: string;
 }
 
 export type ImGoingCardProps = DetailsUpdates & ImGoingCardParentProps;
@@ -59,6 +60,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
 
   public render() {
     const {
+      username,
       classes: { content, topName, italic, standardCard, centered },
       address,
       favoriteDanceSong,
@@ -73,18 +75,21 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
             variant='body1'
             component='p'
           >
-            I'm going!
+            {username ? `${username} is` : "I'm"} going!
           </Typography>
           <Typography
             className={classnames(topName, centered)}
             variant='h6'
             component='p'
           >
-            We're excited to see you there!
+            {username
+              ? "We're excited they're coming!"
+              : "We're excited to see you there!"}
           </Typography>
           <Typography className={topName} component='p'>
-            If you wouldn't mind, we'd like to collect just a few more details
-            from you
+            {username
+              ? `Can you fill out these details for ${username}?`
+              : "If you wouldn't mind, we'd like to collect just a few more details from you"}
           </Typography>
           <AddressInput
             onChange={this.handleChange('address')}
@@ -93,7 +98,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
           />
           <TextField
             id='standard-name'
-            label='Your favorite dance song'
+            label='Favorite dance song'
             fullWidth
             value={favoriteDanceSong}
             onChange={this.handleChange('favoriteDanceSong')}

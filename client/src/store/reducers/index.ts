@@ -10,6 +10,7 @@ import { redirectReducer } from './redirect';
 import { rsvpCeremonyFailureReducer, rsvpCeremonyRequestReducer, rsvpCeremonySuccessReducer } from './rsvpCeremony';
 import {
   changeDetailsReducer,
+  changeDetailsRelationReducer,
   updateDetailsFailureReducer,
   updateDetailsRequestReducer,
   updateDetailsSuccessReducer,
@@ -30,6 +31,7 @@ const apiReducers = combineKeyableRsaaReducers<State>(initialState)(
 
 const standardReducers = combineKeyableReducers<State>(initialState)(
   changeDetailsReducer,
+  changeDetailsRelationReducer,
   redirectReducer
 );
 

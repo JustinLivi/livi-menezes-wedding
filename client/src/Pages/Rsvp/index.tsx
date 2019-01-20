@@ -5,40 +5,20 @@ import { createSelector } from 'reselect';
 
 import { DetailsIcons } from '../../ButtonBar/Details';
 import { RsvpBar } from '../../ButtonBar/RsvpBar';
-import { DetailsUpdates } from '../../common';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
-import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
-import { getRelationshipId, getUserId, getWeddingRsvp } from '../../store/selectors';
+import { changeDetailsRelation, updateDetails } from '../../store/actions/updateDetails';
+import { getWeddingRsvp } from '../../store/selectors/user';
 
 export interface RsvpStateProps {
-  userId?: string;
-  relationId?: string;
   weddingRsvp?: boolean;
 }
 
-export interface RsvpDispatchProps {
-  updateDetails: typeof updateDetails;
-  changeDetails: typeof changeDetails;
-}
-
-export type RsvpProps = RsvpStateProps & RsvpDispatchProps;
-
-export class UnconnectedRsvp extends React.Component<RsvpProps> {
-  constructor(props: RsvpProps) {
+export class UnconnectedRsvp extends React.Component<RsvpStateProps> {
+  constructor(props: RsvpStateProps) {
     super(props);
   }
-
-  public update = (value: DetailsUpdates) => {
-    const { updateDetails: update, userId } = this.props;
-    if (userId) {
-      update({
-        ...value,
-        userId
-      });
-    }
-  };
 
   public render() {
     const { weddingRsvp } = this.props;
@@ -69,16 +49,14 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
 }
 
 export const mapStateToProps = createSelector(
-  [getWeddingRsvp, getUserId, getRelationshipId],
-  (weddingRsvp, userId, relationId) => ({
-    relationId,
-    userId,
+  [getWeddingRsvp],
+  weddingRsvp => ({
     weddingRsvp
   })
 );
 
 export const actionCreators = {
-  changeDetails,
+  changeDetails: changeDetailsRelation,
   updateDetails
 };
 

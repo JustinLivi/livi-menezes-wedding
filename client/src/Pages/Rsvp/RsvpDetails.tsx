@@ -15,7 +15,7 @@ import {
   getRelationships,
   getUserId,
   getWeddingRsvp,
-} from '../../store/selectors';
+} from '../../store/selectors/user';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
 
@@ -56,8 +56,8 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
     const { updateDetails: update, userId } = this.props;
     if (userId) {
       update({
-        ...value,
-        userId
+        body: { ...value, userId },
+        params: {}
       });
     }
   };

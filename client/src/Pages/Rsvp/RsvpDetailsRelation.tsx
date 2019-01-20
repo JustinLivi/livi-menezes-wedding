@@ -7,15 +7,20 @@ import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
-import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
+import { changeDetailsRelation, updateDetails } from '../../store/actions/updateDetails';
+import { fetchUser } from '../../store/actions/user';
+import { extractRelationId, RelationIdRouteProps } from '../../store/selectors/common';
 import {
-  getAddress,
-  getDietaryRestrictions,
-  getFavoriteDanceSong,
-  getRelationships,
-  getUserId,
-  getWeddingRsvp,
-} from '../../store/selectors';
+  getRelationshipAddress,
+  getRelationshipDietaryRestrictions,
+  getRelationshipFavoriteDanceSong,
+  getRelationshipId,
+  getRelationshipName,
+  getRelationshipRsvp,
+  getRelationshipsCacheStatus,
+} from '../../store/selectors/relationships';
+import { getHasMoreRelations } from '../../store/selectors/user';
+import { CacheStatus } from '../../store/stateDefinition';
 import { CantMakeItCard } from './CantMakeItCard';
 import { ImGoingCard } from './ImGoingCard';
 
@@ -33,73 +38,98 @@ export interface RsvpDetailsRelationStateProps {
   favoriteDanceSong?: string;
   address?: string;
   dietaryRestrictions?: string;
-  relationships?: string[];
+  hasMoreRelations?: true;
+  username?: string;
+  cacheStatus: CacheStatus;
 }
 
 export interface RsvpDetailsRelationDispatchProps {
+  fetchUser: typeof fetchUser;
   updateDetails: typeof updateDetails;
-  changeDetails: typeof changeDetails;
+  changeDetails: typeof changeDetailsRelation;
 }
 
 export interface RsvpDetailsRelationParentProps
   extends WithStyles<typeof styles> {}
 
 export type RsvpDetailsRelationProps = RsvpDetailsRelationStateProps &
+  RelationIdRouteProps &
   RsvpDetailsRelationDispatchProps &
   RsvpDetailsRelationParentProps;
 
 export class UnstyledRsvpDetailsRelation extends React.Component<
   RsvpDetailsRelationProps
 > {
+  private relationId: number;
+
   constructor(props: RsvpDetailsRelationProps) {
     super(props);
+    this.relationId = extractRelationId(this.props);
+  }
+
+  public componentDidMount() {
+    const { cacheStatus, fetchUser: fetch, userId } = this.props;
+    if (cacheStatus === CacheStatus.BEHIND && userId) {
+      fetch({ userId, relationshipIndex: this.relationId });
+    }
   }
 
   public update = (value: DetailsUpdates) => {
     const { updateDetails: update, userId } = this.props;
     if (userId) {
       update({
-        ...value,
-        userId
+        body: { ...value, userId },
+        params: { relationshipIndex: this.relationId }
       });
     }
   };
 
+  public change = (updates: DetailsUpdates) => {
+    const { changeDetails: change } = this.props;
+    change({
+      relationIndex: this.relationId,
+      updates
+    });
+  };
+
   public render() {
     const {
-      changeDetails: change,
       favoriteDanceSong,
       address,
       weddingRsvpDetails,
       dietaryRestrictions,
-      relationships,
+      hasMoreRelations,
+      username,
       classes: { help }
     } = this.props;
+    const back = `/rsvp/u/${this.relationId}`;
+    const next = `/rsvp/u/${this.relationId + 1}`;
     return (
       <ColumnLayout>
         {weddingRsvpDetails ? (
           <ImGoingCard
+            username={username}
             address={address}
-            changeDetails={change}
+            changeDetails={this.change}
             dietaryRestrictions={dietaryRestrictions}
             favoriteDanceSong={favoriteDanceSong}
             updateDetails={this.update}
           />
         ) : (
           <CantMakeItCard
-            changeDetails={change}
+            changeDetails={this.change}
             updateDetails={this.update}
             address={address}
           />
         )}
-        {address && (
+        {address && hasMoreRelations && (
           <div className={help}>Continue to RSVP for friends and family</div>
         )}
-        {address && relationships ? (
-          <ContinueBar back='/' next='/rsvp/u/0' />
+        {address && hasMoreRelations ? (
+          <ContinueBar back={back} next={next} />
         ) : (
           <div className={help}>
-            <Details to='/' iconType={DetailsIcons.backArrow} />
+            <Details to={back} iconType={DetailsIcons.backArrow} />
           </div>
         )}
       </ColumnLayout>
@@ -113,32 +143,39 @@ export const UnconnectedRsvpDetailsRelation = withStyles(styles)(
 
 export const mapStateToProps = createSelector(
   [
-    getWeddingRsvp,
-    getUserId,
-    getFavoriteDanceSong,
-    getAddress,
-    getDietaryRestrictions,
-    getRelationships
+    getRelationshipsCacheStatus,
+    getRelationshipRsvp,
+    getRelationshipId,
+    getRelationshipFavoriteDanceSong,
+    getRelationshipAddress,
+    getRelationshipDietaryRestrictions,
+    getHasMoreRelations,
+    getRelationshipName
   ],
   (
+    cacheStatus,
     weddingRsvpDetails,
     userId,
     favoriteDanceSong,
     address,
     dietaryRestrictions,
-    relationships
+    hasMoreRelations,
+    username
   ) => ({
     address,
+    cacheStatus,
     dietaryRestrictions,
     favoriteDanceSong,
-    relationships,
+    hasMoreRelations,
     userId,
+    username,
     weddingRsvpDetails
   })
 );
 
 export const actionCreators = {
-  changeDetails,
+  changeDetails: changeDetailsRelation,
+  fetchUser,
   updateDetails
 };
 

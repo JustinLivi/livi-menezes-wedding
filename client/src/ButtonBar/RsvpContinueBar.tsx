@@ -5,12 +5,8 @@ import { match } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { rsvpCeremony } from '../store/actions/rsvpCeremony';
-import {
-  getHasMoreRelations,
-  getRelationshipId,
-  getRelationshipRsvp,
-  getRelationshipsCacheStatus,
-} from '../store/selectors';
+import { getRelationshipId, getRelationshipRsvp, getRelationshipsCacheStatus } from '../store/selectors/relationships';
+import { getHasMoreRelations } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
 import { theme } from '../theme';
 import { CantMakeIt } from './CantMakeIt';
@@ -155,6 +151,16 @@ export const disableCantMakeItSelector = (
       weddingRsvp === false
   )(state, props);
 
+export const displaySkipSelector = (
+  state: State,
+  props: RsvpContinueBarParentProps
+): true | undefined =>
+  createSelector(
+    [getRelationshipRsvp, getHasMoreRelations],
+    (weddingRsvp, hasMoreRelations) =>
+      hasMoreRelations || weddingRsvp !== undefined || undefined
+  )(state, props);
+
 export const mapStateToProps = (
   state: State,
   props: RsvpContinueBarParentProps
@@ -164,7 +170,7 @@ export const mapStateToProps = (
     (weddingRsvp, userId) => ({
       disableCantMakeIt: disableCantMakeItSelector(state, props),
       disableImGoing: disableImGoingSelector(state, props),
-      displaySkip: getHasMoreRelations(state, props),
+      displaySkip: displaySkipSelector(state, props),
       userId,
       weddingRsvp
     })

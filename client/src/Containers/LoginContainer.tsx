@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { Profile } from '../common';
 import { ErrorMessage } from '../Components/ErrorMessage';
 import { fetchUser } from '../store/actions/user';
-import { getProfile, getUserCacheStatus } from '../store/selectors';
+import { getProfile, getUserCacheStatus } from '../store/selectors/user';
 import { CacheStatus } from '../store/stateDefinition';
 
 export interface LoginStateProps {

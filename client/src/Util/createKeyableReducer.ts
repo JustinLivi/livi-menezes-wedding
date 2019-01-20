@@ -1,16 +1,29 @@
 import immer, { Draft } from 'immer';
 import { mapValues } from 'lodash';
-import { Action } from 'redux';
+
+export interface FluxStandardAction<
+  ActionType extends string = any,
+  Payload = any,
+  Meta = any
+> {
+  type: ActionType;
+  payload?: Payload;
+  meta?: Meta;
+}
 
 export type ReducerMethod<
   State,
-  ReducerAction extends Action<ActionType> = Action<ActionType>,
+  ReducerAction extends FluxStandardAction<ActionType> = FluxStandardAction<
+    ActionType
+  >,
   ActionType extends string = ReducerAction['type']
 > = (state: Draft<State>, action: ReducerAction) => void | State;
 
 export interface KeyableReducer<
   State,
-  ReducerAction extends Action<ActionType> = Action<ActionType>,
+  ReducerAction extends FluxStandardAction<ActionType> = FluxStandardAction<
+    ActionType
+  >,
   ActionType extends string = ReducerAction['type']
 > {
   type: ActionType;
@@ -19,13 +32,13 @@ export interface KeyableReducer<
 
 export type ActionCreator<
   Params,
-  A extends Action<ActionType>,
+  A extends FluxStandardAction<ActionType>,
   ActionType extends string = A['type']
 > = (params: Params) => A;
 
 export const createActionCreator = <
   Params = never,
-  A extends Action<ActionType> = never,
+  A extends FluxStandardAction<ActionType> = never,
   ActionType extends string = A['type']
 >(
   actionCreator: ActionCreator<Params, A, ActionType>
@@ -33,7 +46,7 @@ export const createActionCreator = <
 
 export const createKeyableReducer = <
   State = never,
-  ReducerAction extends Action<ActionType> = never,
+  ReducerAction extends FluxStandardAction<ActionType> = never,
   ActionType extends string = ReducerAction['type']
 >(
   type: ActionType,
@@ -45,7 +58,7 @@ export const createKeyableReducer = <
 
 export const combineKeyableReducers = <State = never>(defaultState: State) => (
   ...keyableReducers: Array<KeyableReducer<State, any, any>>
-) => (baseState: State = defaultState, action: Action): State => {
+) => (baseState: State = defaultState, action: FluxStandardAction): State => {
   let newState: State = baseState;
   mapValues(keyableReducers, (reducer: KeyableReducer<State>) => {
     if (reducer.type === action.type) {
