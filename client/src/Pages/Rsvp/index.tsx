@@ -73,6 +73,7 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
           undefined
         )}
         <ProfileCard
+          swipe
           swipeRight={this.rsvp(true)}
           swipeLeft={this.rsvp(false)}
           className={standardCard}

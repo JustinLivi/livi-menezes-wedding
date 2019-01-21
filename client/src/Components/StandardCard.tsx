@@ -27,6 +27,7 @@ const styles = createStyles({
 });
 
 export interface StandardCardProps extends WithStyles<typeof styles> {
+  swipe?: boolean;
   className?: string;
   swipeRight?: () => void;
   swipeLeft?: () => void;
@@ -36,12 +37,14 @@ export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
   className,
   swipeRight,
   swipeLeft,
+  swipe,
   classes: { card, root, defaultCard },
   children
 }) => (
   <div className={root}>
     <Card className={classnames(defaultCard, className)} />
     <SwipeableCard
+      swipe={swipe}
       className={card}
       swipeRight={swipeRight}
       swipeLeft={swipeLeft}

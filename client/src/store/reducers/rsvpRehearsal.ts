@@ -30,10 +30,10 @@ export const rsvpRehearsalRequestReducer = createKeyableRequestReducer<
       state.relationships[relationshipIndex]
     ) {
       state.relationshipsCacheStatus = CacheStatus.PERSISTING;
-      state.relationships[relationshipIndex].attendingWedding = rsvp;
+      state.relationships[relationshipIndex].attendingRehearsal = rsvp;
     } else if (state.user) {
       state.userCacheStatus = CacheStatus.PERSISTING;
-      state.user.attendingWedding = rsvp;
+      state.user.attendingRehearsal = rsvp;
     }
   }
 );

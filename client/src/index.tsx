@@ -10,6 +10,14 @@ import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 import { store } from './store';
 
+const appHeight = () => {
+  const doc = document.documentElement;
+  if (doc) {
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+  }
+};
+window.addEventListener('resize', appHeight);
+appHeight();
 scrollTo(0, 0);
 ReactDOM.render(
   <Provider store={store}>

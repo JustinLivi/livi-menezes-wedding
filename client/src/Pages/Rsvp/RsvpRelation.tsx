@@ -7,10 +7,12 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRelationBar } from '../../ButtonBar/RsvpRelationBar';
+import { ItsaMatch } from '../../Components/ItsaMatch';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
+import { rsvpCeremony } from '../../store/actions/rsvpCeremony';
 import { fetchUser } from '../../store/actions/user';
 import { extractRelationId, RelationIdRouteProps } from '../../store/selectors/common';
 import {
@@ -18,9 +20,10 @@ import {
   getRelationshipInvitedRehearsal,
   getRelationshipName,
   getRelationshipPhoto,
+  getRelationshipRsvp,
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
-import { getInvitedRehearsal } from '../../store/selectors/user';
+import { getInvitedRehearsal, getRedirect } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { Loading } from './Loading';
 
@@ -39,10 +42,13 @@ export interface RsvpRelationStateProps {
   name?: string;
   photo?: string;
   activeStep: number;
+  weddingRsvp?: boolean;
+  redirect?: string;
 }
 
 export interface RsvpRelationDispatchProps {
   fetchUser: typeof fetchUser;
+  rsvpCeremony: typeof rsvpCeremony;
 }
 
 export type RsvpRelationParentProps = WithStyles<typeof styles> &
@@ -69,6 +75,16 @@ export class UnconnectedRsvpRelation extends React.Component<
     }
   }
 
+  public rsvp: (response: boolean) => () => void = response => () => {
+    const { rsvpCeremony: shouldRsvp, userId } = this.props;
+    if (userId) {
+      shouldRsvp({
+        body: { userId, rsvp: response },
+        params: { relationshipIndex: this.relationId }
+      });
+    }
+  };
+
   public render() {
     const {
       name,
@@ -76,14 +92,30 @@ export class UnconnectedRsvpRelation extends React.Component<
       match: matched,
       cacheStatus,
       activeStep,
-      classes: { standardCard }
+      classes: { standardCard },
+      weddingRsvp,
+      redirect
     } = this.props;
     return (
       <ColumnLayout>
         {cacheStatus === CacheStatus.UP_TO_DATE ||
         cacheStatus === CacheStatus.PERSISTING ? (
           <React.Fragment>
+            {weddingRsvp === true && redirect ? (
+              <ItsaMatch
+                leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                name={name}
+                rightPhoto={justinMarisa}
+                message={`${name} is going to Justin and Marisa's Wedding!`}
+                description="Justin and Marisa's Wedding"
+              />
+            ) : (
+              undefined
+            )}
             <ProfileCard
+              swipe
+              swipeRight={this.rsvp(true)}
+              swipeLeft={this.rsvp(false)}
               className={standardCard}
               image={
                 photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
@@ -138,19 +170,24 @@ export const mapStateToProps = (state: State, props: RsvpRelationParentProps) =>
       getRelationshipsCacheStatus,
       getRelationshipId,
       getRelationshipName,
-      getRelationshipPhoto
+      getRelationshipPhoto,
+      getRelationshipRsvp,
+      getRedirect
     ],
-    (cacheStatus, userId, name, photo) => ({
+    (cacheStatus, userId, name, photo, weddingRsvp, redirect) => ({
       activeStep: activeStepSelector(state, props),
       cacheStatus,
       name,
       photo,
-      userId
+      redirect,
+      userId,
+      weddingRsvp
     })
   )(state, props);
 
 export const actionCreators = {
-  fetchUser
+  fetchUser,
+  rsvpCeremony
 };
 
 export const UnstyledRsvpRelation = connect(

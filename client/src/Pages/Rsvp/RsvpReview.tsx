@@ -164,9 +164,9 @@ export class UnconnectedRsvpReview extends React.Component<
               handleImGoing={this.handleCeremonyClick(true, userId)}
               photo={photo}
               name={name}
-              attendingRehearsal={!!rehearsalRsvp}
-              rehearsal={!!invitedRehearsal}
-              attendingWedding={!!weddingRsvp}
+              attendingRehearsal={rehearsalRsvp}
+              rehearsal={!!weddingRsvp && !!invitedRehearsal}
+              attendingWedding={weddingRsvp}
             />
             {map(
               allRelationships,
@@ -196,7 +196,9 @@ export class UnconnectedRsvpReview extends React.Component<
                     photo={profile ? profile.photo : undefined}
                     name={relationName}
                     attendingRehearsal={relationAttendingRehearsal}
-                    rehearsal={!!relationRehearsal}
+                    rehearsal={
+                      !!relationAttendingWedding && !!relationRehearsal
+                    }
                     attendingWedding={relationAttendingWedding}
                   />
                 </React.Fragment>

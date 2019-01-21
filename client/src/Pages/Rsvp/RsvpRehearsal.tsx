@@ -7,29 +7,18 @@ import { createSelector } from 'reselect';
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRehearsalBar } from '../../ButtonBar/RsvpRehearsalBar';
 import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
+import { ItsaMatch } from '../../Components/ItsaMatch';
+import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
-import { getPhoto, getRehearsalRsvp } from '../../store/selectors/user';
+import justinMarisa from '../../profiles/justin-marisa.jpg';
+import { rsvpRehearsal } from '../../store/actions/rsvpRehearsal';
+import { getPhoto, getRedirect, getRehearsalRsvp, getUserId } from '../../store/selectors/user';
 import { AvatarCard } from './AvatarCard';
 
 const styles = createStyles({
   ...buttonBarStyles,
-  avatar: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: 5,
-    width: '100%'
-  },
   centered: {
     textAlign: 'center'
-  },
-  content: {
-    paddingTop: 25
-  },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
   },
   topName: {
     marginBottom: 15
@@ -39,12 +28,19 @@ const styles = createStyles({
 export interface RsvpRehearsalStateProps {
   rehearsalRsvp?: boolean;
   photo?: string;
+  redirect?: string;
+  userId?: string;
+}
+
+export interface RsvpRehearsalDispatchProps {
+  rsvpRehearsal: typeof rsvpRehearsal;
 }
 
 export interface RsvpRehearsalParentProps extends WithStyles<typeof styles> {}
 
 export type RsvpRehearsaltProps = RsvpRehearsalParentProps &
-  RsvpRehearsalStateProps;
+  RsvpRehearsalStateProps &
+  RsvpRehearsalDispatchProps;
 
 export class UnconnectedRsvpRehearsal extends React.Component<
   RsvpRehearsaltProps
@@ -53,15 +49,38 @@ export class UnconnectedRsvpRehearsal extends React.Component<
     super(props);
   }
 
+  public rsvp: (response: boolean) => () => void = response => () => {
+    const { rsvpRehearsal: shouldRsvp, userId } = this.props;
+    if (userId) {
+      shouldRsvp({ body: { userId, rsvp: response }, params: {} });
+    }
+  };
+
   public render() {
     const {
       rehearsalRsvp,
-      classes: { standardCard, content, avatar, topName, centered },
+      redirect,
+      classes: { topName, centered },
       photo
     } = this.props;
     return (
       <ColumnLayout>
-        <AvatarCard>
+        {rehearsalRsvp === true && redirect ? (
+          <ItsaMatch
+            leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+            name={name}
+            rightPhoto={justinMarisa}
+            message="You're going to the wedding rehearsal!"
+            description="Justin and Marisa's Wedding Rehearsal"
+          />
+        ) : (
+          undefined
+        )}
+        <AvatarCard
+          swipe
+          swipeRight={this.rsvp(true)}
+          swipeLeft={this.rsvp(false)}
+        >
           <Typography
             className={classnames(topName, centered)}
             variant='h6'
@@ -84,15 +103,22 @@ export class UnconnectedRsvpRehearsal extends React.Component<
 }
 
 export const mapStateToProps = createSelector(
-  [getRehearsalRsvp, getPhoto],
-  (rehearsalRsvp, photo) => ({
+  [getRehearsalRsvp, getPhoto, getRedirect, getUserId],
+  (rehearsalRsvp, photo, redirect, userId) => ({
     photo,
-    rehearsalRsvp
+    redirect,
+    rehearsalRsvp,
+    userId
   })
 );
 
-export const UnstyledRsvpRehearsal = connect(mapStateToProps)(
-  UnconnectedRsvpRehearsal
-);
+export const actionCreators = {
+  rsvpRehearsal
+};
+
+export const UnstyledRsvpRehearsal = connect(
+  mapStateToProps,
+  actionCreators
+)(UnconnectedRsvpRehearsal);
 
 export const RsvpRehearsal = withStyles(styles)(UnstyledRsvpRehearsal);

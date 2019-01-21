@@ -9,16 +9,22 @@ import { createSelector } from 'reselect';
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRehearsalRelationBar } from '../../ButtonBar/RsvpRehearsalRelationBar';
 import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
+import { ItsaMatch } from '../../Components/ItsaMatch';
+import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import justinMarisa from '../../profiles/justin-marisa.jpg';
+import { rsvpRehearsal } from '../../store/actions/rsvpRehearsal';
 import { fetchUser } from '../../store/actions/user';
 import { extractRelationId, RelationIdRouteProps } from '../../store/selectors/common';
 import {
   getRelationshipId,
   getRelationshipInvitedRehearsal,
   getRelationshipName,
+  getRelationshipPhoto,
+  getRelationshipRsvpRehearsal,
   getRelationshipsCacheStatus,
 } from '../../store/selectors/relationships';
-import { getInvitedRehearsal } from '../../store/selectors/user';
+import { getInvitedRehearsal, getRedirect } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { AvatarCardRelation } from './AvatarCardRelation';
 import { Loading } from './Loading';
@@ -47,10 +53,14 @@ export interface RsvpRehearsalRelationStateProps {
   userId?: string;
   name?: string;
   activeStep: number;
+  photo?: string;
+  redirect?: string;
+  rehearsalRsvp?: boolean;
 }
 
 export interface RsvpRehearsalRelationDispatchProps {
   fetchUser: typeof fetchUser;
+  rsvpRehearsal: typeof rsvpRehearsal;
 }
 
 export type RsvpRehearsalRelationParentProps = WithStyles<typeof styles> &
@@ -63,14 +73,26 @@ export type RsvpRehearsalRelationProps = RsvpRehearsalRelationStateProps &
 export class UnconnectedRsvpRehearsalRelation extends React.Component<
   RsvpRehearsalRelationProps
 > {
+  private relationId: number;
   constructor(props: RsvpRehearsalRelationProps) {
     super(props);
+    this.relationId = extractRelationId(this.props);
   }
+
+  public rsvp: (response: boolean) => () => void = response => () => {
+    const { rsvpRehearsal: shouldRsvp, userId } = this.props;
+    if (userId) {
+      shouldRsvp({
+        body: { userId, rsvp: response },
+        params: { relationshipIndex: this.relationId }
+      });
+    }
+  };
 
   public componentDidMount() {
     const { cacheStatus, fetchUser: fetch, userId } = this.props;
     if (cacheStatus === CacheStatus.BEHIND && userId) {
-      fetch({ userId, relationshipIndex: extractRelationId(this.props) });
+      fetch({ userId, relationshipIndex: this.relationId });
     }
   }
 
@@ -80,6 +102,9 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
       match: matched,
       cacheStatus,
       activeStep,
+      rehearsalRsvp,
+      redirect,
+      photo,
       classes: { topName, centered }
     } = this.props;
     return (
@@ -87,7 +112,23 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
         {cacheStatus === CacheStatus.UP_TO_DATE ||
         cacheStatus === CacheStatus.PERSISTING ? (
           <React.Fragment>
-            <AvatarCardRelation {...{ match: matched }}>
+            {rehearsalRsvp === true && redirect ? (
+              <ItsaMatch
+                leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                name={name}
+                rightPhoto={justinMarisa}
+                message={`${name} is going to the wedding rehearsal!`}
+                description="Justin and Marisa's Wedding Rehearsal"
+              />
+            ) : (
+              undefined
+            )}
+            <AvatarCardRelation
+              swipe
+              swipeLeft={this.rsvp(false)}
+              swipeRight={this.rsvp(true)}
+              {...{ match: matched }}
+            >
               <Typography
                 className={classnames(topName, centered)}
                 variant='h6'
@@ -153,17 +194,28 @@ export const mapStateToProps = (
   props: RsvpRehearsalRelationParentProps
 ) =>
   createSelector(
-    [getRelationshipsCacheStatus, getRelationshipId, getRelationshipName],
-    (cacheStatus, userId, name) => ({
+    [
+      getRelationshipsCacheStatus,
+      getRelationshipId,
+      getRelationshipName,
+      getRelationshipRsvpRehearsal,
+      getRedirect,
+      getRelationshipPhoto
+    ],
+    (cacheStatus, userId, name, rehearsalRsvp, redirect, photo) => ({
       activeStep: activeStepSelector(state, props),
       cacheStatus,
       name,
+      photo,
+      redirect,
+      rehearsalRsvp,
       userId
     })
   )(state, props);
 
 export const actionCreators = {
-  fetchUser
+  fetchUser,
+  rsvpRehearsal
 };
 
 export const UnstyledRsvpRehearsalRelation = connect(

@@ -92,7 +92,7 @@ export class UnconnectedRsvpRehearsalBar extends React.Component<
             help={weddingRsvp === undefined ? 'skip' : 'next'}
           />
           <ImGoing
-            help="they're going!"
+            help="I'm going!"
             selected={weddingRsvp}
             onClick={this.handleClick(true)}
             disabled={disableImGoing}
@@ -120,11 +120,8 @@ export const disableCantMakeItSelector = createSelector(
 );
 
 export const nextSelector = createSelector(
-  [getRehearsalRsvp, getRelationshipsCount],
-  (weddingRsvp, relationshipsCount) =>
-    relationshipsCount && weddingRsvp === undefined
-      ? '/rsvp/u/0'
-      : '/rsvp/review'
+  [getRelationshipsCount],
+  relationshipsCount => (relationshipsCount ? '/rsvp/u/0' : '/rsvp/review')
 );
 
 export const mapStateToProps = (state: State) =>

@@ -32,7 +32,11 @@ export interface AvatarCardStateProps {
   name?: string;
 }
 
-export interface AvatarCardParentProps extends WithStyles<typeof styles> {}
+export interface AvatarCardParentProps extends WithStyles<typeof styles> {
+  swipe?: boolean;
+  swipeRight?: () => void;
+  swipeLeft?: () => void;
+}
 
 export type AvatarCardProps = AvatarCardParentProps & AvatarCardStateProps;
 
@@ -44,12 +48,20 @@ export class UnconnectedAvatarCard extends React.Component<AvatarCardProps> {
   public render() {
     const {
       children,
+      swipe,
+      swipeRight,
+      swipeLeft,
       classes: { standardCard, content, avatar },
       photo,
       name
     } = this.props;
     return (
-      <StandardCard className={standardCard}>
+      <StandardCard
+        className={standardCard}
+        swipe={swipe}
+        swipeRight={swipeRight}
+        swipeLeft={swipeLeft}
+      >
         <CardContent className={content}>
           <Grid className={avatar}>
             <Avatar alt='You' src={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}>

@@ -10,6 +10,7 @@ export interface SwipeableCardStateProps {
 }
 
 export interface SwipeableCardParentProps {
+  swipe?: boolean;
   className?: string;
   swipeRight?: () => void;
   swipeLeft?: () => void;
@@ -38,6 +39,10 @@ export class UnconnectedSwipeableCard extends React.Component<
   }
 
   public componentDidMount() {
+    const { swipe } = this.props;
+    if (!swipe) {
+      return;
+    }
     document.onmousemove = this.handleMouseMove;
     document.onmouseup = this.handleMouseUp;
     document.ontouchmove = this.handleTouchMove;
@@ -45,6 +50,10 @@ export class UnconnectedSwipeableCard extends React.Component<
   }
 
   public componentWillUnmount() {
+    const { swipe } = this.props;
+    if (!swipe) {
+      return;
+    }
     document.onmousemove = null;
     document.onmouseup = null;
     document.ontouchmove = null;
@@ -126,8 +135,21 @@ export class UnconnectedSwipeableCard extends React.Component<
   };
 
   public render() {
-    const { children, direction, className } = this.props;
+    const { children, direction, className, swipe } = this.props;
     const { percentDragged, mouseDown } = this.state;
+    if (!swipe && !direction) {
+      return (
+        <div
+          className={className}
+          style={{
+            position: 'absolute',
+            width: 400
+          }}
+        >
+          {children}
+        </div>
+      );
+    }
     const config = { stiffness: 90, damping: 30 };
     let multiplier = 0;
     if (direction === 'left') {
