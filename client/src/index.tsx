@@ -19,11 +19,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 scrollTo(0, 100);
-// const $body = document.getElementsByTagName('body');
-// $body[0].setAttribute('style', 'position: absolute');
-addEventListener('scroll', () => {
-  scrollTo(0, 100);
-});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

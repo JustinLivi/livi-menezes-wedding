@@ -32,8 +32,6 @@ export class UnstyledAddressInput extends React.Component<
   AddressInputProps,
   AddressInputState
 > {
-  public menuAnchor?: HTMLElement | null;
-
   constructor(props: AddressInputProps) {
     super(props);
     this.state = {

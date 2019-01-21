@@ -15,7 +15,8 @@ export const styles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    minHeight: '100vh'
+    height: '100vh',
+    minHeight: 400
   }
 });
 

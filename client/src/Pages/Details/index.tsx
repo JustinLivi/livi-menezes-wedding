@@ -24,12 +24,6 @@ const styles = createStyles({
     paddingTop: 25,
     textAlign: 'center'
   },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
-  },
   topName: {
     marginBottom: 0
   }
@@ -38,10 +32,10 @@ const styles = createStyles({
 export interface DetailsProps extends WithStyles<typeof styles> {}
 
 export const UnstyledDetails: React.SFC<DetailsProps> = ({
-  classes: { root, topName, names, hr, italic, standardCard }
+  classes: { root, topName, names, hr, italic }
 }) => (
   <ColumnLayout>
-    <StandardCard className={standardCard}>
+    <StandardCard>
       <CardContent className={root}>
         <Typography gutterBottom variant='body1' component='p'>
           Together with their families

@@ -23,12 +23,6 @@ const styles = createStyles({
   italic: {
     fontStyle: 'italic'
   },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
-  },
   topName: {
     marginBottom: 15
   }
@@ -72,14 +66,14 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
     const {
       username,
       name,
-      classes: { avatar, content, topName, italic, standardCard, centered },
+      classes: { avatar, content, topName, italic, centered },
       address,
       favoriteDanceSong,
       dietaryRestrictions,
       photo
     } = this.props;
     return (
-      <StandardCard className={standardCard}>
+      <StandardCard>
         <CardContent className={content}>
           <Grid className={avatar}>
             <Avatar alt={username || name || 'Loading...'} src={photo}>

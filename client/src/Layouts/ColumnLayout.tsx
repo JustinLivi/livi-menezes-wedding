@@ -10,6 +10,7 @@ const styles = createStyles({
     flexGrow: 1,
     justifyContent: 'center',
     maxWidth: '100vw',
+    minHeight: 600,
     overflowX: 'hidden',
     paddingTop: 74
   }
