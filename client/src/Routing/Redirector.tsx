@@ -4,10 +4,12 @@ import { Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { redirected } from '../store/actions/redirect';
+import { getSwipe } from '../store/selectors/swipe';
 import { getRedirect } from '../store/selectors/user';
 
 export interface RedirectorStateProps {
   to?: string;
+  swipe?: string;
 }
 
 export interface RedirectorDispatchProps {
@@ -16,34 +18,61 @@ export interface RedirectorDispatchProps {
 
 export type RedirectorProps = RedirectorStateProps & RedirectorDispatchProps;
 
-export class UnconnectedRedirector extends React.Component<RedirectorProps> {
+export interface RedirectorLocalState {
+  timeout: NodeJS.Timeout | null;
+  redirect?: string;
+}
+
+export class UnconnectedRedirector extends React.Component<
+  RedirectorProps,
+  RedirectorLocalState
+> {
   constructor(props: RedirectorProps) {
     super(props);
+    this.state = {
+      timeout: null
+    };
   }
 
   public componentDidMount() {
-    const { to, redirected: handleRedirected } = this.props;
-    if (to) {
-      handleRedirected(undefined);
+    const { to, redirected: handleRedirected, swipe } = this.props;
+    const { timeout, redirect } = this.state;
+    if (to && !timeout && !redirect) {
+      this.setState({
+        timeout: setTimeout(
+          () => {
+            handleRedirected(undefined);
+            this.setState({ timeout: null, redirect: to });
+          },
+          swipe === 'left' ? 500 : 6000
+        )
+      });
     }
   }
 
   public componentDidUpdate() {
     this.componentDidMount();
+    const { redirect } = this.state;
+    if (redirect) {
+      this.setState({
+        redirect: undefined
+      });
+    }
   }
 
   public render() {
-    const { to } = this.props;
-    if (to) {
-      return <Redirect to={to} push />;
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={redirect} push />;
     }
     return <React.Fragment />;
   }
 }
 
 export const mapStateToProps = createSelector(
-  [getRedirect],
-  to => ({
+  [getRedirect, getSwipe],
+  (to, swipe) => ({
+    swipe,
     to
   })
 );

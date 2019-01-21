@@ -3,11 +3,16 @@ import classnames from 'classnames';
 import * as React from 'react';
 
 import { theme } from '../theme';
+import { SwipeableCard } from './SwipeableCard';
 
 const styles = createStyles({
   card: {
     flexGrow: 1,
-    maxWidth: 400
+    maxWidth: 'calc(100vw - 16px)'
+  },
+  defaultCard: {
+    maxWidth: 'calc(100vw - 16px)',
+    width: 400
   },
   root: {
     alignItems: 'center',
@@ -16,21 +21,33 @@ const styles = createStyles({
     flexDirection: 'row',
     flexGrow: 0,
     justifyContent: 'center',
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    maxWidth: '100vw'
   }
 });
 
 export interface StandardCardProps extends WithStyles<typeof styles> {
   className?: string;
+  swipeRight?: () => void;
+  swipeLeft?: () => void;
 }
 
 export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
   className,
-  classes: { card, root },
+  swipeRight,
+  swipeLeft,
+  classes: { card, root, defaultCard },
   children
 }) => (
   <div className={root}>
-    <Card className={classnames(card, className)}>{children}</Card>
+    <Card className={classnames(defaultCard, className)} />
+    <SwipeableCard
+      className={card}
+      swipeRight={swipeRight}
+      swipeLeft={swipeLeft}
+    >
+      <Card className={className}>{children}</Card>
+    </SwipeableCard>
   </div>
 );
 

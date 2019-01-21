@@ -22,6 +22,7 @@ export const rsvpCeremonyRequestReducer = createKeyableRequestReducer<
       }
     }
   ) => {
+    state.swipe = rsvp ? 'right' : 'left';
     if (
       relationshipIndex !== undefined &&
       state.relationships &&

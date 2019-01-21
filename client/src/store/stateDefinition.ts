@@ -9,6 +9,7 @@ export enum CacheStatus {
 }
 
 export interface State {
+  swipe?: 'left' | 'right';
   redirect?: string;
   relationshipsCacheStatus: CacheStatus;
   relationships: UserData[];

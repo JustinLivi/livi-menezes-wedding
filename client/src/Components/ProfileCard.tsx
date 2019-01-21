@@ -20,6 +20,8 @@ export interface ProfileCardProps extends WithStyles<typeof styles> {
   title: string;
   blurb?: React.ReactNode;
   className?: string;
+  swipeRight?: () => void;
+  swipeLeft?: () => void;
 }
 
 export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
@@ -28,9 +30,15 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   blurb,
   children,
   className,
+  swipeRight,
+  swipeLeft,
   classes: { media, root }
 }) => (
-  <StandardCard className={className}>
+  <StandardCard
+    className={className}
+    swipeRight={swipeRight}
+    swipeLeft={swipeLeft}
+  >
     {children ? (
       <CardMedia className={media} title={title} image={image}>
         {children}

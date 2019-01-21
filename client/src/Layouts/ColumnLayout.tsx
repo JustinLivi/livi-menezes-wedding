@@ -9,6 +9,8 @@ const styles = createStyles({
     flexDirection: 'column',
     flexGrow: 1,
     justifyContent: 'center',
+    maxWidth: '100vw',
+    overflowX: 'hidden',
     paddingTop: 74
   }
 });
