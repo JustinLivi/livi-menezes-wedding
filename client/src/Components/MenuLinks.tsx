@@ -6,9 +6,9 @@ import { Omit } from '../Util/util';
 
 export type MenuLink = React.ReactType<Omit<MenuItemProps, 'innerRef'>>;
 
-export const RsvpLink: MenuLink = props => <Link to='/' {...props} />;
+export const DetailsLink: MenuLink = props => <Link to='/' {...props} />;
 
-export const DetailsLink: MenuLink = props => <Link to='/details' {...props} />;
+export const RsvpLink: MenuLink = props => <Link to='/rsvp' {...props} />;
 
 export const OurStoryLink: MenuLink = props => (
   <Link to='/our-story' {...props} />

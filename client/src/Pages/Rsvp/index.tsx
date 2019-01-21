@@ -78,7 +78,7 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
           swipeLeft={this.rsvp(false)}
           className={standardCard}
           image={justinMarisa}
-          title="Justin and Marisa's Wedding"
+          title="RSVP Justin and Marisa's Wedding"
           blurb={
             <React.Fragment>
               <Typography component='p'>

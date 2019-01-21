@@ -89,6 +89,9 @@ export class UnstyledRsvpBar extends React.Component<RsvpBarProps> {
               selected={weddingRsvp === false}
             />
           )}
+          {!onlyInfo && (
+            <Details to={`/`} iconType={DetailsIcons.backArrow} help='back' />
+          )}
           <Details
             help={
               hideHelp

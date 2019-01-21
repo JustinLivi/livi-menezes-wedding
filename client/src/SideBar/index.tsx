@@ -47,14 +47,14 @@ export const UnstyledSideBar: React.SFC<SideBarProps> = ({
     <Divider />
     <List>
       <ListItem
+        icon={<Description />}
+        linkComponent={DetailsLink}
+        primary='Invitation'
+      />
+      <ListItem
         icon={<EmailRounded />}
         linkComponent={RsvpLink}
         primary='RSVP'
-      />
-      <ListItem
-        icon={<Description />}
-        linkComponent={DetailsLink}
-        primary='Details'
       />
       <ListItem
         icon={<People />}

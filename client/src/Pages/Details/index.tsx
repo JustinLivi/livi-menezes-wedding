@@ -2,6 +2,8 @@ import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@
 import classnames from 'classnames';
 import * as React from 'react';
 
+import { DetailsIcons } from '../../ButtonBar/Details';
+import { RsvpBar } from '../../ButtonBar/RsvpBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 
@@ -22,6 +24,12 @@ const styles = createStyles({
     paddingTop: 25,
     textAlign: 'center'
   },
+  standardCard: {
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
+    position: 'relative'
+  },
   topName: {
     marginBottom: 0
   }
@@ -30,10 +38,10 @@ const styles = createStyles({
 export interface DetailsProps extends WithStyles<typeof styles> {}
 
 export const UnstyledDetails: React.SFC<DetailsProps> = ({
-  classes: { root, topName, names, hr, italic }
+  classes: { root, topName, names, hr, italic, standardCard }
 }) => (
   <ColumnLayout>
-    <StandardCard>
+    <StandardCard className={standardCard}>
       <CardContent className={root}>
         <Typography gutterBottom variant='body1' component='p'>
           Together with their families
@@ -87,6 +95,11 @@ export const UnstyledDetails: React.SFC<DetailsProps> = ({
         </Typography>
       </CardContent>
     </StandardCard>
+    <RsvpBar
+      onlyInfo
+      toDetails='/rsvp'
+      detailsIconType={DetailsIcons.nextArrow}
+    />
   </ColumnLayout>
 );
 

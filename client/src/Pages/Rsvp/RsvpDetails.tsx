@@ -108,10 +108,10 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
         )}
         <Breadcrumbs activeStep={1} />
         {address && relationships ? (
-          <ContinueBar back='/' next={next} />
+          <ContinueBar back='/rsvp' next={next} />
         ) : (
           <div className={help}>
-            <Details to='/' iconType={DetailsIcons.backArrow} />
+            <Details to='/rsvp' iconType={DetailsIcons.backArrow} />
           </div>
         )}
       </ColumnLayout>

@@ -12,6 +12,12 @@ const styles = createStyles({
   root: {
     '&:last-child': { paddingBottom: 10 },
     paddingTop: 10
+  },
+  standardCard: {
+    height: 450,
+    maxHeight: 'calc(100vh - 260px)',
+    overflow: 'auto',
+    position: 'relative'
   }
 });
 
@@ -34,11 +40,11 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   swipe,
   swipeRight,
   swipeLeft,
-  classes: { media, root }
+  classes: { media, root, standardCard }
 }) => (
   <StandardCard
     swipe={swipe}
-    className={className}
+    className={className || standardCard}
     swipeRight={swipeRight}
     swipeLeft={swipeLeft}
   >

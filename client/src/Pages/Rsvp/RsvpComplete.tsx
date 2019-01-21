@@ -1,12 +1,12 @@
 import { createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
 import { root } from 'cheerio';
-import classnames from 'classnames';
 import * as React from 'react';
 
-import { Details, DetailsIcons } from '../../ButtonBar/Details';
+import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
+import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
-import { AvatarCard } from './AvatarCard';
+import celebrate from './Celebrate.jpg';
 
 const styles = createStyles({
   ...buttonBarStyles,
@@ -24,31 +24,21 @@ export const UnstyledRsvpComplete: React.SFC<CantMakeItCardProps> = ({
   classes: { topName, centered, buttonBar, root: buttonBarRoot }
 }) => (
   <ColumnLayout>
-    <AvatarCard>
-      <Typography
-        className={classnames(topName, centered)}
-        variant='h6'
-        component='p'
-      >
-        RSVP Complete!
-      </Typography>
-      <Typography className={topName} component='p'>
-        Thanks for responding!
-      </Typography>
-      <Typography className={topName} component='p'>
-        Check out some of the menu options or continue below to test your
-        knowledge of our story.
-      </Typography>
-    </AvatarCard>
-    <div className={buttonBarRoot}>
-      <div className={buttonBar}>
-        <Details
-          to='/our-story'
-          iconType={DetailsIcons.nextArrow}
-          help='continue'
-        />
-      </div>
-    </div>
+    <ProfileCard
+      image={celebrate}
+      title='RSVP Complete!'
+      blurb={
+        <React.Fragment>
+          <Typography component='p'>
+            Thanks for taking the time to respond!
+          </Typography>
+          <Typography component='p'>
+            Continue below to test your knowledge of our story.
+          </Typography>
+        </React.Fragment>
+      }
+    />
+    <ContinueBar back='/rsvp/review' next='/our-story' />
   </ColumnLayout>
 );
 
