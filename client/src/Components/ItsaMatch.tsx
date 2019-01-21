@@ -34,11 +34,13 @@ const styles = createStyles({
   root: {
     bottom: 0,
     fontSize: '25em',
+    height: '100vh',
     left: 0,
     overflow: 'visible',
     position: 'fixed',
     right: 0,
     top: 0,
+    width: '100vw',
     zIndex: 2000
   },
   successMessage: {
@@ -80,6 +82,8 @@ export class UnstyledItsaMatch extends React.Component<
     }, 5000);
     setTimeout(() => {
       this.setState({ start: true });
+      const $body = document.getElementsByTagName('body');
+      $body[0].setAttribute('style', 'position: absolute');
     }, 500);
   }
 

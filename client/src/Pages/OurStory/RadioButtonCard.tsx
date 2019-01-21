@@ -40,6 +40,9 @@ export const styles = createStyles({
   expand: {
     flexGrow: 1
   },
+  formControlRoot: {
+    display: 'flex'
+  },
   icon: {
     marginLeft: 5
   },
@@ -95,14 +98,15 @@ export class UnstyledRadioButtonCard extends React.Component<
         correctRadio,
         incorrectRadio,
         icon,
-        expand
+        expand,
+        formControlRoot
       }
     } = this.props;
     return (
       <StandardCard>
         <CardContent>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>{question}</FormLabel>
+          <FormControl classes={{ root: formControlRoot }} component='fieldset'>
+            <FormLabel component='h1'>{question}</FormLabel>
             <RadioGroup
               aria-label={question}
               value={`${value}`}

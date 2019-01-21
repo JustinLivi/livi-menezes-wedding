@@ -41,8 +41,11 @@ export class UnconnectedRedirector extends React.Component<
       this.setState({
         timeout: setTimeout(
           () => {
+            const $body = document.getElementsByTagName('body');
+            $body[0].setAttribute('style', '');
             handleRedirected(undefined);
             this.setState({ timeout: null, redirect: to });
+            scrollTo(0, 100);
           },
           swipe === 'left' ? 500 : 6000
         )

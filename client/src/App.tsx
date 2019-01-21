@@ -9,38 +9,22 @@ import { theme } from './theme';
 
 export class App extends Component {
   public componentDidMount() {
-    const $root = document.getElementById('root');
-    if ($root) {
-      $root.scrollTo(0, 100);
-    }
+    scrollTo(0, 100);
   }
 
   public componentDidUpdate() {
-    this.componentDidMount();
+    scrollTo(0, 100);
   }
 
   public render() {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: '100vh',
-          maxHeight: '100vh',
-          maxWidth: '100vw',
-          minHeight: '100vh',
-          minWidth: '100vw',
-          width: '100vw'
-        }}
-      >
-        <Router>
-          <MuiThemeProvider theme={theme}>
-            <Routes />
-            <Redirector />
-            <CacheRefresher />
-          </MuiThemeProvider>
-        </Router>
-      </div>
+      <Router>
+        <MuiThemeProvider theme={theme}>
+          <Routes />
+          <Redirector />
+          <CacheRefresher />
+        </MuiThemeProvider>
+      </Router>
     );
   }
 }
