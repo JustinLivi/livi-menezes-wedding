@@ -85,6 +85,10 @@ functions:
           path: /rsvp/details
           method: post
           cors: true
+      - http:
+          path: /quiz/{proxy+}
+          method: post
+          cors: true
 
 resources:
   Resources:

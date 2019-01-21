@@ -1,6 +1,9 @@
+import reduceReducers from 'reduce-reducers';
+
 import { Endpoints } from '../../common';
-import { createKeyableReducer } from '../../Util/createKeyableReducer';
+import { combineKeyableReducers, createKeyableReducer } from '../../Util/createKeyableReducer';
 import {
+  combineKeyableRsaaReducers,
   createKeyableFailureReducer,
   createKeyableRequestReducer,
   createKeyableSuccessReducer,
@@ -12,7 +15,7 @@ import {
   ChangeDetailsRelationAction,
   UpdateDetailsActionSet,
 } from '../actions/updateDetails';
-import { CacheStatus, State } from '../stateDefinition';
+import { CacheStatus, initialState, State } from '../stateDefinition';
 
 export const updateDetailsRequestReducer = createKeyableRequestReducer<
   State,
@@ -101,6 +104,14 @@ export const updateDetailsFailureReducer = createKeyableFailureReducer<
   }
 );
 
+export const updateDetailsApiRootReducer = combineKeyableRsaaReducers<State>(
+  initialState
+)(
+  updateDetailsRequestReducer,
+  updateDetailsSuccessReducer,
+  updateDetailsFailureReducer
+);
+
 export const changeDetailsReducer = createKeyableReducer<
   State,
   ChangeDetailsAction
@@ -124,3 +135,12 @@ export const changeDetailsRelationReducer = createKeyableReducer<
     };
   }
 });
+
+export const updateDetailsStandardRootReducer = combineKeyableReducers<State>(
+  initialState
+)(changeDetailsReducer, changeDetailsRelationReducer);
+
+export const updateDetailsRootReducer = reduceReducers<State>(
+  updateDetailsApiRootReducer,
+  updateDetailsStandardRootReducer
+);

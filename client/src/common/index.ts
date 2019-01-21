@@ -3,6 +3,16 @@ export interface Profile {
   photo: string;
 }
 
+export interface Answer {
+  correct: boolean;
+  answerId: number;
+}
+
+export interface QuizPayload extends Answer {
+  questionId: number;
+  userId: string;
+}
+
 export interface UserData {
   name: string;
   id: string;
@@ -14,6 +24,7 @@ export interface UserData {
   address?: string;
   favoriteDanceSong?: string;
   dietaryRestrictions?: string;
+  answers: Answer[];
 }
 
 export interface RsvpPayload {

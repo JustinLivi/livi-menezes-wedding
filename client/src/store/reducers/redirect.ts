@@ -1,6 +1,6 @@
-import { createKeyableReducer } from '../../Util/createKeyableReducer';
+import { combineKeyableReducers, createKeyableReducer } from '../../Util/createKeyableReducer';
 import { REDIRECTED, RedirectedAction } from '../actions/redirect';
-import { State } from '../stateDefinition';
+import { initialState, State } from '../stateDefinition';
 
 export const redirectReducer = createKeyableReducer<State, RedirectedAction>(
   REDIRECTED,
@@ -8,4 +8,8 @@ export const redirectReducer = createKeyableReducer<State, RedirectedAction>(
     state.swipe = undefined;
     state.redirect = undefined;
   }
+);
+
+export const redirectRootReducer = combineKeyableReducers<State>(initialState)(
+  redirectReducer
 );

@@ -1,11 +1,12 @@
 import { Endpoints } from '../../common';
 import {
+  combineKeyableRsaaReducers,
   createKeyableFailureReducer,
   createKeyableRequestReducer,
   createKeyableSuccessReducer,
 } from '../../Util/rsaaActionCreator';
 import { FetchUserActionSet } from '../actions/user';
-import { CacheStatus, State } from '../stateDefinition';
+import { CacheStatus, initialState, State } from '../stateDefinition';
 
 export const getUserRequestReducer = createKeyableRequestReducer<
   State,
@@ -74,4 +75,10 @@ export const getUserFailureReducer = createKeyableFailureReducer<
       state.userCacheStatus = CacheStatus.ERRORED;
     }
   }
+);
+
+export const userRootReducer = combineKeyableRsaaReducers<State>(initialState)(
+  getUserRequestReducer,
+  getUserSuccessReducer,
+  getUserFailureReducer
 );

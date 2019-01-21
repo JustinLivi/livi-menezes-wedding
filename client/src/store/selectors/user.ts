@@ -1,3 +1,5 @@
+import { match } from 'react-router-dom';
+
 import { CacheStatus, State } from '../stateDefinition';
 import { extractRelationId, RelationIdRouteProps } from './common';
 
@@ -50,3 +52,19 @@ export const getHasMoreRelations = (
   props: RelationIdRouteProps
 ): true | undefined =>
   extractRelationId(props) < getRelationshipsCount(state) - 1 || undefined;
+
+export const getAnswers = ({ user }: State) => user && user.answers;
+
+export const getAnswer = (
+  state: State,
+  props: { match: match<{ questionId: string }> }
+) => {
+  const {
+    match: {
+      params: { questionId }
+    }
+  } = props;
+  const id = parseInt(questionId, 10);
+  const answers = getAnswers(state);
+  return answers && answers[id];
+};

@@ -3,43 +3,22 @@ import { Reducer } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { combineKeyableReducers } from '../../Util/createKeyableReducer';
-import { combineKeyableRsaaReducers } from '../../Util/rsaaActionCreator';
-import { initialState, State } from '../stateDefinition';
-import { redirectReducer } from './redirect';
-import { rsvpCeremonyFailureReducer, rsvpCeremonyRequestReducer, rsvpCeremonySuccessReducer } from './rsvpCeremony';
-import { rsvpRehearsalFailureReducer, rsvpRehearsalRequestReducer, rsvpRehearsalSuccessReducer } from './rsvpRehearsal';
-import {
-  changeDetailsReducer,
-  changeDetailsRelationReducer,
-  updateDetailsFailureReducer,
-  updateDetailsRequestReducer,
-  updateDetailsSuccessReducer,
-} from './updateDetails';
-import { getUserFailureReducer, getUserRequestReducer, getUserSuccessReducer } from './user';
+import { State } from '../stateDefinition';
+import { quizRootReducer } from './quiz';
+import { redirectRootReducer } from './redirect';
+import { rsvpCeremonyRootReducer } from './rsvpCeremony';
+import { rsvpRehearsalRootReducer } from './rsvpRehearsal';
+import { updateDetailsRootReducer } from './updateDetails';
+import { userRootReducer } from './user';
 
-const apiReducers = combineKeyableRsaaReducers<State>(initialState)(
-  getUserRequestReducer,
-  getUserSuccessReducer,
-  getUserFailureReducer,
-  rsvpCeremonyRequestReducer,
-  rsvpCeremonySuccessReducer,
-  rsvpCeremonyFailureReducer,
-  rsvpRehearsalRequestReducer,
-  rsvpRehearsalSuccessReducer,
-  rsvpRehearsalFailureReducer,
-  updateDetailsRequestReducer,
-  updateDetailsSuccessReducer,
-  updateDetailsFailureReducer
+const rootReducer = reduceReducers<State>(
+  quizRootReducer,
+  redirectRootReducer,
+  rsvpCeremonyRootReducer,
+  rsvpRehearsalRootReducer,
+  updateDetailsRootReducer,
+  userRootReducer
 );
-
-const standardReducers = combineKeyableReducers<State>(initialState)(
-  changeDetailsReducer,
-  changeDetailsRelationReducer,
-  redirectReducer
-);
-
-const rootReducer = reduceReducers<State>(standardReducers, apiReducers);
 
 export const reducer = persistReducer(
   {

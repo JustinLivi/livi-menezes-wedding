@@ -54,7 +54,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/rsvp/review' exact component={RsvpReview} />
     <Route path='/rsvp/complete' exact component={RsvpComplete} />
     <Route path='/our-story' exact component={OurStory} />
-    <Route path='/our-story/details' component={OurStoryDetails} />
+    <Route path='/our-story/question/:questionId' component={OurStoryDetails} />
     <Route path='/venue' exact component={Venue} />
     <Route path='/venue/details' exact component={VenueDetails} />
     <Route path='/directions' exact component={Directions} />

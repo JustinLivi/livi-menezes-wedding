@@ -1,68 +1,121 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { match, Redirect } from 'react-router-dom';
+import { createSelector } from 'reselect';
 
-import { CheckboxCard } from '../../Components/CheckboxCard';
+import { Answer } from '../../common';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
-import { RadioButtonCard } from './RadioButtonCard';
+import { answerQuestion } from '../../store/actions/quiz';
+import { getAnswer, getUserCacheStatus, getUserId } from '../../store/selectors/user';
+import { CacheStatus } from '../../store/stateDefinition';
+import { DatingApp } from './Questions/DatingApp';
+import { Engagement } from './Questions/Engagement';
+import { FirstDate } from './Questions/FirstDate';
+import { Question } from './Questions/QuestionType';
+import { Venue } from './Questions/Venue';
 
-export const OurStoryDetails: React.SFC = () => (
-  <ColumnLayout>
-    <RadioButtonCard
-      question='On what online dating app did we meet?'
-      answers={[
-        'Tinder',
-        'OkCupid',
-        'Coffee meets Bagel',
-        'Bumble',
-        'Farmers Only'
-      ]}
-    />
-    <RadioButtonCard
-      question='Who took the conversation "off the app?" (switched to text message conversation)'
-      answers={['Justin', 'Marisa']}
-    />
-    <RadioButtonCard
-      question='Where was our first date?'
-      answers={[
-        "Dooby's",
-        "The Brewer's Art",
-        'The Helmand',
-        'The Owl Bar',
-        'The Crown'
-      ]}
-    />
-    <CheckboxCard
-      question='Which of the following places have we been to together?'
-      answers={['Croatia', 'Spain', 'Italy', 'Montana', 'California']}
-    />
-    <RadioButtonCard
-      question='How long did we wait before moving in together?'
-      answers={[
-        '2 weeks',
-        '9 months',
-        '525,600 minutes',
-        '13 months',
-        '4 years'
-      ]}
-    />
-    <CheckboxCard
-      question='Which of the following neighborhoods have we lived in together?'
-      answers={[
-        'Mount Vernon',
-        'Capitol Hill',
-        'Del Ray',
-        'Station North',
-        'Forest Hills'
-      ]}
-    />
-    <RadioButtonCard
-      question='How close are we in age?'
-      answers={[
-        'Justin is 3 years older',
-        'Justin is 1 year older',
-        'Same age',
-        'Marisa is 1 year older',
-        'Marisa is 3 years older'
-      ]}
-    />
-  </ColumnLayout>
+const questions: Array<React.SFC<Question>> = [
+  DatingApp,
+  FirstDate,
+  Engagement,
+  Venue
+];
+
+// putting this here because of time constraints but ideally would be returned
+// from server and UI would be code split. Deadlines are :(
+const correctAnswers = [0, 0, 4, 4];
+
+export interface OurStoryDetailsStateProps {
+  answer?: Answer;
+  userId?: string;
+  cacheStatus: CacheStatus;
+}
+
+export interface OurStoryDetailsParentProps {
+  match: match<{ questionId: string }>;
+}
+
+export interface OurStoryDetailsDispatchProps {
+  answerQuestion: typeof answerQuestion;
+}
+
+export type OurStoryDetails = OurStoryDetailsStateProps &
+  OurStoryDetailsDispatchProps &
+  OurStoryDetailsParentProps;
+
+export class UnconnectedOurStoryDetails extends React.Component<
+  OurStoryDetails
+> {
+  private questionId: number;
+
+  constructor(props: OurStoryDetails) {
+    super(props);
+    const {
+      match: {
+        params: { questionId }
+      }
+    } = props;
+    this.questionId = parseInt(questionId, 10);
+  }
+
+  public onChange = (answerId: number) => {
+    const { answerQuestion: answer, userId } = this.props;
+    if (!userId) {
+      return;
+    }
+    answer({
+      answerId,
+      correct: correctAnswers[this.questionId] === answerId,
+      questionId: this.questionId,
+      userId
+    });
+  };
+
+  public render() {
+    const {
+      answer,
+      cacheStatus,
+      match: {
+        params: { questionId }
+      }
+    } = this.props;
+    const id = parseInt(questionId, 10);
+    const QuestionComponent = questions[id];
+    if (!QuestionComponent) {
+      return <Redirect to='/our-story' />;
+    }
+    return (
+      <ColumnLayout>
+        <QuestionComponent
+          disabled={
+            cacheStatus === CacheStatus.PERSISTING ||
+            cacheStatus === CacheStatus.FETCHING
+              ? true
+              : undefined
+          }
+          correctAnswer={correctAnswers[this.questionId]}
+          onChange={this.onChange}
+          value={answer && answer.answerId}
+        />
+      </ColumnLayout>
+    );
+  }
+}
+
+export const mapStateToProps = createSelector(
+  [getUserId, getAnswer, getUserCacheStatus],
+  (userId, answer, cacheStatus) => ({
+    answer,
+    cacheStatus,
+    userId
+  })
 );
+
+export const actionCreators = {
+  answerQuestion
+};
+
+export const OurStoryDetails = connect(
+  mapStateToProps,
+  actionCreators
+)(UnconnectedOurStoryDetails);

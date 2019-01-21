@@ -1,12 +1,13 @@
 import { Endpoints } from '../../common';
 import {
+  combineKeyableRsaaReducers,
   createKeyableFailureReducer,
   createKeyableRequestReducer,
   createKeyableSuccessReducer,
 } from '../../Util/rsaaActionCreator';
 import { RsvpRehearsalActionSet } from '../actions/rsvpRehearsal';
 import { getRelationshipsCount } from '../selectors/user';
-import { CacheStatus, State } from '../stateDefinition';
+import { CacheStatus, initialState, State } from '../stateDefinition';
 
 export const rsvpRehearsalRequestReducer = createKeyableRequestReducer<
   State,
@@ -86,4 +87,12 @@ export const rsvpRehearsalFailureReducer = createKeyableFailureReducer<
       state.userCacheStatus = CacheStatus.ERRORED;
     }
   }
+);
+
+export const rsvpRehearsalRootReducer = combineKeyableRsaaReducers<State>(
+  initialState
+)(
+  rsvpRehearsalRequestReducer,
+  rsvpRehearsalSuccessReducer,
+  rsvpRehearsalFailureReducer
 );
