@@ -1,6 +1,6 @@
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Details } from '../Pages/Details';
 import { Directions } from '../Pages/Directions';
@@ -27,6 +27,8 @@ export const styles = createStyles({
     minHeight: '100vh'
   }
 });
+
+export const RedirectToRoot = () => <Redirect to='/' />;
 
 export interface ProtectedRoutesProps extends WithStyles<typeof styles> {}
 
@@ -58,6 +60,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/directions' exact component={Directions} />
     <Route path='/where-to-stay' exact component={WhereToStay} />
     <Route path='/things-to-do' exact component={ThingsToDo} />
+    <Route path='/*' component={RedirectToRoot} />
   </Switch>
 );
 

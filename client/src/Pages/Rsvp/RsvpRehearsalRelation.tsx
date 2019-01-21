@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { forEach, range } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { match } from 'react-router-dom';
+import { match, Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
@@ -107,6 +107,9 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
       photo,
       classes: { topName, centered }
     } = this.props;
+    if (cacheStatus === CacheStatus.ERRORED) {
+      return <Redirect to={`/rsvp/details/${this.relationId}`} />;
+    }
     return (
       <ColumnLayout>
         {cacheStatus === CacheStatus.UP_TO_DATE ||

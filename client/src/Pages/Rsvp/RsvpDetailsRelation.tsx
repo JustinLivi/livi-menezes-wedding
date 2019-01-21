@@ -2,6 +2,7 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import { forEach, range } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
@@ -116,6 +117,9 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
       classes: { help }
     } = this.props;
     const back = `/rsvp/u/${this.relationId}`;
+    if (cacheStatus === CacheStatus.ERRORED) {
+      return <Redirect to={`/rsvp/u/${this.relationId}`} />;
+    }
     return (
       <ColumnLayout>
         {cacheStatus === CacheStatus.BEHIND ||

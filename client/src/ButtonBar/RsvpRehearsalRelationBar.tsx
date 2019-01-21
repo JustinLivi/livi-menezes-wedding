@@ -58,24 +58,21 @@ export type RsvpRehearsalRelationBarProps = RsvpRehearsalRelationBarStateProps &
 export class UnconnectedRsvpRehearsalRelationBar extends React.Component<
   RsvpRehearsalRelationBarProps
 > {
+  private relationIndex: number;
+
   constructor(props: RsvpRehearsalRelationBarProps) {
     super(props);
+    this.relationIndex = extractRelationId(props);
   }
 
   public handleClick: (
     response: boolean
   ) => React.MouseEventHandler<HTMLElement> = response => event => {
-    const {
-      rsvpRehearsal: rsvp,
-      userId,
-      match: {
-        params: { relationId }
-      }
-    } = this.props;
+    const { rsvpRehearsal: rsvp, userId } = this.props;
     if (userId) {
       rsvp({
         body: { userId, rsvp: response },
-        params: { relationshipIndex: parseInt(relationId, 10) }
+        params: { relationshipIndex: this.relationIndex }
       });
     }
   };
@@ -86,12 +83,8 @@ export class UnconnectedRsvpRehearsalRelationBar extends React.Component<
       disableCantMakeIt,
       disableImGoing,
       weddingRsvp,
-      match: {
-        params: { relationId }
-      },
       classes: { root, buttonBar }
     } = this.props;
-    const relationIndex = parseInt(relationId, 10);
     return (
       <div className={root}>
         <div className={buttonBar}>
@@ -101,7 +94,7 @@ export class UnconnectedRsvpRehearsalRelationBar extends React.Component<
             selected={weddingRsvp === false}
           />
           <Details
-            to={`/rsvp/details/${relationIndex}`}
+            to={`/rsvp/details/${this.relationIndex}`}
             iconType={DetailsIcons.backArrow}
             help='back'
           />

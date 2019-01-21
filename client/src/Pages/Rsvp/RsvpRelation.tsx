@@ -96,6 +96,10 @@ export class UnconnectedRsvpRelation extends React.Component<
       weddingRsvp,
       redirect
     } = this.props;
+    // redirect on error logic is in button bar
+    if (cacheStatus === CacheStatus.ERRORED) {
+      return <RsvpRelationBar match={matched} />;
+    }
     return (
       <ColumnLayout>
         {cacheStatus === CacheStatus.UP_TO_DATE ||

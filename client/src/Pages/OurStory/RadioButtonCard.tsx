@@ -2,7 +2,7 @@ import { CardActionArea, CardContent, FormControl, FormControlLabel, FormLabel, 
 import { map } from 'lodash';
 import * as React from 'react';
 
-import { StandardCard } from './StandardCard';
+import { StandardCard } from '../../Components/StandardCard';
 
 export interface RadioButtonCardProps {
   question: string;

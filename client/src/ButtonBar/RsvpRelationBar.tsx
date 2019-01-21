@@ -1,7 +1,7 @@
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { match } from 'react-router-dom';
+import { match, Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { rsvpCeremony } from '../store/actions/rsvpCeremony';
@@ -36,6 +36,7 @@ export const buttonBarStyles = createStyles({
 });
 
 export interface RsvpRelationBarStateProps {
+  cacheStatus: CacheStatus;
   displaySkip?: true;
   disableCantMakeIt: boolean;
   disableImGoing: boolean;
@@ -86,8 +87,12 @@ export class UnconnectedRsvpRelationBar extends React.Component<
       disableImGoing,
       weddingRsvp,
       back,
+      cacheStatus,
       classes: { root, buttonBar }
     } = this.props;
+    if (cacheStatus === CacheStatus.ERRORED) {
+      return <Redirect to={back} />;
+    }
     return (
       <div className={root}>
         <div className={buttonBar}>
@@ -190,9 +195,10 @@ export const mapStateToProps = (
   props: RsvpRelationBarParentProps
 ) =>
   createSelector(
-    [getRelationshipRsvp, getRelationshipId],
-    (weddingRsvp, userId) => ({
+    [getRelationshipRsvp, getRelationshipId, getRelationshipsCacheStatus],
+    (weddingRsvp, userId, cacheStatus) => ({
       back: backSelector(state, props),
+      cacheStatus,
       disableCantMakeIt: disableCantMakeItSelector(state, props),
       disableImGoing: disableImGoingSelector(state, props),
       displaySkip: displaySkipSelector(state, props),

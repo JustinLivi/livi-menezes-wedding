@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { CheckboxCard } from '../../Components/CheckboxCard';
-import { RadioButtonCard } from '../../Components/RadioButtonCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import { RadioButtonCard } from './RadioButtonCard';
 
 export const OurStoryDetails: React.SFC = () => (
   <ColumnLayout>
