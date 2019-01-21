@@ -10,23 +10,20 @@ import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 import { store } from './store';
 
-const appHeight = () => {
-  const doc = document.documentElement;
-  if (doc) {
-    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
-  }
-};
-window.addEventListener('resize', appHeight);
-appHeight();
-scrollTo(0, 0);
+const $root = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistStore(store)}>
       <App />
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  $root
 );
+// tslint:disable-next-line:no-console
+console.log($root);
+if ($root) {
+  $root.scrollTo(0, 100);
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

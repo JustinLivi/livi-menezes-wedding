@@ -1,7 +1,3 @@
-:root {
-  --app-height: 100%;
-}
-
 html,
 body {
   margin: 0;
@@ -12,13 +8,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
   width: 100vw;
   height: 100vh;
-
-  @media not all and (hover: hover) {
-    height: var(--app-height);
-  }
 }
 
 code {
@@ -27,12 +20,12 @@ code {
 }
 
 #root {
-  min-height: 100vh;
   min-width: 100vw;
-  max-height: 100vh;
   max-width: 100vw;
-  height: 100vh;
   width: 100vw;
+  min-height: calc(100vh + 100px);
+  max-height: calc(100vh + 100px);
+  height: calc(100vh + 100px);
   display: flex;
   flex-direction: row;
 }
