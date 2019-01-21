@@ -84,7 +84,7 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
         disabled={attendingWedding === true}
       />
       <Typography variant='body1' component='span'>
-        Attending Wedding
+        {attendingWedding === false ? 'Not ' : ''}Attending Wedding
       </Typography>
     </Grid>
     {rehearsal && (
@@ -105,7 +105,7 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
           disabled={attendingRehearsal === true}
         />
         <Typography variant='body1' component='span'>
-          Attending Rehearsal
+          {attendingRehearsal === false ? 'Not ' : ''}Attending Rehearsal
         </Typography>
       </Grid>
     )}
