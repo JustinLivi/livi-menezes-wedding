@@ -10,6 +10,7 @@ import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 import { store } from './store';
 
+scrollTo(0, 0);
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistStore(store)}>
