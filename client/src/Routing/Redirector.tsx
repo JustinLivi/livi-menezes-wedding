@@ -42,7 +42,11 @@ export class UnconnectedRedirector extends React.Component<
         timeout: setTimeout(
           () => {
             const $body = document.getElementsByTagName('body');
-            $body[0].setAttribute('style', '');
+            try {
+              $body[0].setAttribute('style', '');
+            } catch (error) {
+              // do nothing
+            }
             handleRedirected(undefined);
             this.setState({ timeout: null, redirect: to });
             scrollTo(0, 100);

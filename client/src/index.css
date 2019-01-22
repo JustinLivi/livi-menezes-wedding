@@ -9,9 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   overflow-y: auto;
-  min-height: calc(100vh + 100px);
-  max-height: calc(100vh + 100px);
-  height: calc(100vh + 100px);
+  height: 100vh;
 }
 
 code {
@@ -22,8 +20,11 @@ code {
 #root {
   width: 100vw;
   height: 100vh;
-  padding-top: 100px;
   position: absolute;
   display: flex;
   flex-direction: row;
+}
+
+.FullScreen {
+  background-color: white;
 }

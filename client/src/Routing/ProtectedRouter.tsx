@@ -1,5 +1,9 @@
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
+import { Button, createStyles, Grid, Typography, WithStyles, withStyles } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import { Fullscreen as FullscreenIcon } from '@material-ui/icons';
+import MobileDetect from 'mobile-detect';
 import * as React from 'react';
+import Fullscreen from 'react-fullscreen-crossbrowser';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
@@ -8,9 +12,24 @@ import { NavBar } from '../NavBar';
 import { LoginPage } from '../Pages/Login';
 import { SideBar } from '../SideBar';
 import { getProfile } from '../store/selectors/user';
+import { theme } from '../theme';
 import { ProtectedRoutes } from './ProtectedRoutes';
 
+const md = new MobileDetect(window.navigator.userAgent);
+
 export const styles = createStyles({
+  fullscreenHelp: {
+    margin: 20,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  fullscreenIcon: {
+    marginRight: theme.spacing.unit
+  },
+  gridRoot: {
+    flexGrow: 1,
+    textAlign: 'center'
+  },
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,21 +48,88 @@ export interface ProtectedRouterParentProps extends WithStyles<typeof styles> {}
 export type ProtectedRouterProps = ProtectedRouterStateProps &
   ProtectedRouterParentProps;
 
-export const UnstyledProtectedRouter: React.SFC<ProtectedRouterProps> = ({
-  classes: { root },
-  profile
-}) =>
-  profile ? (
-    <React.Fragment>
-      <SideBar />
-      <div className={root}>
-        <NavBar />
-        <ProtectedRoutes />
-      </div>
-    </React.Fragment>
-  ) : (
-    <LoginPage error />
-  );
+export interface ProtectedRouterLocalState {
+  isFullscreen?: boolean;
+}
+
+export class UnstyledProtectedRouter extends React.Component<
+  ProtectedRouterProps,
+  ProtectedRouterLocalState
+> {
+  constructor(props: ProtectedRouterProps) {
+    super(props);
+    this.state = {};
+  }
+
+  public handleFullscreen = (isFullscreen: boolean) => {
+    this.setState({ isFullscreen });
+  };
+
+  public decide = (isFullscreen: boolean) => () => {
+    this.setState({ isFullscreen });
+  };
+
+  public render() {
+    const {
+      classes: { root, gridRoot, fullscreenIcon, fullscreenHelp },
+      profile
+    } = this.props;
+    const { isFullscreen } = this.state;
+    if (md.isPhoneSized() && isFullscreen === undefined) {
+      return (
+        <Grid
+          className={gridRoot}
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+        >
+          <Grid item>
+            <Typography className={fullscreenHelp} variant='h5'>
+              This experience is best in fullscreen
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Fab
+              variant='extended'
+              aria-label='Fullscreen'
+              color='primary'
+              onClick={this.decide(true)}
+            >
+              <FullscreenIcon className={fullscreenIcon} />
+              Fullscreen
+            </Fab>
+          </Grid>
+          <Grid item>
+            <Button
+              className={fullscreenHelp}
+              variant='outlined'
+              size='medium'
+              aria-label='No thanks'
+              onClick={this.decide(false)}
+            >
+              No thanks
+            </Button>
+          </Grid>
+        </Grid>
+      );
+    }
+    return profile ? (
+      <Fullscreen
+        enabled={this.state.isFullscreen}
+        onChange={this.handleFullscreen}
+      >
+        <SideBar />
+        <div className={root}>
+          <NavBar />
+          <ProtectedRoutes />
+        </div>
+      </Fullscreen>
+    ) : (
+      <LoginPage error />
+    );
+  }
+}
 
 export const UnconnectedProtectedRouter = withStyles(styles)(
   UnstyledProtectedRouter

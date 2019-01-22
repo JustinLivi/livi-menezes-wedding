@@ -8,14 +8,6 @@ import { Routes } from './Routing/Routes';
 import { theme } from './theme';
 
 export class App extends Component {
-  public componentDidMount() {
-    scrollTo(0, 100);
-  }
-
-  public componentDidUpdate() {
-    scrollTo(0, 100);
-  }
-
   public render() {
     return (
       <Router>
