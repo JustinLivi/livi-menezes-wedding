@@ -8,19 +8,19 @@ import { SwipeableCard } from './SwipeableCard';
 const styles = createStyles({
   card: {
     flexGrow: 1,
-    maxHeight: 'calc(100vh - 250px)',
+    maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
     minHeight: 350
   },
   defaultCard: {
-    maxHeight: 'calc(100vh - 250px)',
+    maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
     minHeight: 350,
     opacity: 0,
     width: 400
   },
   innerCard: {
-    maxHeight: 'calc(100vh - 270px)',
+    maxHeight: 'calc(100vh - 320px)',
     maxWidth: '100vw',
     minHeight: 350,
     overflow: 'auto'
@@ -31,7 +31,6 @@ const styles = createStyles({
     display: 'inline-flex',
     flexDirection: 'row',
     flexGrow: 0,
-    // height: 350,
     justifyContent: 'center',
     margin: theme.spacing.unit,
     position: 'relative'

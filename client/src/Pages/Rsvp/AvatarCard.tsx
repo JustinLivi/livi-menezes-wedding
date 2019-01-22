@@ -18,12 +18,6 @@ const styles = createStyles({
   },
   content: {
     paddingTop: 25
-  },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
   }
 });
 
@@ -51,17 +45,12 @@ export class UnconnectedAvatarCard extends React.Component<AvatarCardProps> {
       swipe,
       swipeRight,
       swipeLeft,
-      classes: { standardCard, content, avatar },
+      classes: { content, avatar },
       photo,
       name
     } = this.props;
     return (
-      <StandardCard
-        className={standardCard}
-        swipe={swipe}
-        swipeRight={swipeRight}
-        swipeLeft={swipeLeft}
-      >
+      <StandardCard swipe={swipe} swipeRight={swipeRight} swipeLeft={swipeLeft}>
         <CardContent className={content}>
           <Grid className={avatar}>
             <Avatar alt='You' src={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}>

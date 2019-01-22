@@ -69,7 +69,7 @@ export class UnstyledAddressInput extends React.Component<
           label: 'Home address (for thank yous!)',
           onChange,
           placeholder: 'Home address',
-          value
+          value: value || ''
         }}
       />
     ) : (

@@ -17,14 +17,12 @@ code {
     monospace;
 }
 
-#root {
+#root,
+.FullScreen {
+  background-color: white;
   width: 100vw;
   height: 100vh;
   position: absolute;
   display: flex;
   flex-direction: row;
-}
-
-.FullScreen {
-  background-color: white;
 }

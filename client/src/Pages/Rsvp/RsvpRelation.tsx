@@ -27,14 +27,7 @@ import { getInvitedRehearsal, getRedirect } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { Loading } from './Loading';
 
-export const styles = createStyles({
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
-  }
-});
+export const styles = createStyles({});
 
 export interface RsvpRelationStateProps {
   cacheStatus: CacheStatus;
@@ -92,7 +85,6 @@ export class UnconnectedRsvpRelation extends React.Component<
       match: matched,
       cacheStatus,
       activeStep,
-      classes: { standardCard },
       weddingRsvp,
       redirect
     } = this.props;
@@ -120,7 +112,6 @@ export class UnconnectedRsvpRelation extends React.Component<
               swipe
               swipeRight={this.rsvp(true)}
               swipeLeft={this.rsvp(false)}
-              className={standardCard}
               image={
                 photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
               }

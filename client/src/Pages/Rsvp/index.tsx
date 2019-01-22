@@ -16,10 +16,10 @@ import { getName, getPhoto, getRedirect, getUserId, getWeddingRsvp } from '../..
 
 export const styles = createStyles({
   standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
+    // height: 450,
+    // maxHeight: 'calc(100vh - 260px)',
+    // overflow: 'auto',
+    // position: 'relative'
   }
 });
 

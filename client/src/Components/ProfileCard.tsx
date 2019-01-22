@@ -4,21 +4,18 @@ import * as React from 'react';
 import { StandardCard } from './StandardCard';
 
 const styles = createStyles({
+  header: {
+    fontSize: '1.1rem'
+  },
   media: {
     height: 350,
-    maxHeight: 'calc(100vh - 360px)',
+    maxHeight: 'calc(100vh - 400px)',
     maxWidth: '100%',
     minHeight: 250
   },
   root: {
     '&:last-child': { paddingBottom: 10 },
     paddingTop: 10
-  },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
   }
 });
 
@@ -41,11 +38,11 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
   swipe,
   swipeRight,
   swipeLeft,
-  classes: { media, root, standardCard }
+  classes: { media, root, header }
 }) => (
   <StandardCard
     swipe={swipe}
-    className={className || standardCard}
+    className={className}
     swipeRight={swipeRight}
     swipeLeft={swipeLeft}
   >
@@ -58,7 +55,12 @@ export const UnstyledProfileCard: React.SFC<ProfileCardProps> = ({
     )}
     <CardContent className={root}>
       {title && (
-        <Typography gutterBottom variant='h5' component='h2'>
+        <Typography
+          classes={{ h5: header }}
+          gutterBottom
+          variant='h5'
+          component='h2'
+        >
           {title}
         </Typography>
       )}

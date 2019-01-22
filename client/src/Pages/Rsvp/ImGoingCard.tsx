@@ -18,7 +18,7 @@ const styles = createStyles({
     textAlign: 'center'
   },
   content: {
-    paddingTop: 25
+    paddingTop: 15
   },
   italic: {
     fontStyle: 'italic'
@@ -100,7 +100,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
           <Typography className={topName} component='p'>
             {username
               ? `Can you fill out these details for ${username}?`
-              : "If you wouldn't mind, we'd like to collect just a few more details from you"}
+              : 'We need just a few more details from you'}
           </Typography>
           <AddressInput
             onChange={this.handleChange('address')}

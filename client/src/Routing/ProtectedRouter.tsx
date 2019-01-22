@@ -75,58 +75,59 @@ export class UnstyledProtectedRouter extends React.Component<
       profile
     } = this.props;
     const { isFullscreen } = this.state;
-    if (md.isPhoneSized() && isFullscreen === undefined) {
-      return (
-        <Grid
-          className={gridRoot}
-          container
-          direction='column'
-          justify='center'
-          alignItems='center'
-        >
-          <Grid item>
-            <Typography className={fullscreenHelp} variant='h5'>
-              This experience is best in fullscreen
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Fab
-              variant='extended'
-              aria-label='Fullscreen'
-              color='primary'
-              onClick={this.decide(true)}
-            >
-              <FullscreenIcon className={fullscreenIcon} />
-              Fullscreen
-            </Fab>
-          </Grid>
-          <Grid item>
-            <Button
-              className={fullscreenHelp}
-              variant='outlined'
-              size='medium'
-              aria-label='No thanks'
-              onClick={this.decide(false)}
-            >
-              No thanks
-            </Button>
-          </Grid>
-        </Grid>
-      );
-    }
-    return profile ? (
+    return (
       <Fullscreen
         enabled={this.state.isFullscreen}
         onChange={this.handleFullscreen}
       >
-        <SideBar />
-        <div className={root}>
-          <NavBar />
-          <ProtectedRoutes />
-        </div>
+        {md.isPhoneSized() && isFullscreen === undefined ? (
+          <Grid
+            className={gridRoot}
+            container
+            direction='column'
+            justify='center'
+            alignItems='center'
+          >
+            <Grid item>
+              <Typography className={fullscreenHelp} variant='h5'>
+                This experience is best in fullscreen
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Fab
+                variant='extended'
+                aria-label='Fullscreen'
+                color='primary'
+                onClick={this.decide(true)}
+              >
+                <FullscreenIcon className={fullscreenIcon} />
+                Fullscreen
+              </Fab>
+            </Grid>
+            <Grid item>
+              <Button
+                className={fullscreenHelp}
+                variant='outlined'
+                size='medium'
+                aria-label='No thanks'
+                onClick={this.decide(false)}
+              >
+                No thanks
+              </Button>
+            </Grid>
+          </Grid>
+        ) : profile ? (
+          <React.Fragment>
+            <SideBar />
+            <div className={root}>
+              <NavBar />
+              <ProtectedRoutes />
+            </div>
+          </React.Fragment>
+        ) : (
+          <LoginPage error />
+        )}
       </Fullscreen>
-    ) : (
-      <LoginPage error />
     );
   }
 }
