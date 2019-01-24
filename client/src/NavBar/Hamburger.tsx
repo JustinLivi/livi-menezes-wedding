@@ -44,7 +44,14 @@ const styles = createStyles({
   }
 });
 
-export interface HamburgerProps extends WithStyles<typeof styles> {}
+export interface HamburgerProps extends WithStyles<typeof styles> {
+  fullScreenRef?:
+    | Element
+    | React.Component<any, {}, any>
+    | (() => React.ReactInstance)
+    | null
+    | undefined;
+}
 
 export interface HamburgerState {
   anchorEl: Element | null;
@@ -68,6 +75,7 @@ export class UnstyledHamburger extends React.Component<
 
   public render() {
     const {
+      fullScreenRef,
       classes: { root, iconButton, menu }
     } = this.props;
     const { anchorEl } = this.state;
@@ -82,6 +90,7 @@ export class UnstyledHamburger extends React.Component<
           <MenuIcon classes={{ root: menu }} />
         </IconButton>
         <Menu
+          container={fullScreenRef}
           color='primary'
           id='simple-menu'
           anchorEl={anchorEl}

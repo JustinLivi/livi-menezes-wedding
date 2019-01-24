@@ -31,9 +31,17 @@ const styles = createStyles({
   }
 });
 
-export interface NavBarProps extends WithStyles<typeof styles> {}
+export interface NavBarProps extends WithStyles<typeof styles> {
+  fullScreenRef?:
+    | Element
+    | React.Component<any, {}, any>
+    | (() => React.ReactInstance)
+    | null
+    | undefined;
+}
 
 export const UnstyledAppBar: React.SFC<NavBarProps> = ({
+  fullScreenRef,
   classes: { root, appBar, toolbar }
 }) => (
   <div className={root}>
@@ -41,7 +49,7 @@ export const UnstyledAppBar: React.SFC<NavBarProps> = ({
       <Toolbar classes={{ root: toolbar }}>
         <HeaderText />
         <Logo />
-        <Hamburger />
+        <Hamburger fullScreenRef={fullScreenRef} />
       </Toolbar>
     </AppBar>
   </div>

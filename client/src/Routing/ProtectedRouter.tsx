@@ -50,6 +50,7 @@ export type ProtectedRouterProps = ProtectedRouterStateProps &
 
 export interface ProtectedRouterLocalState {
   isFullscreen?: boolean;
+  fullScreenRef?: Fullscreen | null;
 }
 
 export class UnstyledProtectedRouter extends React.Component<
@@ -69,14 +70,19 @@ export class UnstyledProtectedRouter extends React.Component<
     this.setState({ isFullscreen });
   };
 
+  public getFullscreenRef = (fullScreenRef: Fullscreen | null) => {
+    this.setState({ fullScreenRef });
+  };
+
   public render() {
     const {
       classes: { root, gridRoot, fullscreenIcon, fullscreenHelp },
       profile
     } = this.props;
-    const { isFullscreen } = this.state;
+    const { isFullscreen, fullScreenRef } = this.state;
     return (
       <Fullscreen
+        ref={this.getFullscreenRef}
         enabled={this.state.isFullscreen}
         onChange={this.handleFullscreen}
       >
@@ -120,7 +126,7 @@ export class UnstyledProtectedRouter extends React.Component<
           <React.Fragment>
             <SideBar />
             <div className={root}>
-              <NavBar />
+              <NavBar fullScreenRef={fullScreenRef} />
               <ProtectedRoutes />
             </div>
           </React.Fragment>
