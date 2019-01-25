@@ -20,14 +20,14 @@ import { Question } from './Questions/QuestionType';
 import { Venue } from './Questions/Venue';
 import { VenueAnswer } from './Questions/VenueAnswer';
 
-const questions: Array<React.SFC<Question>> = [
+export const questions: Array<React.SFC<Question>> = [
   DatingApp,
   FirstDate,
   Engagement,
   Venue
 ];
 
-const answerComponents: Array<React.ComponentType<any>> = [
+export const answerComponents: Array<React.ComponentType<any>> = [
   DatingAppAnswer,
   FirstDateAnswer,
   EngagementAnswer,
@@ -70,14 +70,6 @@ export class UnconnectedOurStoryDetails extends React.Component<
     this.state = {};
   }
 
-  public componentDidMount() {
-    if (this.getAnswer()) {
-      this.setState({
-        timeoutId: setTimeout(this.shouldRotate, 3000)
-      });
-    }
-  }
-
   public componentDidUpdate({
     match: {
       params: { questionId }
@@ -90,7 +82,11 @@ export class UnconnectedOurStoryDetails extends React.Component<
         }
         return { shouldRotate: false, timeoutId: null };
       });
-      this.componentDidMount();
+      if (this.getAnswer()) {
+        this.setState({
+          timeoutId: setTimeout(this.shouldRotate, 3000)
+        });
+      }
     }
   }
 
@@ -116,7 +112,7 @@ export class UnconnectedOurStoryDetails extends React.Component<
       questionId,
       userId
     });
-    setTimeout(this.shouldRotate, 3000);
+    setTimeout(this.shouldRotate, 1500);
   };
 
   public render() {
@@ -124,7 +120,8 @@ export class UnconnectedOurStoryDetails extends React.Component<
       cacheStatus,
       match: {
         params: { questionId }
-      }
+      },
+      answers
     } = this.props;
     const { shouldRotate } = this.state;
     const id = parseInt(questionId, 10);
@@ -150,7 +147,7 @@ export class UnconnectedOurStoryDetails extends React.Component<
               transform: `rotateY(${rot < 90 ? rot : 180 - rot}deg)`
             }}
           >
-            {rot < 90 || rot > 270 ? (
+            {rot < 90 ? (
               <QuestionComponent
                 disabled={
                   cacheStatus === CacheStatus.PERSISTING ||
@@ -162,8 +159,10 @@ export class UnconnectedOurStoryDetails extends React.Component<
                 onChange={this.onChange}
                 value={answer && answer.answerId}
               />
-            ) : (
+            ) : rot < 178 ? (
               <AnswerComponent />
+            ) : (
+              <Redirect to={`/our-story/answer/${id}`} />
             )}
             <div
               style={{
@@ -171,8 +170,18 @@ export class UnconnectedOurStoryDetails extends React.Component<
               }}
             >
               <ContinueBar
-                back={`/our-story${id ? `/question/${id - 1}` : ''}`}
-                next={`/our-story/question/${id + 1}`}
+                back={`/our-story${
+                  !id
+                    ? ''
+                    : answers && answers[id - 1]
+                    ? `/answer/${id - 1}`
+                    : `/question/${id - 1}`
+                }`}
+                next={
+                  answer
+                    ? `/our-story/answer/${id}`
+                    : `/our-story/question/${id + 1}`
+                }
               />
             </div>
           </ColumnLayout>

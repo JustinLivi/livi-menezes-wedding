@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Details } from '../Pages/Details';
 import { Directions } from '../Pages/Directions';
 import { OurStory } from '../Pages/OurStory';
+import { OurStoryAnswer } from '../Pages/OurStory/Answer';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
 import { Rsvp } from '../Pages/Rsvp';
 import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
@@ -55,6 +56,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/rsvp/complete' exact component={RsvpComplete} />
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/question/:questionId' component={OurStoryDetails} />
+    <Route path='/our-story/answer/:questionId' component={OurStoryAnswer} />
     <Route path='/venue' exact component={Venue} />
     <Route path='/venue/details' exact component={VenueDetails} />
     <Route path='/directions' exact component={Directions} />
