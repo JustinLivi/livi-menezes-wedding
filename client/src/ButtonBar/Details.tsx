@@ -40,6 +40,7 @@ export interface DetailsProps extends WithStyles<typeof styles> {
   iconType?: DetailsIcons;
   help?: string;
   external?: boolean;
+  disabled?: boolean;
 }
 
 export class UnstyledDetails extends React.Component<DetailsProps> {
@@ -53,11 +54,13 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
       external,
       to,
       classes: { fab, root, label },
-      iconType
+      iconType,
+      disabled
     } = this.props;
     return (
       <div className={root}>
         <Fab
+          disabled={disabled}
           component={!external ? this.linkComponent : undefined}
           href={external ? to : undefined}
           target={external ? '_blank' : undefined}

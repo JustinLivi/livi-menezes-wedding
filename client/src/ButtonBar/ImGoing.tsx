@@ -26,7 +26,9 @@ const styles = createStyles({
     '&$disabled': {
       backgroundColor: theme.imGoing.color,
       color: theme.palette.primary.light
-    }
+    },
+    backgroundColor: theme.imGoing.color,
+    color: theme.palette.primary.light
   },
   rootDiv: buttonHolderStyles
 });

@@ -3,13 +3,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { getRelationshipName, getRelationshipPhoto } from '../../store/selectors/relationships';
 
 const styles = createStyles({
-  ...buttonBarStyles,
   avatar: {
     display: 'flex',
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RsvpBar } from '../../ButtonBar/RsvpBar';
+import { NextBar } from '../../ButtonBar/NextBar';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import nationalAquarium from './national-aquarium.jpg';
@@ -12,6 +12,6 @@ export const ThingsToDo: React.SFC = () => (
       title='Things to Do'
       blurb='Activities to pass the time in Baltimore and DC'
     />
-    <RsvpBar onlyInfo hideHelp toDetails='/things-to-do/details' />
+    <NextBar to='/things-to-do/details' />
   </ColumnLayout>
 );

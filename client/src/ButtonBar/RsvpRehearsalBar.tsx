@@ -1,4 +1,3 @@
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -6,31 +5,14 @@ import { createSelector } from 'reselect';
 import { rsvpRehearsal } from '../store/actions/rsvpRehearsal';
 import { getRehearsalRsvp, getRelationshipsCount, getUserCacheStatus, getUserId } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
-import { theme } from '../theme';
+import { ButtonBar } from './ButtonBar';
 import { CantMakeIt } from './CantMakeIt';
 import { Details, DetailsIcons } from './Details';
 import { ImGoing } from './ImGoing';
 
-const styles = createStyles({
-  buttonBar: {
-    flexGrow: 0
-  },
-  root: {
-    alignItems: 'center',
-    boxPack: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 0,
-    height: 132,
-    justifyContent: 'center',
-    margin: theme.spacing.unit
-  }
-});
-
 export interface RsvpRehearsalBarStateProps {
   next: string;
-  disableCantMakeIt: boolean;
-  disableImGoing: boolean;
+  disableButtons: boolean;
   userId?: string;
   weddingRsvp?: boolean;
 }
@@ -39,12 +21,8 @@ export interface RsvpRehearsalBarDetailsProps {
   rsvpRehearsal: typeof rsvpRehearsal;
 }
 
-export interface RsvpRehearsalBarParentProps
-  extends WithStyles<typeof styles> {}
-
 export type RsvpRehearsalBarProps = RsvpRehearsalBarStateProps &
-  RsvpRehearsalBarDetailsProps &
-  RsvpRehearsalBarParentProps;
+  RsvpRehearsalBarDetailsProps;
 
 export class UnconnectedRsvpRehearsalBar extends React.Component<
   RsvpRehearsalBarProps
@@ -66,57 +44,41 @@ export class UnconnectedRsvpRehearsalBar extends React.Component<
   };
 
   public render() {
-    const {
-      next,
-      disableCantMakeIt,
-      disableImGoing,
-      weddingRsvp,
-      classes: { root, buttonBar }
-    } = this.props;
+    const { next, disableButtons, weddingRsvp } = this.props;
     return (
-      <div className={root}>
-        <div className={buttonBar}>
-          <CantMakeIt
-            onClick={this.handleClick(false)}
-            disabled={disableCantMakeIt}
-            selected={weddingRsvp === false}
-          />
-          <Details
-            to={`/rsvp/details/`}
-            iconType={DetailsIcons.backArrow}
-            help='back'
-          />
-          <Details
-            to={next}
-            iconType={DetailsIcons.nextArrow}
-            help={weddingRsvp === undefined ? 'skip' : 'next'}
-          />
-          <ImGoing
-            help="I'm going!"
-            selected={weddingRsvp}
-            onClick={this.handleClick(true)}
-            disabled={disableImGoing}
-          />
-        </div>
-      </div>
+      <ButtonBar>
+        <CantMakeIt
+          help="can't make it"
+          onClick={this.handleClick(false)}
+          disabled={disableButtons}
+          selected={weddingRsvp === false}
+        />
+        <Details
+          to={`/rsvp/details/`}
+          iconType={DetailsIcons.backArrow}
+          help='back'
+        />
+        <Details
+          to={next}
+          iconType={DetailsIcons.nextArrow}
+          help={weddingRsvp === undefined ? 'skip' : 'next'}
+        />
+        <ImGoing
+          help="I'm going!"
+          selected={weddingRsvp}
+          onClick={this.handleClick(true)}
+          disabled={disableButtons}
+        />
+      </ButtonBar>
     );
   }
 }
 
-export const disableImGoingSelector = createSelector(
-  [getUserCacheStatus, getRehearsalRsvp],
-  (cacheStatus, weddingRsvp) =>
+export const disableButtonsSelector = createSelector(
+  [getUserCacheStatus],
+  cacheStatus =>
     cacheStatus === CacheStatus.FETCHING ||
-    cacheStatus === CacheStatus.PERSISTING ||
-    weddingRsvp === true
-);
-
-export const disableCantMakeItSelector = createSelector(
-  [getUserCacheStatus, getRehearsalRsvp],
-  (cacheStatus, weddingRsvp) =>
-    cacheStatus === CacheStatus.FETCHING ||
-    cacheStatus === CacheStatus.PERSISTING ||
-    weddingRsvp === false
+    cacheStatus === CacheStatus.PERSISTING
 );
 
 export const nextSelector = createSelector(
@@ -128,8 +90,7 @@ export const mapStateToProps = (state: State) =>
   createSelector(
     [getRehearsalRsvp, getUserId],
     (weddingRsvp, userId) => ({
-      disableCantMakeIt: disableCantMakeItSelector(state),
-      disableImGoing: disableImGoingSelector(state),
+      disableButtons: disableButtonsSelector(state),
       next: nextSelector(state),
       userId,
       weddingRsvp
@@ -140,9 +101,7 @@ export const actionCreators = {
   rsvpRehearsal
 };
 
-export const UnstyledRsvpRehearsalBar = connect(
+export const RsvpRehearsalBar = connect(
   mapStateToProps,
   actionCreators
 )(UnconnectedRsvpRehearsalBar);
-
-export const RsvpRehearsalBar = withStyles(styles)(UnstyledRsvpRehearsalBar);

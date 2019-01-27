@@ -2,8 +2,7 @@ import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@
 import classnames from 'classnames';
 import * as React from 'react';
 
-import { DetailsIcons } from '../../ButtonBar/Details';
-import { RsvpBar } from '../../ButtonBar/RsvpBar';
+import { NextBar } from '../../ButtonBar/NextBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 
@@ -89,11 +88,7 @@ export const UnstyledDetails: React.SFC<DetailsProps> = ({
         </Typography>
       </CardContent>
     </StandardCard>
-    <RsvpBar
-      onlyInfo
-      toDetails='/rsvp'
-      detailsIconType={DetailsIcons.nextArrow}
-    />
+    <NextBar to='/rsvp' />
   </ColumnLayout>
 );
 

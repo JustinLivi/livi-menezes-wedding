@@ -1,4 +1,3 @@
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { match, Redirect } from 'react-router-dom';
@@ -14,32 +13,15 @@ import {
 } from '../store/selectors/relationships';
 import { getHasMoreRelations, getInvitedRehearsal, getWeddingRsvp } from '../store/selectors/user';
 import { CacheStatus, State } from '../store/stateDefinition';
-import { theme } from '../theme';
+import { ButtonBar } from './ButtonBar';
 import { CantMakeIt } from './CantMakeIt';
 import { Details, DetailsIcons } from './Details';
 import { ImGoing } from './ImGoing';
 
-export const buttonBarStyles = createStyles({
-  buttonBar: {
-    flexGrow: 0
-  },
-  root: {
-    alignItems: 'center',
-    boxPack: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 0,
-    height: 132,
-    justifyContent: 'center',
-    margin: theme.spacing.unit
-  }
-});
-
 export interface RsvpRelationBarStateProps {
   cacheStatus: CacheStatus;
   displaySkip?: true;
-  disableCantMakeIt: boolean;
-  disableImGoing: boolean;
+  disableButtons: boolean;
   userId?: string;
   weddingRsvp?: boolean;
   back: string;
@@ -49,8 +31,7 @@ export interface RsvpRelationBarDetailsProps {
   rsvpCeremony: typeof rsvpCeremony;
 }
 
-export interface RsvpRelationBarParentProps
-  extends WithStyles<typeof buttonBarStyles> {
+export interface RsvpRelationBarParentProps {
   match: match<{ relationId: string }>;
 }
 
@@ -83,46 +64,43 @@ export class UnconnectedRsvpRelationBar extends React.Component<
   public render() {
     const {
       displaySkip,
-      disableCantMakeIt,
-      disableImGoing,
+      disableButtons,
       weddingRsvp,
       back,
-      cacheStatus,
-      classes: { root, buttonBar }
+      cacheStatus
     } = this.props;
     if (cacheStatus === CacheStatus.ERRORED) {
       return <Redirect to={back} />;
     }
     return (
-      <div className={root}>
-        <div className={buttonBar}>
-          <CantMakeIt
-            onClick={this.handleClick(false)}
-            disabled={disableCantMakeIt}
-            selected={weddingRsvp === false}
+      <ButtonBar>
+        <CantMakeIt
+          help="can't make it"
+          onClick={this.handleClick(false)}
+          disabled={disableButtons}
+          selected={weddingRsvp === false}
+        />
+        <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
+        {displaySkip && (
+          <Details
+            to={
+              weddingRsvp === undefined
+                ? `/rsvp/u/${this.relationIndex + 1}`
+                : `/rsvp/details/${this.relationIndex}`
+            }
+            iconType={DetailsIcons.nextArrow}
+            help={weddingRsvp === undefined ? 'skip' : 'next'}
           />
-          <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
-          {displaySkip && (
-            <Details
-              to={
-                weddingRsvp === undefined
-                  ? `/rsvp/u/${this.relationIndex + 1}`
-                  : `/rsvp/details/${this.relationIndex}`
-              }
-              iconType={DetailsIcons.nextArrow}
-              help={weddingRsvp === undefined ? 'skip' : 'next'}
-            />
-          )}
-          {
-            <ImGoing
-              help="they're going!"
-              selected={weddingRsvp}
-              onClick={this.handleClick(true)}
-              disabled={disableImGoing}
-            />
-          }
-        </div>
-      </div>
+        )}
+        {
+          <ImGoing
+            help="they're going!"
+            selected={weddingRsvp}
+            onClick={this.handleClick(true)}
+            disabled={disableButtons}
+          />
+        }
+      </ButtonBar>
     );
   }
 }
@@ -156,29 +134,12 @@ export const backSelector = (state: State, props: RsvpRelationBarParentProps) =>
     }
   )(state);
 
-export const disableImGoingSelector = (
-  state: State,
-  props: RsvpRelationBarParentProps
-) =>
-  createSelector(
-    [getRelationshipsCacheStatus, getRelationshipRsvp],
-    (cacheStatus, weddingRsvp) =>
-      cacheStatus === CacheStatus.FETCHING ||
-      cacheStatus === CacheStatus.PERSISTING ||
-      weddingRsvp === true
-  )(state, props);
-
-export const disableCantMakeItSelector = (
-  state: State,
-  props: RsvpRelationBarParentProps
-) =>
-  createSelector(
-    [getRelationshipsCacheStatus, getRelationshipRsvp],
-    (cacheStatus, weddingRsvp) =>
-      cacheStatus === CacheStatus.FETCHING ||
-      cacheStatus === CacheStatus.PERSISTING ||
-      weddingRsvp === false
-  )(state, props);
+export const disableButtonsSelector = createSelector(
+  [getRelationshipsCacheStatus],
+  cacheStatus =>
+    cacheStatus === CacheStatus.FETCHING ||
+    cacheStatus === CacheStatus.PERSISTING
+);
 
 export const displaySkipSelector = (
   state: State,
@@ -199,8 +160,7 @@ export const mapStateToProps = (
     (weddingRsvp, userId, cacheStatus) => ({
       back: backSelector(state, props),
       cacheStatus,
-      disableCantMakeIt: disableCantMakeItSelector(state, props),
-      disableImGoing: disableImGoingSelector(state, props),
+      disableButtons: disableButtonsSelector(state),
       displaySkip: displaySkipSelector(state, props),
       userId,
       weddingRsvp
@@ -211,11 +171,7 @@ export const actionCreators = {
   rsvpCeremony
 };
 
-export const UnstyledRsvpRelationBar = connect(
+export const RsvpRelationBar = connect(
   mapStateToProps,
   actionCreators
 )(UnconnectedRsvpRelationBar);
-
-export const RsvpRelationBar = withStyles(buttonBarStyles)(
-  UnstyledRsvpRelationBar
-);

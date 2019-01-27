@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RsvpBar } from '../../ButtonBar/RsvpBar';
+import { NextBar } from '../../ButtonBar/NextBar';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import innerHarbor from './inner-harbor.jpg';
@@ -12,6 +12,6 @@ export const WhereToStay: React.SFC = () => (
       title='Where to Stay'
       blurb='Find a hotel or AirBnb in Baltimore, MD'
     />
-    <RsvpBar onlyInfo hideHelp toDetails='/where-to-stay/details' />
+    <NextBar to='/where-to-stay/details' />
   </ColumnLayout>
 );

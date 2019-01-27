@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRehearsalBar } from '../../ButtonBar/RsvpRehearsalBar';
-import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
 import { ItsaMatch } from '../../Components/ItsaMatch';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -16,7 +15,6 @@ import { getPhoto, getRedirect, getRehearsalRsvp, getUserId } from '../../store/
 import { AvatarCard } from './AvatarCard';
 
 const styles = createStyles({
-  ...buttonBarStyles,
   centered: {
     textAlign: 'center'
   },

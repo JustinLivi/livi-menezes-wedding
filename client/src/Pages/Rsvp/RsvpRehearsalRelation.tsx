@@ -8,7 +8,6 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRehearsalRelationBar } from '../../ButtonBar/RsvpRehearsalRelationBar';
-import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
 import { ItsaMatch } from '../../Components/ItsaMatch';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -30,7 +29,6 @@ import { AvatarCardRelation } from './AvatarCardRelation';
 import { Loading } from './Loading';
 
 const styles = createStyles({
-  ...buttonBarStyles,
   avatar: {
     display: 'flex',
     justifyContent: 'center',
