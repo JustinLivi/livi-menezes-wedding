@@ -5,7 +5,7 @@ import { loadMapApi } from '../Util/loadMapsApi';
 
 const styles = createStyles({
   root: {
-    height: 360,
+    height: 350,
     maxHeight: 'calc(100vh - 308px)',
     maxWidth: '100%'
   }

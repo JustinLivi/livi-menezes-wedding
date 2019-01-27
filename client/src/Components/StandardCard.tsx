@@ -7,10 +7,10 @@ import { SwipeableCard } from './SwipeableCard';
 
 const styles = createStyles({
   card: {
-    flexGrow: 1,
     maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
-    minHeight: 350
+    minHeight: 350,
+    width: 400
   },
   defaultCard: {
     maxHeight: 'calc(100vh - 300px)',
@@ -53,15 +53,23 @@ export const UnstyledStandardCard: React.SFC<StandardCardProps> = ({
   children
 }) => (
   <div className={root}>
-    <Card className={classnames(defaultCard, className)}>{children}</Card>
-    <SwipeableCard
-      swipe={swipe}
-      className={card}
-      swipeRight={swipeRight}
-      swipeLeft={swipeLeft}
-    >
-      <Card className={classnames(innerCard, className)}>{children}</Card>
-    </SwipeableCard>
+    {swipe ? (
+      <React.Fragment>
+        <Card className={classnames(defaultCard, className)}>{children}</Card>
+        <SwipeableCard
+          swipe={swipe}
+          className={card}
+          swipeRight={swipeRight}
+          swipeLeft={swipeLeft}
+        >
+          <Card className={classnames(innerCard, className)}>{children}</Card>
+        </SwipeableCard>
+      </React.Fragment>
+    ) : (
+      <div className={card}>
+        <Card className={classnames(innerCard, className)}>{children}</Card>
+      </div>
+    )}
   </div>
 );
 
