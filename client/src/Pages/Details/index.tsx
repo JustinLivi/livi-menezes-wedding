@@ -1,10 +1,13 @@
-import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { CardContent, createStyles, Link, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { LinkProps } from '@material-ui/core/Link';
 import classnames from 'classnames';
 import * as React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { NextBar } from '../../ButtonBar/NextBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import { Omit } from '../../Util/util';
 
 const styles = createStyles({
   hr: {
@@ -28,9 +31,13 @@ const styles = createStyles({
   }
 });
 
-export interface DetailsProps extends WithStyles<typeof styles> {}
+export type LinkComponent = React.ReactType<Omit<LinkProps, 'innerRef'>>;
 
-export const UnstyledDetails: React.SFC<DetailsProps> = ({
+export const DirectionsLink: LinkComponent = props => (
+  <RouterLink to='/directions/details' {...props} />
+);
+
+export const UnstyledDetails: React.SFC<WithStyles<typeof styles>> = ({
   classes: { root, topName, names, hr, italic }
 }) => (
   <ColumnLayout>
@@ -63,12 +70,14 @@ export const UnstyledDetails: React.SFC<DetailsProps> = ({
         <Typography variant='h6' component='p'>
           Sunday, October 13, 2019 at 4:00pm
         </Typography>
-        <Typography variant='body1' component='p'>
-          The George Peabody Library
-        </Typography>
-        <Typography variant='body1' component='p'>
-          Baltimore, Maryland
-        </Typography>
+        <Link component={DirectionsLink}>
+          <Typography color='primary' variant='body1' component='p'>
+            The George Peabody Library
+          </Typography>
+          <Typography color='primary' variant='body1' component='p'>
+            Baltimore, Maryland
+          </Typography>
+        </Link>
         <hr className={hr} />
         <Typography variant='body1' component='p'>
           Cocktails, dinner, and dancing will follow

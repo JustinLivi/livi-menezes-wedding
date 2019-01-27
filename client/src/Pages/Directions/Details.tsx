@@ -38,8 +38,9 @@ export const DirectionsDetails: React.SFC = () => (
     <StandardCard>
       <p>Flying: BWI is the nearest Airport insert link >></p>
       <p>
-        Driving: We will be providing valet parking at the Library. The parking
-        garage closes at midnight.
+        Driving: The venue is easily accessible in Baltimore via ride shares,
+        such Lyft and Uber. The valet closes at <strong>midnight</strong>, so
+        please be sure to pick up your car before then.
       </p>
       <p>
         Train: The Library is within walking distance of the Library. However,

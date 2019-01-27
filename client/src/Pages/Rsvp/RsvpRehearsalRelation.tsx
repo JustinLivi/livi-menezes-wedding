@@ -27,6 +27,7 @@ import { getInvitedRehearsal, getRedirect } from '../../store/selectors/user';
 import { CacheStatus, State } from '../../store/stateDefinition';
 import { AvatarCardRelation } from './AvatarCardRelation';
 import { Loading } from './Loading';
+import { RehearsalDetails } from './RehearsalDetails';
 
 const styles = createStyles({
   avatar: {
@@ -137,14 +138,12 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
               >
                 RSVP For Rehearsal
               </Typography>
-              <Typography className={topName} component='p'>
+              <Typography variant='body1' className={centered} component='p'>
                 {name
                   ? `${name} is invited to our rehearsal dinner!`
                   : 'loading...'}
               </Typography>
-              <Typography className={topName} component='p'>
-                Details TBD
-              </Typography>
+              <RehearsalDetails />
             </AvatarCardRelation>
             <Breadcrumbs activeStep={activeStep} />
             <RsvpRehearsalRelationBar match={matched} />

@@ -8,6 +8,7 @@ import { DirectionsDetails } from '../Pages/Directions/Details';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryAnswer } from '../Pages/OurStory/Answer';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
+import { Registry } from '../Pages/Registry';
 import { Rsvp } from '../Pages/Rsvp';
 import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
 import { RsvpDetails } from '../Pages/Rsvp/RsvpDetails';
@@ -62,6 +63,7 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/where-to-stay' exact component={WhereToStay} />
     <Route path='/where-to-stay/details' exact component={WhereToStayDetails} />
     <Route path='/things-to-do' exact component={ThingsToDo} />
+    <Route path='/registry' exact component={Registry} />
     <Route path='/*' component={RedirectToRoot} />
   </Switch>
 );
