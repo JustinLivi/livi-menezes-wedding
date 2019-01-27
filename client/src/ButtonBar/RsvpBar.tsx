@@ -53,7 +53,9 @@ export class UnconnectedRsvpBar extends React.Component<RsvpBarProps> {
         <Chevron to='/' iconType={ChevronIcons.backArrow} help='back' />
         <Chevron
           help='next'
-          disabled={weddingRsvp === undefined}
+          disabled={
+            weddingRsvp === undefined ? 'Please RSVP to continue' : undefined
+          }
           to='/rsvp/details'
           iconType={ChevronIcons.nextArrow}
         />

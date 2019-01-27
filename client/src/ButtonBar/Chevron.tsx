@@ -3,6 +3,7 @@ import Fab, { FabProps } from '@material-ui/core/Fab';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { DisabledTooltip } from '../Components/DisabledTooltip';
 import { theme } from '../theme';
 import { Omit } from '../Util/util';
 import { ChevronIcon, ChevronIcons } from './ChevronIcon';
@@ -34,7 +35,7 @@ export interface ChevronProps extends WithStyles<typeof styles> {
   iconType?: ChevronIcons;
   help?: string;
   external?: boolean;
-  disabled?: boolean;
+  disabled?: string;
 }
 
 export class UnstyledChevron extends React.Component<ChevronProps> {
@@ -52,21 +53,23 @@ export class UnstyledChevron extends React.Component<ChevronProps> {
       disabled
     } = this.props;
     return (
-      <div className={root}>
-        <Fab
-          disabled={disabled}
-          component={!external ? this.linkComponent : undefined}
-          href={external ? to : undefined}
-          target={external ? '_blank' : undefined}
-          aria-label='Details'
-          classes={{ root: fab }}
-        >
-          <Icon color='inherit'>
-            <ChevronIcon iconType={iconType} />
-          </Icon>
-        </Fab>
-        {help && <span className={label}>{help}</span>}
-      </div>
+      <DisabledTooltip help={disabled} disabled={!!disabled} placement='top'>
+        <div className={root}>
+          <Fab
+            disabled={!!disabled}
+            component={!external ? this.linkComponent : undefined}
+            href={external ? to : undefined}
+            target={external ? '_blank' : undefined}
+            aria-label='Details'
+            classes={{ root: fab }}
+          >
+            <Icon color='inherit'>
+              <ChevronIcon iconType={iconType} />
+            </Icon>
+          </Fab>
+          {help && <span className={label}>{help}</span>}
+        </div>
+      </DisabledTooltip>
     );
   }
 

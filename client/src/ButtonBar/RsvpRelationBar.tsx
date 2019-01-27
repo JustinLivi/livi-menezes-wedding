@@ -21,8 +21,8 @@ import { ImGoing } from './ImGoing';
 
 export interface RsvpRelationBarStateProps {
   cacheStatus: CacheStatus;
-  displaySkip?: true;
   disableButtons: boolean;
+  next: string;
   userId?: string;
   weddingRsvp?: boolean;
   back: string;
@@ -63,13 +63,7 @@ export class UnconnectedRsvpRelationBar extends React.Component<
   };
 
   public render() {
-    const {
-      displaySkip,
-      disableButtons,
-      weddingRsvp,
-      back,
-      cacheStatus
-    } = this.props;
+    const { disableButtons, weddingRsvp, back, cacheStatus, next } = this.props;
     return cacheStatus === CacheStatus.ERRORED ? (
       <Redirect to={back} />
     ) : (
@@ -81,25 +75,17 @@ export class UnconnectedRsvpRelationBar extends React.Component<
           selected={weddingRsvp === false}
         />
         <Chevron to={back} iconType={ChevronIcons.backArrow} help='back' />
-        {displaySkip && (
-          <Chevron
-            to={
-              weddingRsvp === undefined
-                ? `/rsvp/u/${this.relationIndex + 1}`
-                : `/rsvp/details/${this.relationIndex}`
-            }
-            iconType={ChevronIcons.nextArrow}
-            help={weddingRsvp === undefined ? 'skip' : 'next'}
-          />
-        )}
-        {
-          <ImGoing
-            help="they're going!"
-            selected={weddingRsvp}
-            onClick={this.handleClick(true)}
-            disabled={disableButtons}
-          />
-        }
+        <Chevron
+          to={next}
+          iconType={ChevronIcons.nextArrow}
+          help={weddingRsvp === undefined ? 'skip' : 'next'}
+        />
+        <ImGoing
+          help="they're going!"
+          selected={weddingRsvp}
+          onClick={this.handleClick(true)}
+          disabled={disableButtons}
+        />
       </ButtonBar>
     );
   }
@@ -111,6 +97,9 @@ export const backSelector = (state: State, props: RsvpRelationBarParentProps) =>
     (invitedRehearsal, weddingRsvp) => {
       const relationId = extractRelationId(props);
       if (relationId === 0) {
+        if (weddingRsvp === undefined) {
+          return '/rsvp';
+        }
         if (invitedRehearsal && weddingRsvp) {
           return '/rsvp/rehearsal/';
         }
@@ -124,10 +113,11 @@ export const backSelector = (state: State, props: RsvpRelationBarParentProps) =>
           params: { relationId: `${prevRelation}` }
         }
       };
-      if (
-        getRelationshipInvitedRehearsal(state, prevParams) &&
-        getRelationshipRsvp(state, prevParams)
-      ) {
+      const relationRsvp = getRelationshipRsvp(state, prevParams);
+      if (relationRsvp === undefined) {
+        return `/rsvp/u/${prevRelation}`;
+      }
+      if (getRelationshipInvitedRehearsal(state, prevParams) && relationRsvp) {
         return `/rsvp/rehearsal/${prevRelation}`;
       }
       return `/rsvp/details/${prevRelation}`;
@@ -141,14 +131,18 @@ export const disableButtonsSelector = createSelector(
     cacheStatus === CacheStatus.PERSISTING
 );
 
-export const displaySkipSelector = (
+export const nextSelector = (
   state: State,
   props: RsvpRelationBarParentProps
-): true | undefined =>
+): string =>
   createSelector(
     [getRelationshipRsvp, getHasMoreRelations],
     (weddingRsvp, hasMoreRelations) =>
-      hasMoreRelations || weddingRsvp !== undefined || undefined
+      weddingRsvp !== undefined
+        ? `/rsvp/details/${extractRelationId(props)}`
+        : hasMoreRelations
+        ? `/rsvp/u/${extractRelationId(props) + 1}`
+        : '/rsvp/review'
   )(state, props);
 
 export const mapStateToProps = (
@@ -161,7 +155,7 @@ export const mapStateToProps = (
       back: backSelector(state, props),
       cacheStatus,
       disableButtons: disableButtonsSelector(state),
-      displaySkip: displaySkipSelector(state, props),
+      next: nextSelector(state, props),
       userId,
       weddingRsvp
     })

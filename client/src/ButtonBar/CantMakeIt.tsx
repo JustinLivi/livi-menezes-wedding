@@ -72,7 +72,7 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
         </SvgIcon>
       </Icon>
     </Fab>
-    {<span className={label}>{help}</span>}
+    <span className={label}>{help}</span>
   </div>
 );
 

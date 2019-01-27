@@ -32,6 +32,8 @@ export class UnstyledAddressInput extends React.Component<
   AddressInputProps,
   AddressInputState
 > {
+  public script?: HTMLScriptElement;
+
   constructor(props: AddressInputProps) {
     super(props);
     this.state = {
@@ -40,7 +42,13 @@ export class UnstyledAddressInput extends React.Component<
   }
 
   public componentDidMount() {
-    loadMapApi(this.onScriptLoad);
+    this.script = loadMapApi(this.onScriptLoad);
+  }
+
+  public componentWillUnmount() {
+    if (this.script) {
+      this.script.removeEventListener('load', this.onScriptLoad);
+    }
   }
 
   public target = () => (

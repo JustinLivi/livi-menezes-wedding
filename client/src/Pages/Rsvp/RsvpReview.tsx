@@ -218,6 +218,9 @@ export const backSelector = (state: State) =>
     [getInvitedRehearsal, getRelationshipsCount, getWeddingRsvp],
     (invitedRehearsal, relationshipsCount, weddingRsvp) => {
       if (relationshipsCount === 0) {
+        if (weddingRsvp === undefined) {
+          return '/rsvp';
+        }
         if (invitedRehearsal && weddingRsvp) {
           return '/rsvp/rehearsal/';
         }
@@ -232,10 +235,11 @@ export const backSelector = (state: State) =>
           url: ''
         }
       };
-      if (
-        getRelationshipInvitedRehearsal(state, prevParams) &&
-        getRelationshipRsvp(state, prevParams)
-      ) {
+      const relationRsvp = getRelationshipRsvp(state, prevParams);
+      if (relationRsvp === undefined) {
+        return `/rsvp/u/${prevRelation}`;
+      }
+      if (getRelationshipInvitedRehearsal(state, prevParams) && relationRsvp) {
         return `/rsvp/rehearsal/${prevRelation}`;
       }
       return `/rsvp/details/${prevRelation}`;

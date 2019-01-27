@@ -111,7 +111,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
             id='standard-name'
             label='Favorite dance song'
             fullWidth
-            value={favoriteDanceSong}
+            value={favoriteDanceSong || ''}
             onChange={this.handleChange('favoriteDanceSong')}
             onBlur={this.handleBlur('favoriteDanceSong')}
             margin='normal'
@@ -122,7 +122,7 @@ export class UnstyledImGoingCard extends React.Component<ImGoingCardProps> {
             fullWidth
             multiline
             rowsMax='4'
-            value={dietaryRestrictions}
+            value={dietaryRestrictions || ''}
             onChange={this.handleChange('dietaryRestrictions')}
             onBlur={this.handleBlur('dietaryRestrictions')}
             margin='normal'

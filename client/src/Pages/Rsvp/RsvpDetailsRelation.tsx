@@ -6,8 +6,6 @@ import { Redirect } from 'react-router-dom';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
-import { Chevron } from '../../ButtonBar/Chevron';
-import { ChevronIcons } from '../../ButtonBar/ChevronIcon';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
@@ -148,17 +146,11 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
               />
             )}
             <Breadcrumbs activeStep={activeStep} />
-            {address ? (
-              <ContinueBar back={back} next={next} />
-            ) : (
-              <div className={help}>
-                <Chevron
-                  to={back}
-                  iconType={ChevronIcons.backArrow}
-                  help='back'
-                />
-              </div>
-            )}
+            <ContinueBar
+              back={back}
+              next={next}
+              nextHelp={!address ? 'skip' : 'next'}
+            />
           </React.Fragment>
         )}
       </ColumnLayout>

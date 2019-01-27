@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
-import { Chevron } from '../../ButtonBar/Chevron';
-import { ChevronIcons } from '../../ButtonBar/ChevronIcon';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
@@ -108,13 +106,11 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
           />
         )}
         <Breadcrumbs activeStep={1} />
-        {address && relationships ? (
-          <ContinueBar back='/rsvp' next={next} />
-        ) : (
-          <div className={help}>
-            <Chevron to='/rsvp' iconType={ChevronIcons.backArrow} />
-          </div>
-        )}
+        <ContinueBar
+          back='/rsvp'
+          next={next}
+          disableNext={!address ? 'Enter address to continue' : undefined}
+        />
       </ColumnLayout>
     );
   }

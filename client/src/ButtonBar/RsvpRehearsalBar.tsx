@@ -62,7 +62,10 @@ export class UnconnectedRsvpRehearsalBar extends React.Component<
         <Chevron
           to={next}
           iconType={ChevronIcons.nextArrow}
-          help={weddingRsvp === undefined ? 'skip' : 'next'}
+          disabled={
+            weddingRsvp === undefined ? 'Please RSVP to continue' : undefined
+          }
+          help='next'
         />
         <ImGoing
           help="I'm going!"
