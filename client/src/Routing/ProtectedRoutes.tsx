@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Details } from '../Pages/Details';
 import { Directions } from '../Pages/Directions';
+import { DirectionsDetails } from '../Pages/Directions/Details';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryAnswer } from '../Pages/OurStory/Answer';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
@@ -16,9 +17,8 @@ import { RsvpRehearsalRelation } from '../Pages/Rsvp/RsvpRehearsalRelation';
 import { RsvpRelation } from '../Pages/Rsvp/RsvpRelation';
 import { RsvpReview } from '../Pages/Rsvp/RsvpReview';
 import { ThingsToDo } from '../Pages/ThingsToDo';
-import { Venue } from '../Pages/Venue';
-import { VenueDetails } from '../Pages/Venue/Details';
 import { WhereToStay } from '../Pages/WhereToStay';
+import { WhereToStayDetails } from '../Pages/WhereToStay/Details';
 
 export const styles = createStyles({
   root: {
@@ -57,10 +57,10 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/question/:questionId' component={OurStoryDetails} />
     <Route path='/our-story/answer/:questionId' component={OurStoryAnswer} />
-    <Route path='/venue' exact component={Venue} />
-    <Route path='/venue/details' exact component={VenueDetails} />
     <Route path='/directions' exact component={Directions} />
+    <Route path='/directions/details' exact component={DirectionsDetails} />
     <Route path='/where-to-stay' exact component={WhereToStay} />
+    <Route path='/where-to-stay/details' exact component={WhereToStayDetails} />
     <Route path='/things-to-do' exact component={ThingsToDo} />
     <Route path='/*' component={RedirectToRoot} />
   </Switch>

@@ -1,14 +1,5 @@
 import { createStyles, IconButton, Menu, WithStyles, withStyles } from '@material-ui/core';
-import {
-  Description,
-  EmailRounded,
-  Hotel,
-  LocalCafe,
-  LocationCityRounded,
-  LocationOn,
-  Menu as MenuIcon,
-  People,
-} from '@material-ui/icons';
+import { Description, EmailRounded, Hotel, LocalCafe, LocationOn, Menu as MenuIcon, People } from '@material-ui/icons';
 import * as React from 'react';
 
 import {
@@ -17,7 +8,6 @@ import {
   OurStoryLink,
   RsvpLink,
   ThingsToDoLink,
-  VenueLink,
   WhereToStayLink,
 } from '../Components/MenuLinks';
 import { theme } from '../theme';
@@ -114,12 +104,6 @@ export class UnstyledHamburger extends React.Component<
             linkComponent={OurStoryLink}
             onClick={this.handleClose}
             primary='Our Story'
-          />
-          <MenuItem
-            icon={<LocationCityRounded />}
-            linkComponent={VenueLink}
-            onClick={this.handleClose}
-            primary='Venue'
           />
           <MenuItem
             icon={<LocationOn />}
