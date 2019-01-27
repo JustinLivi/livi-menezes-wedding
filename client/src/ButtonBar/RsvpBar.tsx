@@ -7,7 +7,8 @@ import { getUserCacheStatus, getUserId, getWeddingRsvp } from '../store/selector
 import { CacheStatus } from '../store/stateDefinition';
 import { ButtonBar } from './ButtonBar';
 import { CantMakeIt } from './CantMakeIt';
-import { Details, DetailsIcons } from './Details';
+import { Chevron } from './Chevron';
+import { ChevronIcons } from './ChevronIcon';
 import { ImGoing } from './ImGoing';
 
 export interface RsvpBarStateProps {
@@ -49,12 +50,12 @@ export class UnconnectedRsvpBar extends React.Component<RsvpBarProps> {
           }
           selected={weddingRsvp === false}
         />
-        <Details to='/' iconType={DetailsIcons.backArrow} help='back' />
-        <Details
+        <Chevron to='/' iconType={ChevronIcons.backArrow} help='back' />
+        <Chevron
           help='next'
           disabled={weddingRsvp === undefined}
           to='/rsvp/details'
-          iconType={DetailsIcons.nextArrow}
+          iconType={ChevronIcons.nextArrow}
         />
         <ImGoing
           help="I'm going!"

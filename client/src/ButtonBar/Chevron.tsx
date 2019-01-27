@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { theme } from '../theme';
 import { Omit } from '../Util/util';
+import { ChevronIcon, ChevronIcons } from './ChevronIcon';
 import { buttonHolderStyles, commonButtonStyles } from './commonStyles';
-import { DetailsIcon } from './DetailsIcon';
 
 const styles = createStyles({
   fab: {
@@ -29,22 +29,16 @@ const styles = createStyles({
   root: buttonHolderStyles
 });
 
-export enum DetailsIcons {
-  backArrow = 'backArrow',
-  nextArrow = 'nextArrow',
-  details = 'details'
-}
-
-export interface DetailsProps extends WithStyles<typeof styles> {
+export interface ChevronProps extends WithStyles<typeof styles> {
   to: string;
-  iconType?: DetailsIcons;
+  iconType?: ChevronIcons;
   help?: string;
   external?: boolean;
   disabled?: boolean;
 }
 
-export class UnstyledDetails extends React.Component<DetailsProps> {
-  constructor(props: DetailsProps) {
+export class UnstyledChevron extends React.Component<ChevronProps> {
+  constructor(props: ChevronProps) {
     super(props);
   }
 
@@ -68,7 +62,7 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
           classes={{ root: fab }}
         >
           <Icon color='inherit'>
-            <DetailsIcon iconType={iconType} />
+            <ChevronIcon iconType={iconType} />
           </Icon>
         </Fab>
         {help && <span className={label}>{help}</span>}
@@ -81,4 +75,4 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
   );
 }
 
-export const Details = withStyles(styles)(UnstyledDetails);
+export const Chevron = withStyles(styles)(UnstyledChevron);

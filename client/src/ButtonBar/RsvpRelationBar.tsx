@@ -15,7 +15,8 @@ import { getHasMoreRelations, getInvitedRehearsal, getWeddingRsvp } from '../sto
 import { CacheStatus, State } from '../store/stateDefinition';
 import { ButtonBar } from './ButtonBar';
 import { CantMakeIt } from './CantMakeIt';
-import { Details, DetailsIcons } from './Details';
+import { Chevron } from './Chevron';
+import { ChevronIcons } from './ChevronIcon';
 import { ImGoing } from './ImGoing';
 
 export interface RsvpRelationBarStateProps {
@@ -69,10 +70,9 @@ export class UnconnectedRsvpRelationBar extends React.Component<
       back,
       cacheStatus
     } = this.props;
-    if (cacheStatus === CacheStatus.ERRORED) {
-      return <Redirect to={back} />;
-    }
-    return (
+    return cacheStatus === CacheStatus.ERRORED ? (
+      <Redirect to={back} />
+    ) : (
       <ButtonBar>
         <CantMakeIt
           help="can't make it"
@@ -80,15 +80,15 @@ export class UnconnectedRsvpRelationBar extends React.Component<
           disabled={disableButtons}
           selected={weddingRsvp === false}
         />
-        <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
+        <Chevron to={back} iconType={ChevronIcons.backArrow} help='back' />
         {displaySkip && (
-          <Details
+          <Chevron
             to={
               weddingRsvp === undefined
                 ? `/rsvp/u/${this.relationIndex + 1}`
                 : `/rsvp/details/${this.relationIndex}`
             }
-            iconType={DetailsIcons.nextArrow}
+            iconType={ChevronIcons.nextArrow}
             help={weddingRsvp === undefined ? 'skip' : 'next'}
           />
         )}

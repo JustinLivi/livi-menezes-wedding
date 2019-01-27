@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { ButtonBar } from './ButtonBar';
-import { Details, DetailsIcons } from './Details';
+import { Chevron } from './Chevron';
+import { ChevronIcons } from './ChevronIcon';
 
 export interface NextBarProps {
   to: string;
@@ -10,11 +11,11 @@ export interface NextBarProps {
 
 export const NextBar: React.SFC<NextBarProps> = ({ to, external }) => (
   <ButtonBar>
-    <Details
+    <Chevron
       help='next'
       to={to}
       external={external}
-      iconType={DetailsIcons.nextArrow}
+      iconType={ChevronIcons.nextArrow}
     />
   </ButtonBar>
 );

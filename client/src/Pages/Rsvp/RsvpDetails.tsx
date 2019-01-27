@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
+import { Chevron } from '../../ButtonBar/Chevron';
+import { ChevronIcons } from '../../ButtonBar/ChevronIcon';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
-import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -111,7 +112,7 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
           <ContinueBar back='/rsvp' next={next} />
         ) : (
           <div className={help}>
-            <Details to='/rsvp' iconType={DetailsIcons.backArrow} />
+            <Chevron to='/rsvp' iconType={ChevronIcons.backArrow} />
           </div>
         )}
       </ColumnLayout>
