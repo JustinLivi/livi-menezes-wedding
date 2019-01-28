@@ -10,6 +10,7 @@ const styles = createStyles({
     maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
     minHeight: 350,
+    position: 'relative',
     width: 400
   },
   defaultCard: {
