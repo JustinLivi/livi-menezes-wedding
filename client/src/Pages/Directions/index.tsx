@@ -14,7 +14,7 @@ export const Directions: React.SFC = () => (
     <ProfileCard
       image={directions}
       title='Directions'
-      blurb='Get directions to the Peabody Library'
+      blurb='Get directions and transit information'
     >
       <GoogleMap
         id='peabody-map'
