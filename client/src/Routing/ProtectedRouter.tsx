@@ -18,6 +18,9 @@ import { ProtectedRoutes } from './ProtectedRoutes';
 const md = new MobileDetect(window.navigator.userAgent);
 
 export const styles = createStyles({
+  fab: {
+    color: 'white'
+  },
   fullscreenHelp: {
     margin: 20,
     marginLeft: 40,
@@ -76,7 +79,7 @@ export class UnstyledProtectedRouter extends React.Component<
 
   public render() {
     const {
-      classes: { root, gridRoot, fullscreenIcon, fullscreenHelp },
+      classes: { root, gridRoot, fullscreenIcon, fullscreenHelp, fab },
       profile
     } = this.props;
     const { isFullscreen, fullScreenRef } = this.state;
@@ -86,7 +89,7 @@ export class UnstyledProtectedRouter extends React.Component<
         enabled={this.state.isFullscreen}
         onChange={this.handleFullscreen}
       >
-        {md.isPhoneSized() && isFullscreen === undefined ? (
+        {md.isPhoneSized() && !md.is('iPhone') && isFullscreen === undefined ? (
           <Grid
             className={gridRoot}
             container
@@ -101,6 +104,7 @@ export class UnstyledProtectedRouter extends React.Component<
             </Grid>
             <Grid item>
               <Fab
+                className={fab}
                 variant='extended'
                 aria-label='Fullscreen'
                 color='primary'
