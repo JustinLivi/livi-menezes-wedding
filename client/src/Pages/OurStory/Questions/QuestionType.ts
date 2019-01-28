@@ -1,6 +1,6 @@
 export interface Question {
   onChange: (index: number) => void;
-  value?: number;
+  value: number | null;
   correctAnswer: number;
   disabled?: boolean;
 }

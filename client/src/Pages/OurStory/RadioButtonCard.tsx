@@ -63,7 +63,7 @@ export const styles = createStyles({
 
 export interface RadioButtonCardProps extends WithStyles<typeof styles> {
   onChange: (index: number) => void;
-  value?: number;
+  value: number | null;
   correctAnswer: number;
   question: string;
   answers: string[];
@@ -116,7 +116,7 @@ export class UnstyledRadioButtonCard extends React.Component<
               {map(answers, (answer, i) => (
                 <FormControlLabel
                   classes={
-                    value === undefined
+                    value === null
                       ? undefined
                       : correctAnswer === i
                       ? { disabled, label: correctLabel }
@@ -125,14 +125,14 @@ export class UnstyledRadioButtonCard extends React.Component<
                       : undefined
                   }
                   disabled={
-                    isDisabled !== undefined ? isDisabled : value !== undefined
+                    isDisabled !== undefined ? isDisabled : value !== null
                   }
                   key={i}
                   value={`${i}`}
                   control={
                     <Radio
                       classes={
-                        value === undefined
+                        value === null
                           ? undefined
                           : correctAnswer === i
                           ? { disabled, colorSecondary: correctRadio }
@@ -145,7 +145,7 @@ export class UnstyledRadioButtonCard extends React.Component<
                   label={
                     <React.Fragment>
                       <span className={expand}>{answer}</span>
-                      {value === undefined ? (
+                      {value === null ? (
                         undefined
                       ) : correctAnswer === i ? (
                         <Check className={icon} />

@@ -34,6 +34,6 @@ export const Directions: React.SFC = () => (
         url={directionsUrl}
       />
     </ProfileCard>
-    <ContinueBar back='/our-story' next='/directions/details' />
+    <ContinueBar back='/our-story/complete' next='/directions/details' />
   </ColumnLayout>
 );

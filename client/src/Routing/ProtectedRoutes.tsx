@@ -8,6 +8,7 @@ import { DirectionsDetails } from '../Pages/Directions/Details';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryAnswer } from '../Pages/OurStory/Answer';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
+import { QuizComplete } from '../Pages/OurStory/QuizComplete';
 import { Registry } from '../Pages/Registry';
 import { Rsvp } from '../Pages/Rsvp';
 import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
@@ -55,13 +56,18 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     />
     <Route path='/rsvp/review' exact component={RsvpReview} />
     <Route path='/rsvp/complete' exact component={RsvpComplete} />
+
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/question/:questionId' component={OurStoryDetails} />
     <Route path='/our-story/answer/:questionId' component={OurStoryAnswer} />
+    <Route path='/our-story/complete' component={QuizComplete} />
+
     <Route path='/directions' exact component={Directions} />
     <Route path='/directions/details' exact component={DirectionsDetails} />
+
     <Route path='/where-to-stay' exact component={WhereToStay} />
     <Route path='/where-to-stay/details' exact component={WhereToStayDetails} />
+
     <Route path='/things-to-do' exact component={ThingsToDo} />
     <Route path='/registry' exact component={Registry} />
     <Route path='/*' component={RedirectToRoot} />
