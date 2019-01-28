@@ -26,23 +26,25 @@ const styles = createStyles({
     '&$disabled': {
       backgroundColor: theme.cantMakeIt.color,
       color: theme.palette.primary.light
-    }
+    },
+    backgroundColor: theme.cantMakeIt.color,
+    color: theme.palette.primary.light
   },
   rootDiv: buttonHolderStyles
 });
 
 export interface CantMakeItProps extends WithStyles<typeof styles> {
   onClick: React.MouseEventHandler;
+  help?: string;
   className?: string;
   selected?: boolean;
   disabled?: boolean;
-  hideHelp?: true;
   fontSize?: 'small' | 'inherit' | 'default' | 'large';
 }
 
 export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
   disabled: isDisabled,
-  hideHelp,
+  help,
   onClick,
   selected,
   className,
@@ -51,7 +53,7 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
 }) => (
   <div className={rootDiv}>
     <Fab
-      aria-label="Can't make it"
+      aria-label={help}
       className={classnames(largeButton, className)}
       classes={{
         disabled,
@@ -70,7 +72,7 @@ export const UnstyledCantMakeIt: React.SFC<CantMakeItProps> = ({
         </SvgIcon>
       </Icon>
     </Fab>
-    {!hideHelp && <span className={label}>can't make it</span>}
+    <span className={label}>{help}</span>
   </div>
 );
 

@@ -175,8 +175,7 @@ export class UnconnectedSwipeableCard extends React.Component<
             className={className}
             style={{
               position: 'absolute',
-              transform: `translate3d(calc(${x}vw + ${bonus}px), 0, 0) rotateZ(${rot}deg)`,
-              width: 400
+              transform: `translate3d(calc(${x}vw + ${bonus}px), 0, 0) rotateZ(${rot}deg)`
             }}
           >
             {children}

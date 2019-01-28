@@ -3,10 +3,11 @@ import Fab, { FabProps } from '@material-ui/core/Fab';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { DisabledTooltip } from '../Components/DisabledTooltip';
 import { theme } from '../theme';
 import { Omit } from '../Util/util';
+import { ChevronIcon, ChevronIcons } from './ChevronIcon';
 import { buttonHolderStyles, commonButtonStyles } from './commonStyles';
-import { DetailsIcon } from './DetailsIcon';
 
 const styles = createStyles({
   fab: {
@@ -29,21 +30,16 @@ const styles = createStyles({
   root: buttonHolderStyles
 });
 
-export enum DetailsIcons {
-  backArrow = 'backArrow',
-  nextArrow = 'nextArrow',
-  details = 'details'
-}
-
-export interface DetailsProps extends WithStyles<typeof styles> {
+export interface ChevronProps extends WithStyles<typeof styles> {
   to: string;
-  iconType?: DetailsIcons;
+  iconType?: ChevronIcons;
   help?: string;
   external?: boolean;
+  disabled?: string;
 }
 
-export class UnstyledDetails extends React.Component<DetailsProps> {
-  constructor(props: DetailsProps) {
+export class UnstyledChevron extends React.Component<ChevronProps> {
+  constructor(props: ChevronProps) {
     super(props);
   }
 
@@ -53,23 +49,27 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
       external,
       to,
       classes: { fab, root, label },
-      iconType
+      iconType,
+      disabled
     } = this.props;
     return (
-      <div className={root}>
-        <Fab
-          component={!external ? this.linkComponent : undefined}
-          href={external ? to : undefined}
-          target={external ? '_blank' : undefined}
-          aria-label='Details'
-          classes={{ root: fab }}
-        >
-          <Icon color='inherit'>
-            <DetailsIcon iconType={iconType} />
-          </Icon>
-        </Fab>
-        {help && <span className={label}>{help}</span>}
-      </div>
+      <DisabledTooltip help={disabled} disabled={!!disabled} placement='top'>
+        <div className={root}>
+          <Fab
+            disabled={!!disabled}
+            component={!external ? this.linkComponent : undefined}
+            href={external ? to : undefined}
+            target={external ? '_blank' : undefined}
+            aria-label='Details'
+            classes={{ root: fab }}
+          >
+            <Icon color='inherit'>
+              <ChevronIcon iconType={iconType} />
+            </Icon>
+          </Fab>
+          {help && <span className={label}>{help}</span>}
+        </div>
+      </DisabledTooltip>
     );
   }
 
@@ -78,4 +78,4 @@ export class UnstyledDetails extends React.Component<DetailsProps> {
   );
 }
 
-export const Details = withStyles(styles)(UnstyledDetails);
+export const Chevron = withStyles(styles)(UnstyledChevron);

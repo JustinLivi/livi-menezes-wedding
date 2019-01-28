@@ -44,7 +44,8 @@ export class UnstyledFirstDateAnswer extends React.Component<
             component='p'
           >
             It was a typical millennial love story: couple meets on Tinder and
-            splits avocado toast two days later at a local coffee shop.
+            splits avocado toast two days later at their local Korean-inspired
+            cafe.
           </Typography>
           <Typography className={topName} variant='h6' component='p'>
             Fun fact #1

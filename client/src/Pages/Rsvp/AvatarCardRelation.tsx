@@ -3,13 +3,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { getRelationshipName, getRelationshipPhoto } from '../../store/selectors/relationships';
 
 const styles = createStyles({
-  ...buttonBarStyles,
   avatar: {
     display: 'flex',
     justifyContent: 'center',
@@ -18,12 +16,6 @@ const styles = createStyles({
   },
   content: {
     paddingTop: 25
-  },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
   }
 });
 
@@ -52,7 +44,7 @@ export class UnconnectedAvatarCardRelation extends React.Component<
   public render() {
     const {
       children,
-      classes: { standardCard, content, avatar },
+      classes: { content, avatar },
       photo,
       name,
       swipe,
@@ -60,12 +52,7 @@ export class UnconnectedAvatarCardRelation extends React.Component<
       swipeLeft
     } = this.props;
     return (
-      <StandardCard
-        className={standardCard}
-        swipe={swipe}
-        swipeLeft={swipeLeft}
-        swipeRight={swipeRight}
-      >
+      <StandardCard swipe={swipe} swipeLeft={swipeLeft} swipeRight={swipeRight}>
         <CardContent className={content}>
           <Grid className={avatar}>
             <Avatar alt='You' src={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}>

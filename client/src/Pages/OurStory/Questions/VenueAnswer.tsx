@@ -1,51 +1,15 @@
-import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
-import classnames from 'classnames';
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
-import { StandardCard } from '../../../Components/StandardCard';
+import { VirtualTourCard } from '../../../Components/VirtualTourCard';
 
-const styles = createStyles({
-  avatar: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: 5,
-    width: '100%'
-  },
-  centered: {
-    textAlign: 'center'
-  },
-  content: {
-    paddingTop: 25
-  },
-  italic: {
-    fontStyle: 'italic'
-  },
-  topName: {
-    marginBottom: 15
-  }
-});
+const styles = createStyles({});
 
 export interface VenueAnswerProps extends WithStyles<typeof styles> {}
 
 export class UnstyledVenueAnswer extends React.Component<VenueAnswerProps> {
   public render() {
-    const {
-      classes: { avatar, content, topName, italic, centered }
-    } = this.props;
-    return (
-      <StandardCard>
-        <CardContent className={content}>
-          <Typography
-            className={classnames(italic, centered)}
-            gutterBottom
-            variant='body1'
-            component='p'
-          >
-            TODO
-          </Typography>
-        </CardContent>
-      </StandardCard>
-    );
+    return <VirtualTourCard />;
   }
 }
 

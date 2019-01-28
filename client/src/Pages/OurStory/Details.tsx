@@ -157,7 +157,7 @@ export class UnconnectedOurStoryDetails extends React.Component<
                 }
                 correctAnswer={correctAnswers[id]}
                 onChange={this.onChange}
-                value={answer && answer.answerId}
+                value={answer ? answer.answerId : null}
               />
             ) : rot < 178 ? (
               <AnswerComponent />
@@ -180,7 +180,9 @@ export class UnconnectedOurStoryDetails extends React.Component<
                 next={
                   answer
                     ? `/our-story/answer/${id}`
-                    : `/our-story/question/${id + 1}`
+                    : id < questions.length - 1
+                    ? `/our-story/question/${id + 1}`
+                    : '/our-story/complete'
                 }
               />
             </div>

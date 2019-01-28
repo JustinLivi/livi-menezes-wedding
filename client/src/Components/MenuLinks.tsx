@@ -24,6 +24,10 @@ export const WhereToStayLink: MenuLink = props => (
   <Link to='/where-to-stay' {...props} />
 );
 
+export const RegistryLink: MenuLink = props => (
+  <Link to='/registry' {...props} />
+);
+
 export const ThingsToDoLink: MenuLink = props => (
   <Link to='/things-to-do' {...props} />
 );

@@ -8,6 +8,7 @@ import { Logo } from './Logo';
 
 const styles = createStyles({
   appBar: {
+    backgroundColor: theme.palette.primary.light,
     borderBottomColor: theme.palette.grey[200],
     borderBottomStyle: 'solid',
     borderBottomWidth: 1,

@@ -4,9 +4,12 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Details } from '../Pages/Details';
 import { Directions } from '../Pages/Directions';
+import { DirectionsDetails } from '../Pages/Directions/Details';
 import { OurStory } from '../Pages/OurStory';
 import { OurStoryAnswer } from '../Pages/OurStory/Answer';
 import { OurStoryDetails } from '../Pages/OurStory/Details';
+import { QuizComplete } from '../Pages/OurStory/QuizComplete';
+import { Registry } from '../Pages/Registry';
 import { Rsvp } from '../Pages/Rsvp';
 import { RsvpComplete } from '../Pages/Rsvp/RsvpComplete';
 import { RsvpDetails } from '../Pages/Rsvp/RsvpDetails';
@@ -17,10 +20,12 @@ import { RsvpRelation } from '../Pages/Rsvp/RsvpRelation';
 import { RsvpReview } from '../Pages/Rsvp/RsvpReview';
 import { ThingsToDo } from '../Pages/ThingsToDo';
 import { ThingsToDoDetails } from '../Pages/ThingsToDo/Details';
-import { Venue } from '../Pages/Venue';
-import { VenueDetails } from '../Pages/Venue/Details';
 import { WhereToStay } from '../Pages/WhereToStay';
+import { WhereToStayDetails } from '../Pages/WhereToStay/Details';
 
+<<<<<<< HEAD
+=======
+>>>>>>> ad65ac73c32608e60f09a774ede541e8ae8f5695
 export const styles = createStyles({
   root: {
     display: 'flex',
@@ -55,15 +60,21 @@ export const UnstyledProtectedRoutes: React.SFC<ProtectedRoutesProps> = ({
     />
     <Route path='/rsvp/review' exact component={RsvpReview} />
     <Route path='/rsvp/complete' exact component={RsvpComplete} />
+
     <Route path='/our-story' exact component={OurStory} />
     <Route path='/our-story/question/:questionId' component={OurStoryDetails} />
     <Route path='/our-story/answer/:questionId' component={OurStoryAnswer} />
-    <Route path='/venue' exact component={Venue} />
-    <Route path='/venue/details' exact component={VenueDetails} />
+    <Route path='/our-story/complete' component={QuizComplete} />
+
     <Route path='/directions' exact component={Directions} />
+    <Route path='/directions/details' exact component={DirectionsDetails} />
+
     <Route path='/where-to-stay' exact component={WhereToStay} />
+    <Route path='/where-to-stay/details' exact component={WhereToStayDetails} />
+
     <Route path='/things-to-do' exact component={ThingsToDo} />
     <Route path='/things-to-do/details' exact component={ThingsToDoDetails} />
+    <Route path='/registry' exact component={Registry} />
     <Route path='/*' component={RedirectToRoot} />
   </Switch>
 );

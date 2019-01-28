@@ -9,7 +9,7 @@ import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import { answerQuestion } from '../../store/actions/quiz';
 import { getAnswers, getUserCacheStatus } from '../../store/selectors/user';
 import { CacheStatus } from '../../store/stateDefinition';
-import { answerComponents } from './Details';
+import { answerComponents, questions } from './Details';
 
 export interface OurStoryAnswerStateProps {
   answers?: Answer[];
@@ -63,7 +63,11 @@ export class UnconnectedOurStoryAnswer extends React.Component<
         <AnswerComponent />
         <ContinueBar
           back={`/our-story/question/${id}`}
-          next={`/our-story/question/${id + 1}`}
+          next={
+            id < questions.length - 1
+              ? `/our-story/question/${id + 1}`
+              : '/our-story/complete'
+          }
         />
       </ColumnLayout>
     );

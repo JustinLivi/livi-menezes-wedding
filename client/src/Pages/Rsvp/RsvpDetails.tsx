@@ -5,7 +5,6 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
-import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -107,13 +106,11 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
           />
         )}
         <Breadcrumbs activeStep={1} />
-        {address && relationships ? (
-          <ContinueBar back='/rsvp' next={next} />
-        ) : (
-          <div className={help}>
-            <Details to='/rsvp' iconType={DetailsIcons.backArrow} />
-          </div>
-        )}
+        <ContinueBar
+          back='/rsvp'
+          next={next}
+          disableNext={!address ? 'Enter address to continue' : undefined}
+        />
       </ColumnLayout>
     );
   }

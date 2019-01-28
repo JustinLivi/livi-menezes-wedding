@@ -5,23 +5,25 @@ import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import celebrate from './Celebrate.jpg';
+import { questions } from './Details';
 
-export const RsvpComplete: React.SFC = () => (
+export const QuizComplete: React.SFC = () => (
   <ColumnLayout>
     <ProfileCard
       image={celebrate}
-      title='RSVP Complete!'
+      title='Quiz Complete!'
       blurb={
         <React.Fragment>
+          <Typography component='p'>You did great!</Typography>
           <Typography component='p'>
-            Thanks for taking the time to respond!
-          </Typography>
-          <Typography component='p'>
-            Continue below to test your knowledge of our story.
+            Continue below to get travel information.
           </Typography>
         </React.Fragment>
       }
     />
-    <ContinueBar back='/rsvp/review' next='/our-story' />
+    <ContinueBar
+      back={`/our-story/answer/${questions.length - 1}`}
+      next='/directions'
+    />
   </ColumnLayout>
 );

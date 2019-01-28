@@ -7,7 +7,6 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { ContinueBar } from '../../ButtonBar/ContinueBar';
-import { Details, DetailsIcons } from '../../ButtonBar/Details';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -147,17 +146,11 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
               />
             )}
             <Breadcrumbs activeStep={activeStep} />
-            {address ? (
-              <ContinueBar back={back} next={next} />
-            ) : (
-              <div className={help}>
-                <Details
-                  to={back}
-                  iconType={DetailsIcons.backArrow}
-                  help='back'
-                />
-              </div>
-            )}
+            <ContinueBar
+              back={back}
+              next={next}
+              nextHelp={!address ? 'skip' : 'next'}
+            />
           </React.Fragment>
         )}
       </ColumnLayout>

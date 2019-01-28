@@ -1,18 +1,20 @@
 export const loadMapApi = (onLoad: () => void) => {
   if (!window.google && !(window as any).googleLoading) {
     (window as any).googleLoading = true;
-    const s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.src = `https://maps.google.com/maps/api/js?key=AIzaSyAcc6j8YatihuK6CU5xwscroqVriVhqIZQ&libraries=places`;
-    const x = document.getElementsByTagName('script')[0];
-    if (!x.parentNode) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = `https://maps.google.com/maps/api/js?key=AIzaSyAcc6j8YatihuK6CU5xwscroqVriVhqIZQ&libraries=places`;
+    const existingScript = document.getElementsByTagName('script')[0];
+    if (!existingScript.parentNode) {
       throw new Error('No parent node found');
     }
-    x.parentNode.insertBefore(s, x);
-    s.addEventListener('load', onLoad);
+    existingScript.parentNode.insertBefore(script, existingScript);
+    script.addEventListener('load', onLoad);
+    return script;
   } else if (!window.google) {
-    const x = document.getElementsByTagName('script')[0];
-    x.addEventListener('load', onLoad);
+    const existingScript = document.getElementsByTagName('script')[0];
+    existingScript.addEventListener('load', onLoad);
+    return existingScript;
   } else {
     onLoad();
   }

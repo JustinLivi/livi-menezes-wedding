@@ -70,7 +70,6 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
     <Grid className={row} container direction='row' alignItems='center'>
       <CantMakeIt
         fontSize='small'
-        hideHelp
         onClick={handleCantMakeIt}
         className={buttons}
         selected={attendingWedding === false}
@@ -91,7 +90,6 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
       <Grid className={row} container direction='row' alignItems='center'>
         <CantMakeIt
           fontSize='small'
-          hideHelp
           onClick={handleCantMakeIt}
           className={buttons}
           selected={attendingRehearsal === false}

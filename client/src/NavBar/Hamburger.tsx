@@ -4,10 +4,10 @@ import {
   EmailRounded,
   Hotel,
   LocalCafe,
-  LocationCityRounded,
   LocationOn,
   Menu as MenuIcon,
   People,
+  Store,
 } from '@material-ui/icons';
 import * as React from 'react';
 
@@ -15,9 +15,9 @@ import {
   DetailsLink,
   DirectionsLink,
   OurStoryLink,
+  RegistryLink,
   RsvpLink,
   ThingsToDoLink,
-  VenueLink,
   WhereToStayLink,
 } from '../Components/MenuLinks';
 import { theme } from '../theme';
@@ -116,12 +116,6 @@ export class UnstyledHamburger extends React.Component<
             primary='Our Story'
           />
           <MenuItem
-            icon={<LocationCityRounded />}
-            linkComponent={VenueLink}
-            onClick={this.handleClose}
-            primary='Venue'
-          />
-          <MenuItem
             icon={<LocationOn />}
             linkComponent={DirectionsLink}
             onClick={this.handleClose}
@@ -132,6 +126,12 @@ export class UnstyledHamburger extends React.Component<
             linkComponent={WhereToStayLink}
             onClick={this.handleClose}
             primary='Where to Stay'
+          />
+          <MenuItem
+            icon={<Store />}
+            linkComponent={RegistryLink}
+            onClick={this.handleClose}
+            primary='Registry'
           />
           <MenuItem
             icon={<LocalCafe />}

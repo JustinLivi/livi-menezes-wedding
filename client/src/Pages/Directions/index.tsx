@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RsvpBar } from '../../ButtonBar/RsvpBar';
+import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { GoogleMap } from '../../Components/GoogleMap';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -14,7 +14,7 @@ export const Directions: React.SFC = () => (
     <ProfileCard
       image={directions}
       title='Directions'
-      blurb='Get directions to the Peabody Library'
+      blurb='Get directions and transit information'
     >
       <GoogleMap
         id='peabody-map'
@@ -34,6 +34,6 @@ export const Directions: React.SFC = () => (
         url={directionsUrl}
       />
     </ProfileCard>
-    <RsvpBar onlyInfo hideHelp external toDetails={directionsUrl} />
+    <ContinueBar back='/our-story/complete' next='/directions/details' />
   </ColumnLayout>
 );

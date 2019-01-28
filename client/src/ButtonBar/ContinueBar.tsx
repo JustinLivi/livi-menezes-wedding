@@ -1,52 +1,36 @@
-import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
-import { theme } from '../theme';
-import { Details } from './Details';
-import { DetailsIcons } from './DetailsIcon';
+import { ButtonBar } from './ButtonBar';
+import { Chevron } from './Chevron';
+import { ChevronIcons } from './ChevronIcon';
 
-const styles = createStyles({
-  buttonBar: {
-    flexGrow: 0,
-    marginTop: 12
-  },
-  root: {
-    alignItems: 'center',
-    boxPack: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 0,
-    height: 132,
-    justifyContent: 'center',
-    margin: theme.spacing.unit
-  }
-});
-
-export interface ContinueBarProps extends WithStyles<typeof styles> {
+export interface ContinueBarProps {
   back: string;
+  disableBack?: string;
   next: string;
+  disableNext?: string;
+  nextHelp?: string;
 }
 
-export class UnstyledContinueBar extends React.Component<ContinueBarProps> {
-  constructor(props: ContinueBarProps) {
-    super(props);
-  }
-
-  public render() {
-    const {
-      back,
-      next,
-      classes: { root, buttonBar }
-    } = this.props;
-    return (
-      <div className={root}>
-        <div className={buttonBar}>
-          <Details to={back} iconType={DetailsIcons.backArrow} help='back' />
-          <Details to={next} iconType={DetailsIcons.nextArrow} help='next' />
-        </div>
-      </div>
-    );
-  }
-}
-
-export const ContinueBar = withStyles(styles)(UnstyledContinueBar);
+export const ContinueBar: React.SFC<ContinueBarProps> = ({
+  back,
+  disableBack,
+  next,
+  disableNext,
+  nextHelp
+}) => (
+  <ButtonBar>
+    <Chevron
+      to={back}
+      disabled={disableBack}
+      iconType={ChevronIcons.backArrow}
+      help='back'
+    />
+    <Chevron
+      to={next}
+      disabled={disableNext}
+      iconType={ChevronIcons.nextArrow}
+      help={nextHelp || 'next'}
+    />
+  </ButtonBar>
+);

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
-import { DetailsIcons } from '../../ButtonBar/Details';
 import { RsvpBar } from '../../ButtonBar/RsvpBar';
 import { ItsaMatch } from '../../Components/ItsaMatch';
 import { ProfileCard } from '../../Components/ProfileCard';
@@ -15,12 +14,7 @@ import { rsvpCeremony } from '../../store/actions/rsvpCeremony';
 import { getName, getPhoto, getRedirect, getUserId, getWeddingRsvp } from '../../store/selectors/user';
 
 export const styles = createStyles({
-  standardCard: {
-    // height: 450,
-    // maxHeight: 'calc(100vh - 260px)',
-    // overflow: 'auto',
-    // position: 'relative'
-  }
+  standardCard: {}
 });
 
 export interface RsvpStateProps {
@@ -89,12 +83,7 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
           }
         />
         <Breadcrumbs activeStep={0} />
-        <RsvpBar
-          detailsIconType={
-            weddingRsvp === undefined ? undefined : DetailsIcons.nextArrow
-          }
-          toDetails={weddingRsvp === undefined ? '/details' : '/rsvp/details'}
-        />
+        <RsvpBar />
       </ColumnLayout>
     );
   }

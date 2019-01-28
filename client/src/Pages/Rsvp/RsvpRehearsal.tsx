@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 
 import { Breadcrumbs } from '../../Breadcrumbs';
 import { RsvpRehearsalBar } from '../../ButtonBar/RsvpRehearsalBar';
-import { buttonBarStyles } from '../../ButtonBar/RsvpRelationBar';
 import { ItsaMatch } from '../../Components/ItsaMatch';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
@@ -14,9 +13,9 @@ import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { rsvpRehearsal } from '../../store/actions/rsvpRehearsal';
 import { getPhoto, getRedirect, getRehearsalRsvp, getUserId } from '../../store/selectors/user';
 import { AvatarCard } from './AvatarCard';
+import { RehearsalDetails } from './RehearsalDetails';
 
 const styles = createStyles({
-  ...buttonBarStyles,
   centered: {
     textAlign: 'center'
   },
@@ -88,12 +87,10 @@ export class UnconnectedRsvpRehearsal extends React.Component<
           >
             RSVP For Rehearsal
           </Typography>
-          <Typography className={topName} component='p'>
+          <Typography variant='body1' className={centered} component='p'>
             You're invited to our rehearsal dinner!
           </Typography>
-          <Typography className={topName} component='p'>
-            Details TBD
-          </Typography>
+          <RehearsalDetails />
         </AvatarCard>
         <Breadcrumbs activeStep={2} />
         <RsvpRehearsalBar />
