@@ -6,16 +6,23 @@ import { ChevronIcons } from './ChevronIcon';
 
 export interface NextBarProps {
   to: string;
+  help?: string;
   external?: boolean;
+  iconType?: ChevronIcons;
 }
 
-export const NextBar: React.SFC<NextBarProps> = ({ to, external }) => (
+export const NextBar: React.SFC<NextBarProps> = ({
+  to,
+  external,
+  help,
+  iconType
+}) => (
   <ButtonBar>
     <Chevron
-      help='next'
+      help={help || 'next'}
       to={to}
       external={external}
-      iconType={ChevronIcons.nextArrow}
+      iconType={iconType || ChevronIcons.nextArrow}
     />
   </ButtonBar>
 );

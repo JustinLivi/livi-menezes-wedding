@@ -16,7 +16,7 @@ export const Registry: React.SFC = () => (
         <hr />
         <Typography variant='body1' gutterBottom>
           We <strong>do not</strong> need any gifts for our wedding - your
-          presense is present enough!
+          presence is present enough!
         </Typography>
         <Typography variant='body1' gutterBottom>
           If you feel compelled to give, we are registered on
