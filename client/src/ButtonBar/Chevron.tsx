@@ -19,15 +19,26 @@ const styles = createStyles({
     borderWidth: 13,
     color: theme.details.color,
     height: 80,
-    width: 80
+    width: 80,
+    [theme.breakpoints.down('sm')]: {
+      borderWidth: 10,
+      height: 70,
+      width: 70
+    }
   },
   label: {
     color: theme.palette.secondary.main,
     fontSize: '0.9em',
     marginTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.8em'
+    }
   },
-  root: buttonHolderStyles
+  root: {
+    marginBottom: 5,
+    ...buttonHolderStyles
+  }
 });
 
 export interface ChevronProps extends WithStyles<typeof styles> {

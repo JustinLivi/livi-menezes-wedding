@@ -11,8 +11,8 @@ export const commonButtonStyles: CSSProperties = {
   borderStyle: 'solid',
   boxShadow: 'none',
   lineHeight: 'normal',
-  marginLeft: -6,
-  marginRight: -6,
+  marginLeft: -5,
+  marginRight: -5,
   transition:
     'color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,' +
     'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,' +
@@ -24,7 +24,12 @@ export const largeButtonStyles: CSSProperties = {
   ...commonButtonStyles,
   borderWidth: 15,
   height: 110,
-  width: 110
+  width: 110,
+  [theme.breakpoints.down('sm')]: {
+    borderWidth: 10,
+    height: 90,
+    width: 90
+  }
 };
 
 export const buttonHolderStyles: CSSProperties = {

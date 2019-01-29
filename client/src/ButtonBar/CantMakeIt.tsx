@@ -11,6 +11,9 @@ const styles = createStyles({
   label: {
     color: theme.palette.secondary.main,
     fontSize: '0.9em',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.8em'
+    },
     marginTop: 5,
     textAlign: 'center'
   },

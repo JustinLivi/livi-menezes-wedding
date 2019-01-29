@@ -12,7 +12,10 @@ const styles = createStyles({
     color: theme.palette.secondary.main,
     fontSize: '0.9em',
     marginTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.8em'
+    }
   },
   largeButton: {
     ...largeButtonStyles,
