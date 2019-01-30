@@ -12,6 +12,7 @@ import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { rsvpCeremony } from '../../store/actions/rsvpCeremony';
 import { getName, getPhoto, getRedirect, getUserId, getWeddingRsvp } from '../../store/selectors/user';
+import { SwipeInstructions } from './SwipeInstructions';
 
 export const styles = createStyles({
   standardCard: {}
@@ -66,6 +67,7 @@ export class UnconnectedRsvp extends React.Component<RsvpProps> {
         ) : (
           undefined
         )}
+        <SwipeInstructions />
         <ProfileCard
           swipe
           swipeRight={this.rsvp(true)}
