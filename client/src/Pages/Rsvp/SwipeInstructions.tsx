@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Motion, spring } from 'react-motion';
 
 import { SwipeIcon } from '../../Components/SwipeIcon';
-import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import { theme } from '../../theme';
 
 const styles = createStyles({
@@ -121,7 +120,12 @@ export class UnstyledSwipeInstructions extends React.Component<
               }}
             />
             <div className={cover}>
-              <ColumnLayout>
+              <Grid
+                container
+                direction='column'
+                justify='center'
+                alignItems='center'
+              >
                 <Grid
                   container
                   direction='row'
@@ -149,7 +153,7 @@ export class UnstyledSwipeInstructions extends React.Component<
                 >
                   Swipe to RSVP
                 </Grid>
-              </ColumnLayout>
+              </Grid>
             </div>
           </div>
         )}

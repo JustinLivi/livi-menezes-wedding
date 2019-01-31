@@ -69,8 +69,8 @@ export class UnconnectedRsvpRehearsal extends React.Component<
             leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
             name={name}
             rightPhoto={justinMarisa}
-            message="You're going to the wedding rehearsal!"
-            description="Justin and Marisa's Wedding Rehearsal"
+            message="You're going to the rehearsal dinner!"
+            description="Justin and Marisa's Rehearsal Dinner"
           />
         ) : (
           undefined
@@ -85,7 +85,7 @@ export class UnconnectedRsvpRehearsal extends React.Component<
             variant='h6'
             component='p'
           >
-            RSVP For Rehearsal
+            RSVP For Rehearsal Dinner
           </Typography>
           <Typography variant='body1' className={centered} component='p'>
             You're invited to our rehearsal dinner!

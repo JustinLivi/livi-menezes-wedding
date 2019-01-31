@@ -1,6 +1,8 @@
 import { createStyles, WithStyles, withStyles } from '@material-ui/core';
 import * as React from 'react';
 
+import { theme } from '../theme';
+
 const styles = createStyles({
   root: {
     alignItems: 'stretch',
@@ -8,10 +10,15 @@ const styles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
+    flexShrink: 0,
     justifyContent: 'center',
     maxWidth: '100vw',
-    minHeight: 600,
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    paddingTop: 78,
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'start',
+      paddingBottom: 120
+    }
   }
 });
 

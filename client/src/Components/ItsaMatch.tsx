@@ -2,7 +2,6 @@ import { Avatar, createStyles, Grid, Typography, WithStyles, withStyles } from '
 import * as React from 'react';
 import { Motion, spring } from 'react-motion';
 
-import { ColumnLayout } from '../Layouts/ColumnLayout';
 import { theme } from '../theme';
 import { ItsaMatchIcon } from './ItsaMatchIcon';
 
@@ -126,7 +125,12 @@ export class UnstyledItsaMatch extends React.Component<
               }}
             />
             <div className={cover}>
-              <ColumnLayout>
+              <Grid
+                container
+                direction='column'
+                justify='center'
+                alignItems='center'
+              >
                 <Grid
                   container
                   direction='column'
@@ -188,7 +192,7 @@ export class UnstyledItsaMatch extends React.Component<
                     </Typography>
                   </div>
                 </Grid>
-              </ColumnLayout>
+              </Grid>
             </div>
           </div>
         )}

@@ -9,7 +9,7 @@ const styles = createStyles({
   },
   media: {
     height: 350,
-    maxHeight: 'calc(100vh - 400px)',
+    // maxHeight: 'calc(100vh - 400px)',
     maxWidth: '100%',
     minHeight: 250
   },

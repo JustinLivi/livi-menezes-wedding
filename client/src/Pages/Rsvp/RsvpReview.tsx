@@ -44,12 +44,6 @@ const styles = createStyles({
     marginBottom: 20,
     marginTop: 20
   },
-  standardCard: {
-    height: 450,
-    maxHeight: 'calc(100vh - 260px)',
-    overflow: 'auto',
-    position: 'relative'
-  },
   topName: {
     marginBottom: 15
   }
@@ -146,11 +140,11 @@ export class UnconnectedRsvpReview extends React.Component<
       allRelationships,
       name,
       userId,
-      classes: { topName, centered, standardCard, content, hr }
+      classes: { topName, centered, content, hr }
     } = this.props;
     return (
       <ColumnLayout>
-        <StandardCard className={standardCard}>
+        <StandardCard>
           <CardContent className={content}>
             <Typography
               className={classnames(topName, centered)}
