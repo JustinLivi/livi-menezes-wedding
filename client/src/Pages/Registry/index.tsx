@@ -37,7 +37,7 @@ export const UnstyledRegistry: React.SFC<WithStyles<typeof styles>> = ({
           <Typography className={logo}>
             <Link
               target='_blank'
-              href='www.zola.com/registry/livimenezeswedding'
+              href='https://www.zola.com/registry/livimenezeswedding'
             >
               <ZolaLogo />
             </Link>
@@ -45,7 +45,7 @@ export const UnstyledRegistry: React.SFC<WithStyles<typeof styles>> = ({
           <Typography variant='h6' className={logo} gutterBottom>
             <Link
               target='_blank'
-              href='www.zola.com/registry/livimenezeswedding'
+              href='https://www.zola.com/registry/livimenezeswedding'
             >
               Visit Registry
             </Link>
