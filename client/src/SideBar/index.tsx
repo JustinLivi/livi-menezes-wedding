@@ -1,10 +1,11 @@
 import { createStyles, Divider, Drawer, List, WithStyles, withStyles } from '@material-ui/core';
-import { Description, EmailRounded, Hotel, LocalCafe, LocationOn, People, Store } from '@material-ui/icons';
+import { Description, EmailRounded, Gavel, Hotel, LocalCafe, LocationOn, People, Store } from '@material-ui/icons';
 import * as React from 'react';
 
 import {
   DetailsLink,
   DirectionsLink,
+  LegalLink,
   OurStoryLink,
   RegistryLink,
   RsvpLink,
@@ -81,6 +82,7 @@ export const UnstyledSideBar: React.SFC<SideBarProps> = ({
         linkComponent={ThingsToDoLink}
         primary='Things to Do'
       />
+      <ListItem icon={<Gavel />} linkComponent={LegalLink} primary='Legal' />
     </List>
   </Drawer>
 );

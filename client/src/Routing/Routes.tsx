@@ -8,7 +8,7 @@ import { ProtectedRouter } from './ProtectedRouter';
 export const Routes: React.SFC = () => (
   <Switch>
     <Route path='/login/:userId' exact component={LoginPage} />
-    <Route path='/disclaimer' exact component={Disclaimer} />
+    <Route path='/legal' exact component={Disclaimer} />
     <Route component={ProtectedRouter} />
   </Switch>
 );
