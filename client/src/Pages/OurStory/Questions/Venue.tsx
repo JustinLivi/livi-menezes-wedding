@@ -11,7 +11,7 @@ export const Venue: React.SFC<Question> = params => (
       'We only looked at one venue',
       "It's in our old neighborhood",
       'We love Baltimore',
-      "We love Disney, and it's like Beauty and the Beast",
+      "It's like Beauty and the Beast",
       'All of the above'
     ]}
   />
