@@ -32,9 +32,33 @@ export const ThingsToDoDetails: React.SFC = () => (
         <Typography><a href='https://baberuthmuseum.org/'>Babe Ruth Birthplace and Museum</a></Typography>
         <Typography><a href='http://www.poeinbaltimore.org/'>Edgar Allen Poe House and Museum</a></Typography>
         <Typography><a href='http://cylburn.org/'>Cylborne Arboretum</a></Typography>
+        <Typography><a href='http://www.jhsm.org/'>Jewish Museum of Maryland</a></Typography>
         <Typography><a href='https://www.facebook.com/mobtownballroom/'>Swing Dancing at Mobtown Ballroom</a></Typography>
         <Typography><a href='https://www.ripleys.com/baltimore/'>Ripley’s Believe or Not</a></Typography>
         <Typography><a href='https://www.baltimoretattoomuseum.com/'>The Baltimore Tattoo Museum</a></Typography>
+        <Typography>Places of Worship:</Typography>
+        <Typography><a href='https://www.bridgeway.cc/'>Bridgeway Community Church (Non-Denominational)</a></Typography>
+        <Typography><a href='https://www.americasfirstcathedral.org/'>The Baltimore Basilica (Roman Catholic)</a></Typography>
+        <Typography><a href='http://stpaulsbaltimore.org/'>St. Paul's Episcopal Church</a></Typography>
+        <Typography><a href='https://www.emmanueldowntown.org/'>Emmanuel Episcopal Church</a></Typography>
+        <Typography><a href='http://www.roshpinamd.org'>Congregation Rosh Pina (Messianic)</a></Typography>
+        <Typography><a href='http://www.amyeshua.com/'>Am Yeshua Messianic Congregation (Messianic)</a></Typography>
+        <Typography><a href='https://gcbdowntown.com/'>Gallery Church (Non-Denominational)</a></Typography>
+        <Typography><a href='http://www.foundrybaltimore.com/'>The Foundry (Non-Denominational)</a></Typography>
+        <Typography><a href='https://mvp-umc.org/'>Mt. Vernon Place United Methodist Church</a></Typography>
+        <Typography><a href='http://www.thecitytemple.org/index.php#&panel1-1'>The City Temple of Baltimore (Baptist)</a></Typography>
+        <Typography><a href='http://www.firstfranklin.org/'>First & Franklin Presbyterian Church</a></Typography>
+        <Typography><a href='https://www.baltimorehebrew.org/'>Baltimore Hebrew Congregation (Reform)</a></Typography>
+        <Typography><a href='https://bethambaltimore.org/'>Beth AM Synagogue (Conservative)</a></Typography>
+        <Typography><a href='https://www.jewishdowntown.org/'>B'nai Israel Congregation (Modern Orthodox)</a></Typography>
+        <Typography><a href='https://beittikvah.org/'>Congregation Beit Tikvah (Reconstructionist)</a></Typography>
+        <Typography><a href='https://musmd.org/'>Masjid Us Salaam</a></Typography>
+        <Typography><a href='https://www.firstunitarian.net/'>First Unitarian Church of Baltimore</a></Typography>
+        <Typography><a href='http://graceandstpeter.org/'>Grace & St. Peter's Church</a></Typography>
+        <Typography><a href='http://www.zionbaltimore.org/'>Zion Church Of the City of Baltimore</a></Typography>
+        <Typography><a href='http://iskconbaltimore.org/'>ISKCON of Baltimore (Hare Krishna Temple)</a></Typography>
+        <Typography><a href='http://issomddc.org/'>ISSO Swaminarayan Hindu Temple - Baltimore</a></Typography>
+        <Typography><a href='http://www.sgi-usa.org/?sm-location=baltimore-center'>Baltimore Buddhist Center</a></Typography>
         <Typography>See a show:</Typography>
         <Typography><a href='https://www.bsomusic.org/'>Baltimore Symphony Orchestra</a></Typography>
         <Typography><a href='https://modell-lyric.com/'>The Lyric</a></Typography>
