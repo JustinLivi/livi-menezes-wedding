@@ -119,8 +119,8 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
                 leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
                 name={name}
                 rightPhoto={justinMarisa}
-                message={`${name} is going to the wedding rehearsal!`}
-                description="Justin and Marisa's Wedding Rehearsal"
+                message={`${name} is going to the rehearsal dinner!`}
+                description="Justin and Marisa's Rehearsal Dinner"
               />
             ) : (
               undefined

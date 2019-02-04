@@ -2,6 +2,7 @@ import { createStyles, IconButton, Menu, WithStyles, withStyles } from '@materia
 import {
   Description,
   EmailRounded,
+  Gavel,
   Hotel,
   LocalCafe,
   LocationOn,
@@ -14,6 +15,7 @@ import * as React from 'react';
 import {
   DetailsLink,
   DirectionsLink,
+  LegalLink,
   OurStoryLink,
   RegistryLink,
   RsvpLink,
@@ -138,6 +140,12 @@ export class UnstyledHamburger extends React.Component<
             linkComponent={ThingsToDoLink}
             onClick={this.handleClose}
             primary='Things to Do'
+          />
+          <MenuItem
+            icon={<Gavel />}
+            linkComponent={LegalLink}
+            onClick={this.handleClose}
+            primary='Legal'
           />
         </Menu>
       </span>

@@ -23,9 +23,6 @@ import { ThingsToDoDetails } from '../Pages/ThingsToDo/Details';
 import { WhereToStay } from '../Pages/WhereToStay';
 import { WhereToStayDetails } from '../Pages/WhereToStay/Details';
 
-<<<<<<< HEAD
-=======
->>>>>>> ad65ac73c32608e60f09a774ede541e8ae8f5695
 export const styles = createStyles({
   root: {
     display: 'flex',

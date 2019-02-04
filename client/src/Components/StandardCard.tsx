@@ -7,21 +7,21 @@ import { SwipeableCard } from './SwipeableCard';
 
 const styles = createStyles({
   card: {
-    maxHeight: 'calc(100vh - 300px)',
+    // maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
     minHeight: 350,
     position: 'relative',
     width: 400
   },
   defaultCard: {
-    maxHeight: 'calc(100vh - 300px)',
+    // maxHeight: 'calc(100vh - 300px)',
     maxWidth: 'calc(100vw - 20px)',
     minHeight: 350,
     opacity: 0,
     width: 400
   },
   innerCard: {
-    maxHeight: 'calc(100vh - 320px)',
+    // maxHeight: 'calc(100vh - 320px)',
     maxWidth: '100vw',
     minHeight: 350,
     overflow: 'auto'

@@ -31,3 +31,5 @@ export const RegistryLink: MenuLink = props => (
 export const ThingsToDoLink: MenuLink = props => (
   <Link to='/things-to-do' {...props} />
 );
+
+export const LegalLink: MenuLink = props => <Link to='/legal' {...props} />;

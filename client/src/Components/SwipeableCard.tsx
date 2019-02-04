@@ -121,7 +121,6 @@ export class UnconnectedSwipeableCard extends React.Component<
     if (this.state.mouseDown) {
       const { swipeRight, swipeLeft } = this.props;
       const { percentDragged } = this.state;
-      event.preventDefault();
       if (Math.abs(percentDragged - 0.5) > 0.1) {
         if (percentDragged - 0.5 > 0 && swipeRight) {
           swipeRight();

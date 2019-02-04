@@ -1,6 +1,8 @@
 import { CardContent, Typography } from '@material-ui/core';
 import * as React from 'react';
 
+import { ChevronIcons } from '../../ButtonBar/ChevronIcon';
+import { NextBar } from '../../ButtonBar/NextBar';
 import { StandardCard } from '../../Components/StandardCard';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
 
@@ -8,7 +10,7 @@ export const ThingsToDoDetails: React.SFC = () => (
   <ColumnLayout>
     <StandardCard>
       <CardContent>
-        <Typography>
+        <Typography variant='h4' component='h1'>
           Things to do
         </Typography>
         <Typography>Activities:</Typography>
@@ -100,5 +102,6 @@ export const ThingsToDoDetails: React.SFC = () => (
         <Typography><a href='https://baltimore.org/article/baltimore-inner-harbor'>Inner Harbor</a></Typography>
       </CardContent>
     </StandardCard>
+    <NextBar to='/things-to-do' help='back' iconType={ChevronIcons.backArrow} />
   </ColumnLayout>
 );

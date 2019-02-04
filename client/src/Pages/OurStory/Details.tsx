@@ -10,19 +10,28 @@ import { ColumnLayout } from '../../Layouts/ColumnLayout';
 import { answerQuestion } from '../../store/actions/quiz';
 import { getAnswers, getUserCacheStatus, getUserId } from '../../store/selectors/user';
 import { CacheStatus } from '../../store/stateDefinition';
+import { BondOver } from './Questions/BondOver';
+import { BondOverAnswer } from './Questions/BondOverAnswer';
 import { DatingApp } from './Questions/DatingApp';
 import { DatingAppAnswer } from './Questions/DatingAppAnswer';
 import { Engagement } from './Questions/Engagement';
 import { EngagementAnswer } from './Questions/EngagementAnswer';
 import { FirstDate } from './Questions/FirstDate';
 import { FirstDateAnswer } from './Questions/FirstDateAnswer';
+import { Pets } from './Questions/Pets';
+import { PetsAnswer } from './Questions/PetsAnswer';
 import { Question } from './Questions/QuestionType';
+import { Travel } from './Questions/Travel';
+import { TravelAnswer } from './Questions/TravelAnswer';
 import { Venue } from './Questions/Venue';
 import { VenueAnswer } from './Questions/VenueAnswer';
 
 export const questions: Array<React.SFC<Question>> = [
   DatingApp,
   FirstDate,
+  BondOver,
+  Pets,
+  Travel,
   Engagement,
   Venue
 ];
@@ -30,13 +39,16 @@ export const questions: Array<React.SFC<Question>> = [
 export const answerComponents: Array<React.ComponentType<any>> = [
   DatingAppAnswer,
   FirstDateAnswer,
+  BondOverAnswer,
+  PetsAnswer,
+  TravelAnswer,
   EngagementAnswer,
   VenueAnswer
 ];
 
 // putting this here because of time constraints but ideally would be returned
 // from server and UI would be code split. Deadlines are :(
-const correctAnswers = [0, 0, 4, 4];
+const correctAnswers = [0, 0, 1, 5, 1, 4, 4];
 
 export interface OurStoryDetailsStateProps {
   answers?: Answer[];

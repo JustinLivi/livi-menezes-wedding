@@ -15,7 +15,15 @@ const styles = createStyles({
     flexGrow: 0,
     height: 132,
     justifyContent: 'center',
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      alignItems: 'flex-end',
+      bottom: 0,
+      height: 114,
+      left: 0,
+      position: 'fixed',
+      right: 0
+    }
   }
 });
 
