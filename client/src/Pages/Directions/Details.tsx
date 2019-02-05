@@ -32,7 +32,7 @@ export const DirectionsDetails: React.SFC = () => (
           >
             transit options
           </Link>
-          .&nbsp;
+          . WAS is the airport code for DC area airports, including&nbsp;
           <Link
             target='_blank'
             href='https://www.flydulles.com/iad/dulles-international-airport'
@@ -44,9 +44,8 @@ export const DirectionsDetails: React.SFC = () => (
             target='_blank'
             href='https://www.flyreagan.com/dca/reagan-national-airport'
           >
-            Reagan
+            Reagan.
           </Link>
-          &nbsp;are other, farther options.
         </Typography>
 
         <Typography variant='h6' component='h2'>
