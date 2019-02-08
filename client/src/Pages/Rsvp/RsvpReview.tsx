@@ -17,7 +17,7 @@ import {
   getAllRelationships,
   getRelationshipInvitedRehearsal,
   getRelationshipRsvp,
-  getRelationshipsCacheStatus,
+  getRelationshipsCacheStatuses,
 } from '../../store/selectors/relationships';
 import {
   getInvitedRehearsal,
@@ -53,7 +53,7 @@ export interface CantMakeItCardStateProps {
   allRelationships: UserData[];
   back: string;
   userCacheStatus: CacheStatus;
-  relationCacheStatus: CacheStatus;
+  relationCacheStatuses: CacheStatus[];
   relationships?: string[];
   userId?: string;
   weddingRsvp?: boolean;
@@ -86,7 +86,7 @@ export class UnconnectedRsvpReview extends React.Component<
     const {
       allRelationships,
       relationships,
-      relationCacheStatus,
+      relationCacheStatuses,
       fetchUser: shouldFetch,
       userCacheStatus,
       userId
@@ -94,14 +94,12 @@ export class UnconnectedRsvpReview extends React.Component<
     if (userCacheStatus === CacheStatus.BEHIND && userId) {
       shouldFetch({ userId });
     }
-    if (
-      relationships &&
-      relationships.length > 0 &&
-      relationCacheStatus !== CacheStatus.FETCHING &&
-      relationCacheStatus !== CacheStatus.PERSISTING
-    ) {
+    if (relationships && relationships.length > 0) {
       forEach(relationships, (relationship, index) => {
-        if (!allRelationships[index]) {
+        if (
+          !allRelationships[index] ||
+          relationCacheStatuses[index] === CacheStatus.BEHIND
+        ) {
           shouldFetch({ userId: relationship, relationshipIndex: index });
         }
       });
@@ -243,7 +241,7 @@ export const backSelector = (state: State) =>
 export const mapStateToProps = (state: State) =>
   createSelector(
     [
-      getRelationshipsCacheStatus,
+      getRelationshipsCacheStatuses,
       getAllRelationships,
       getUserId,
       getUserCacheStatus,
@@ -255,7 +253,7 @@ export const mapStateToProps = (state: State) =>
       getPhoto
     ],
     (
-      relationCacheStatus,
+      relationCacheStatuses,
       allRelationships,
       userId,
       userCacheStatus,
@@ -272,7 +270,7 @@ export const mapStateToProps = (state: State) =>
       name,
       photo,
       rehearsalRsvp,
-      relationCacheStatus,
+      relationCacheStatuses,
       relationships,
       userCacheStatus,
       userId,

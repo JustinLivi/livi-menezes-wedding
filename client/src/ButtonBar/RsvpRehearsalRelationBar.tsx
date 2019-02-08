@@ -116,7 +116,7 @@ export const mapStateToProps = (
   createSelector(
     [getRelationshipRsvpRehearsal, getRelationshipId],
     (weddingRsvp, userId) => ({
-      disableButtons: disableButtonsSelector(state),
+      disableButtons: disableButtonsSelector(state, props),
       next: nextSelector(state, props),
       userId,
       weddingRsvp

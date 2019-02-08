@@ -37,7 +37,8 @@ export const updateDetailsRequestReducer = createKeyableRequestReducer<
       state.relationships &&
       state.relationships[relationshipIndex]
     ) {
-      state.relationshipsCacheStatus = CacheStatus.PERSISTING;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.PERSISTING;
       state.relationships[relationshipIndex] = {
         ...state.relationships[relationshipIndex],
         ...body
@@ -71,7 +72,8 @@ export const updateDetailsSuccessReducer = createKeyableSuccessReducer<
       state.relationships &&
       state.relationships[relationshipIndex]
     ) {
-      state.relationshipsCacheStatus = CacheStatus.UP_TO_DATE;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.UP_TO_DATE;
     } else if (state.user) {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
     }
@@ -97,7 +99,7 @@ export const updateDetailsFailureReducer = createKeyableFailureReducer<
       state.relationships &&
       state.relationships[relationshipIndex]
     ) {
-      state.relationshipsCacheStatus = CacheStatus.ERRORED;
+      state.relationshipsCacheStatus[relationshipIndex] = CacheStatus.ERRORED;
     } else if (state.user) {
       state.userCacheStatus = CacheStatus.ERRORED;
     }

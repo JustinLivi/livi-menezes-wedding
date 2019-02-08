@@ -154,7 +154,7 @@ export const mapStateToProps = (
     (weddingRsvp, userId, cacheStatus) => ({
       back: backSelector(state, props),
       cacheStatus,
-      disableButtons: disableButtonsSelector(state),
+      disableButtons: disableButtonsSelector(state, props),
       next: nextSelector(state, props),
       userId,
       weddingRsvp

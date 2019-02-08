@@ -11,7 +11,7 @@ export enum CacheStatus {
 export interface State {
   swipe?: 'left' | 'right';
   redirect?: string;
-  relationshipsCacheStatus: CacheStatus;
+  relationshipsCacheStatus: CacheStatus[];
   relationships: UserData[];
   userCacheStatus: CacheStatus;
   user?: UserData;
@@ -19,6 +19,6 @@ export interface State {
 
 export const initialState = {
   relationships: [],
-  relationshipsCacheStatus: CacheStatus.BEHIND,
+  relationshipsCacheStatus: [],
   userCacheStatus: CacheStatus.BEHIND
 };

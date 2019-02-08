@@ -29,7 +29,8 @@ export const rsvpCeremonyRequestReducer = createKeyableRequestReducer<
       state.relationships &&
       state.relationships[relationshipIndex]
     ) {
-      state.relationshipsCacheStatus = CacheStatus.PERSISTING;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.PERSISTING;
       state.relationships[relationshipIndex].attendingWedding = rsvp;
     } else if (state.user) {
       state.userCacheStatus = CacheStatus.PERSISTING;
@@ -53,7 +54,8 @@ export const rsvpCeremonySuccessReducer = createKeyableSuccessReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.UP_TO_DATE;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.UP_TO_DATE;
       state.redirect = `/rsvp/details/${relationshipIndex}`;
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
@@ -77,7 +79,7 @@ export const rsvpCeremonyFailureReducer = createKeyableFailureReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.ERRORED;
+      state.relationshipsCacheStatus[relationshipIndex] = CacheStatus.ERRORED;
     } else {
       state.userCacheStatus = CacheStatus.ERRORED;
     }

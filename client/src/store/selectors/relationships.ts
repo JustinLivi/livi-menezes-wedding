@@ -1,10 +1,15 @@
 import { UserData } from '../../common';
-import { State } from '../stateDefinition';
+import { CacheStatus, State } from '../stateDefinition';
 import { extractRelationId, RelationIdRouteProps } from './common';
 
-export const getRelationshipsCacheStatus = ({
+export const getRelationshipsCacheStatuses = ({
   relationshipsCacheStatus
 }: State) => relationshipsCacheStatus;
+
+export const getRelationshipsCacheStatus = (
+  { relationshipsCacheStatus }: State,
+  props: RelationIdRouteProps
+) => relationshipsCacheStatus[extractRelationId(props)] || CacheStatus.BEHIND;
 
 export const getAllRelationships = ({ relationships }: State) => relationships;
 

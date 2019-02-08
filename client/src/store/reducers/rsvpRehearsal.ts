@@ -30,7 +30,8 @@ export const rsvpRehearsalRequestReducer = createKeyableRequestReducer<
       state.relationships &&
       state.relationships[relationshipIndex]
     ) {
-      state.relationshipsCacheStatus = CacheStatus.PERSISTING;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.PERSISTING;
       state.relationships[relationshipIndex].attendingRehearsal = rsvp;
     } else if (state.user) {
       state.userCacheStatus = CacheStatus.PERSISTING;
@@ -54,10 +55,11 @@ export const rsvpRehearsalSuccessReducer = createKeyableSuccessReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.UP_TO_DATE;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.UP_TO_DATE;
       state.redirect =
         relationshipIndex < getRelationshipsCount(state) - 1
-          ? `/rsvp/u/${relationshipIndex}`
+          ? `/rsvp/u/${relationshipIndex + 1}`
           : '/rsvp/review';
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
@@ -82,7 +84,7 @@ export const rsvpRehearsalFailureReducer = createKeyableFailureReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.ERRORED;
+      state.relationshipsCacheStatus[relationshipIndex] = CacheStatus.ERRORED;
     } else {
       state.userCacheStatus = CacheStatus.ERRORED;
     }

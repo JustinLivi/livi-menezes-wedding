@@ -23,7 +23,7 @@ export const getUserRequestReducer = createKeyableRequestReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.FETCHING;
+      state.relationshipsCacheStatus[relationshipIndex] = CacheStatus.FETCHING;
     } else {
       state.userCacheStatus = CacheStatus.FETCHING;
     }
@@ -46,7 +46,8 @@ export const getUserSuccessReducer = createKeyableSuccessReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.UP_TO_DATE;
+      state.relationshipsCacheStatus[relationshipIndex] =
+        CacheStatus.UP_TO_DATE;
       state.relationships[relationshipIndex] = payload;
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
@@ -70,7 +71,7 @@ export const getUserFailureReducer = createKeyableFailureReducer<
     }
   ) => {
     if (relationshipIndex !== undefined) {
-      state.relationshipsCacheStatus = CacheStatus.ERRORED;
+      state.relationshipsCacheStatus[relationshipIndex] = CacheStatus.ERRORED;
     } else {
       state.userCacheStatus = CacheStatus.ERRORED;
     }
