@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 
 import { StandardCard } from '../../Components/StandardCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
+import defaultProfile from '../../profiles/default_profile.jpg';
 import { getRelationshipName, getRelationshipPhoto } from '../../store/selectors/relationships';
 
 const styles = createStyles({
@@ -55,7 +56,14 @@ export class UnconnectedAvatarCardRelation extends React.Component<
       <StandardCard swipe={swipe} swipeLeft={swipeLeft} swipeRight={swipeRight}>
         <CardContent className={content}>
           <Grid className={avatar}>
-            <Avatar alt='You' src={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}>
+            <Avatar
+              alt='You'
+              src={
+                photo
+                  ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                  : defaultProfile
+              }
+            >
               {name}
             </Avatar>
           </Grid>

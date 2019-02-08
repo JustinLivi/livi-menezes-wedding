@@ -10,6 +10,7 @@ import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import defaultProfile from '../../profiles/default_profile.jpg';
 import { changeDetailsRelation, updateDetails } from '../../store/actions/updateDetails';
 import { fetchUser } from '../../store/actions/user';
 import { extractRelationId, RelationIdRouteProps } from '../../store/selectors/common';
@@ -128,7 +129,11 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
           <React.Fragment>
             {weddingRsvpDetails ? (
               <ImGoingCard
-                photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                photo={
+                  photo
+                    ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                    : defaultProfile
+                }
                 username={username}
                 address={address}
                 changeDetails={this.change}
@@ -138,7 +143,11 @@ export class UnstyledRsvpDetailsRelation extends React.Component<
               />
             ) : (
               <CantMakeItCard
-                photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                photo={
+                  photo
+                    ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                    : defaultProfile
+                }
                 username={username}
                 changeDetails={this.change}
                 updateDetails={this.update}

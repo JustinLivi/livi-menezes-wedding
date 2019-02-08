@@ -11,6 +11,7 @@ import { ItsaMatch } from '../../Components/ItsaMatch';
 import { ProfileCard } from '../../Components/ProfileCard';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import defaultProfile from '../../profiles/default_profile.jpg';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { rsvpCeremony } from '../../store/actions/rsvpCeremony';
 import { fetchUser } from '../../store/actions/user';
@@ -99,7 +100,11 @@ export class UnconnectedRsvpRelation extends React.Component<
           <React.Fragment>
             {weddingRsvp === true && redirect ? (
               <ItsaMatch
-                leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                leftPhoto={
+                  photo
+                    ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                    : defaultProfile
+                }
                 name={name}
                 rightPhoto={justinMarisa}
                 message={`${name} is going to Justin and Marisa's Wedding!`}
@@ -113,10 +118,14 @@ export class UnconnectedRsvpRelation extends React.Component<
               swipeRight={this.rsvp(true)}
               swipeLeft={this.rsvp(false)}
               image={
-                photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : justinMarisa
+                photo
+                  ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                  : defaultProfile
               }
               title={name ? `RSVP for ${name}` : 'loading...'}
-              blurb={`Is ${name} attending the ceremony and reception?`}
+              blurb={
+                name ? `Is ${name} attending the ceremony and reception?` : ''
+              }
             />
             <Breadcrumbs activeStep={activeStep} />
             <RsvpRelationBar match={matched} />

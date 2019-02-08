@@ -1,4 +1,4 @@
-import { CardContent, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
+import { CardContent, CircularProgress, createStyles, Typography, WithStyles, withStyles } from '@material-ui/core';
 import classnames from 'classnames';
 import { forEach, map } from 'lodash';
 import * as React from 'react';
@@ -50,7 +50,7 @@ const styles = createStyles({
 });
 
 export interface CantMakeItCardStateProps {
-  allRelationships: UserData[];
+  allRelationships: Array<UserData | undefined>;
   back: string;
   userCacheStatus: CacheStatus;
   relationCacheStatuses: CacheStatus[];
@@ -160,18 +160,18 @@ export class UnconnectedRsvpReview extends React.Component<
               rehearsal={!!weddingRsvp && !!invitedRehearsal}
               attendingWedding={weddingRsvp}
             />
-            {map(
-              allRelationships,
-              (
-                {
-                  profile,
-                  name: relationName,
-                  attendingRehearsal: relationAttendingRehearsal,
-                  rehearsal: relationRehearsal,
-                  attendingWedding: relationAttendingWedding
-                },
-                index
-              ) => (
+            {map(allRelationships, (relation, index) => {
+              if (!relation) {
+                return <CircularProgress color='secondary' />;
+              }
+              const {
+                profile,
+                name: relationName,
+                attendingRehearsal: relationAttendingRehearsal,
+                rehearsal: relationRehearsal,
+                attendingWedding: relationAttendingWedding
+              } = relation;
+              return (
                 <React.Fragment key={index}>
                   <hr className={hr} />
                   <ReviewResponse
@@ -185,7 +185,7 @@ export class UnconnectedRsvpReview extends React.Component<
                       userId,
                       index
                     )}
-                    photo={profile ? profile.photo : undefined}
+                    photo={profile && profile.photo}
                     name={relationName}
                     attendingRehearsal={relationAttendingRehearsal}
                     rehearsal={
@@ -194,8 +194,8 @@ export class UnconnectedRsvpReview extends React.Component<
                     attendingWedding={relationAttendingWedding}
                   />
                 </React.Fragment>
-              )
-            )}
+              );
+            })}
           </CardContent>
         </StandardCard>
         <Breadcrumbs activeStep={-1} />

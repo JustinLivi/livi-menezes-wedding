@@ -8,6 +8,7 @@ import { ContinueBar } from '../../ButtonBar/ContinueBar';
 import { DetailsUpdates } from '../../common';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import defaultProfile from '../../profiles/default_profile.jpg';
 import { changeDetails, updateDetails } from '../../store/actions/updateDetails';
 import {
   getAddress,
@@ -16,7 +17,6 @@ import {
   getInvitedRehearsal,
   getName,
   getPhoto,
-  getRelationships,
   getRelationshipsCount,
   getUserId,
   getWeddingRsvp,
@@ -39,7 +39,6 @@ export interface RsvpDetailsStateProps {
   favoriteDanceSong?: string;
   address?: string;
   dietaryRestrictions?: string;
-  relationships?: string[];
   name?: string;
   photo?: string;
   next: string;
@@ -78,18 +77,18 @@ export class UnstyledRsvpDetails extends React.Component<RsvpDetailsProps> {
       address,
       weddingRsvpDetails,
       dietaryRestrictions,
-      relationships,
       photo,
       name,
-      next,
-      classes: { help }
+      next
     } = this.props;
     return (
       <ColumnLayout>
         {weddingRsvpDetails ? (
           <ImGoingCard
             name={name}
-            photo={photo && `${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+            photo={
+              photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : defaultProfile
+            }
             address={address}
             changeDetails={change}
             dietaryRestrictions={dietaryRestrictions}
@@ -139,7 +138,6 @@ export const mapStateToProps = (state: State) =>
       getFavoriteDanceSong,
       getAddress,
       getDietaryRestrictions,
-      getRelationships,
       getName,
       getPhoto
     ],
@@ -149,7 +147,6 @@ export const mapStateToProps = (state: State) =>
       favoriteDanceSong,
       address,
       dietaryRestrictions,
-      relationships,
       name,
       photo
     ) => ({
@@ -159,7 +156,6 @@ export const mapStateToProps = (state: State) =>
       name,
       next: nextSelector(state),
       photo,
-      relationships,
       userId,
       weddingRsvpDetails
     })

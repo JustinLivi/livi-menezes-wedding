@@ -11,6 +11,7 @@ import { RsvpRehearsalRelationBar } from '../../ButtonBar/RsvpRehearsalRelationB
 import { ItsaMatch } from '../../Components/ItsaMatch';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
 import { ColumnLayout } from '../../Layouts/ColumnLayout';
+import defaultProfile from '../../profiles/default_profile.jpg';
 import justinMarisa from '../../profiles/justin-marisa.jpg';
 import { rsvpRehearsal } from '../../store/actions/rsvpRehearsal';
 import { fetchUser } from '../../store/actions/user';
@@ -116,7 +117,11 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
           <React.Fragment>
             {rehearsalRsvp === true && redirect ? (
               <ItsaMatch
-                leftPhoto={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}
+                leftPhoto={
+                  photo
+                    ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}`
+                    : defaultProfile
+                }
                 name={name}
                 rightPhoto={justinMarisa}
                 message={`${name} is going to the rehearsal dinner!`}

@@ -5,6 +5,7 @@ import * as React from 'react';
 import { CantMakeIt } from '../../ButtonBar/CantMakeIt';
 import { ImGoing } from '../../ButtonBar/ImGoing';
 import { REACT_APP_PICTURE_ENDPOINT } from '../../config';
+import defaultProfile from '../../profiles/default_profile.jpg';
 
 export const styles = createStyles({
   avatar: {
@@ -53,7 +54,10 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
 }) => (
   <Grid>
     <Grid className={avatar}>
-      <Avatar alt='You' src={`${REACT_APP_PICTURE_ENDPOINT}/${photo}`}>
+      <Avatar
+        alt='You'
+        src={photo ? `${REACT_APP_PICTURE_ENDPOINT}/${photo}` : defaultProfile}
+      >
         {name || 'loading...'}
       </Avatar>
     </Grid>
