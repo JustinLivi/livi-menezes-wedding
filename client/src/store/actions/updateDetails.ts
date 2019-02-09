@@ -1,5 +1,6 @@
+import { createActionCreator, FluxStandardAction } from 'redux-keyable';
+
 import { DetailsUpdates, Endpoints, UpdateDetailsPayload, UserData } from '../../common';
-import { createActionCreator, FluxStandardAction } from '../../Util/createKeyableReducer';
 import { createRsaaActionCreator, RsaaActionSet } from '../../Util/rsaaActionCreator';
 import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 
@@ -29,10 +30,9 @@ export const updateDetails = createRsaaActionCreator<
 }));
 
 export const CHANGE_DETAILS = 'CHANGE_DETAILS';
-export type CHANGE_DETAILS = 'CHANGE_DETAILS';
 
 export interface ChangeDetailsAction
-  extends FluxStandardAction<CHANGE_DETAILS> {
+  extends FluxStandardAction<typeof CHANGE_DETAILS> {
   payload: DetailsUpdates;
 }
 
@@ -45,10 +45,9 @@ export const changeDetails = createActionCreator<
 }));
 
 export const CHANGE_DETAILS_RELATION = 'CHANGE_DETAILS_RELATION';
-export type CHANGE_DETAILS_RELATION = 'CHANGE_DETAILS_RELATION';
 
 export interface ChangeDetailsRelationAction
-  extends FluxStandardAction<CHANGE_DETAILS_RELATION> {
+  extends FluxStandardAction<typeof CHANGE_DETAILS_RELATION> {
   payload: DetailsUpdates;
   meta: { relationIndex: number };
 }

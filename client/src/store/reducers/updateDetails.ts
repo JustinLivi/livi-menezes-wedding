@@ -1,7 +1,7 @@
 import reduceReducers from 'reduce-reducers';
+import { combineKeyableReducers, createKeyableReducer } from 'redux-keyable';
 
 import { Endpoints } from '../../common';
-import { combineKeyableReducers, createKeyableReducer } from '../../Util/createKeyableReducer';
 import {
   combineKeyableRsaaReducers,
   createKeyableFailureReducer,

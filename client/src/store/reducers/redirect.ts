@@ -1,4 +1,5 @@
-import { combineKeyableReducers, createKeyableReducer } from '../../Util/createKeyableReducer';
+import { combineKeyableReducers, createKeyableReducer } from 'redux-keyable';
+
 import { REDIRECTED, RedirectedAction } from '../actions/redirect';
 import { initialState, State } from '../stateDefinition';
 

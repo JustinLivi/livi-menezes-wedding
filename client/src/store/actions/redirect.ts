@@ -1,11 +1,9 @@
 import { Action } from 'redux';
-
-import { createActionCreator } from '../../Util/createKeyableReducer';
+import { createActionCreator } from 'redux-keyable';
 
 export const REDIRECTED = 'REDIRECTED';
-export type REDIRECTED = 'REDIRECTED';
 
-export interface RedirectedAction extends Action<REDIRECTED> {}
+export interface RedirectedAction extends Action<typeof REDIRECTED> {}
 
 export const redirected = createActionCreator<undefined, RedirectedAction>(
   () => ({
