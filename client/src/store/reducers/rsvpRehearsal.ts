@@ -20,11 +20,11 @@ export const rsvpRehearsalRequestReducer = createKeyableRequestReducer<
     {
       meta: {
         body: { rsvp },
-        params: { relationshipIndex }
+        params: { relationshipIndex, noRedirect }
       }
     }
   ) => {
-    state.swipe = rsvp ? 'right' : 'left';
+    state.swipe = noRedirect ? undefined : rsvp ? 'right' : 'left';
     if (
       relationshipIndex !== undefined &&
       state.relationships &&

@@ -185,7 +185,12 @@ export class UnconnectedRsvpReview extends React.Component<
             />
             {map(allRelationships, (relation, index) => {
               if (!relation) {
-                return <CircularProgress color='secondary' />;
+                return (
+                  <React.Fragment key={index}>
+                    <hr className={hr} />
+                    <CircularProgress color='secondary' />
+                  </React.Fragment>
+                );
               }
               const {
                 id,
