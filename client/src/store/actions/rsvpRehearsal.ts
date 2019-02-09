@@ -5,7 +5,7 @@ import { RsaaMeta } from '../../Util/rsaaActionCreatorFactory';
 export interface RsvpRehearsalMeta
   extends RsaaMeta<'POST', Endpoints.RSVP_REHEARSAL> {
   body: RsvpPayload;
-  params: { relationshipIndex?: number };
+  params: { relationshipIndex?: number; noRedirect?: boolean };
 }
 
 export type RsvpRehearsalActionSet = RsaaActionSet<

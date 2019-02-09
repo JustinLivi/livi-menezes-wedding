@@ -50,21 +50,25 @@ export const rsvpRehearsalSuccessReducer = createKeyableSuccessReducer<
     state,
     {
       meta: {
-        params: { relationshipIndex }
+        params: { relationshipIndex, noRedirect }
       }
     }
   ) => {
     if (relationshipIndex !== undefined) {
       state.relationshipsCacheStatus[relationshipIndex] =
         CacheStatus.UP_TO_DATE;
-      state.redirect =
-        relationshipIndex < getRelationshipsCount(state) - 1
-          ? `/rsvp/u/${relationshipIndex + 1}`
-          : '/rsvp/review';
+      state.redirect = noRedirect
+        ? undefined
+        : relationshipIndex < getRelationshipsCount(state) - 1
+        ? `/rsvp/u/${relationshipIndex + 1}`
+        : '/rsvp/review';
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
-      state.redirect =
-        getRelationshipsCount(state) > 0 ? '/rsvp/u/0' : '/rsvp/review';
+      state.redirect = noRedirect
+        ? undefined
+        : getRelationshipsCount(state) > 0
+        ? '/rsvp/u/0'
+        : '/rsvp/review';
     }
   }
 );

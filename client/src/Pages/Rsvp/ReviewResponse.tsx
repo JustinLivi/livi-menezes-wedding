@@ -40,6 +40,8 @@ export interface ReviewResponseProps extends WithStyles<typeof styles> {
   attendingRehearsal?: boolean;
   handleCantMakeIt: React.MouseEventHandler;
   handleImGoing: React.MouseEventHandler;
+  handleCantMakeItRehearsal: React.MouseEventHandler;
+  handleImGoingRehearsal: React.MouseEventHandler;
 }
 
 export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
@@ -48,6 +50,8 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
   attendingWedding,
   handleCantMakeIt,
   handleImGoing,
+  handleCantMakeItRehearsal,
+  handleImGoingRehearsal,
   rehearsal,
   attendingRehearsal,
   classes: { avatar, italic, centered, buttons, row }
@@ -87,27 +91,35 @@ export const UnstyledReviewResponse: React.SFC<ReviewResponseProps> = ({
         disabled={attendingWedding === true}
       />
       <Typography variant='body1' component='span'>
-        {attendingWedding === false ? 'Not ' : ''}Attending Wedding
+        {attendingWedding === false
+          ? 'Not Attending Wedding'
+          : attendingWedding === true
+          ? 'Attending Wedding'
+          : 'No RSVP'}
       </Typography>
     </Grid>
     {rehearsal && (
       <Grid className={row} container direction='row' alignItems='center'>
         <CantMakeIt
           fontSize='small'
-          onClick={handleCantMakeIt}
+          onClick={handleCantMakeItRehearsal}
           className={buttons}
           selected={attendingRehearsal === false}
           disabled={attendingRehearsal === false}
         />
         <ImGoing
           fontSize='small'
-          onClick={handleImGoing}
+          onClick={handleImGoingRehearsal}
           className={buttons}
           selected={attendingRehearsal === true}
           disabled={attendingRehearsal === true}
         />
         <Typography variant='body1' component='span'>
-          {attendingRehearsal === false ? 'Not ' : ''}Attending Rehearsal
+          {attendingRehearsal === false
+            ? 'Not Attending Rehearsal Dinner'
+            : attendingRehearsal === true
+            ? 'Attending Rehearsal Dinner'
+            : 'No RSVP'}
         </Typography>
       </Grid>
     )}

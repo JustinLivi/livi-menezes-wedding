@@ -49,17 +49,19 @@ export const rsvpCeremonySuccessReducer = createKeyableSuccessReducer<
     state,
     {
       meta: {
-        params: { relationshipIndex }
+        params: { relationshipIndex, noRedirect }
       }
     }
   ) => {
     if (relationshipIndex !== undefined) {
       state.relationshipsCacheStatus[relationshipIndex] =
         CacheStatus.UP_TO_DATE;
-      state.redirect = `/rsvp/details/${relationshipIndex}`;
+      state.redirect = noRedirect
+        ? undefined
+        : `/rsvp/details/${relationshipIndex}`;
     } else {
       state.userCacheStatus = CacheStatus.UP_TO_DATE;
-      state.redirect = '/rsvp/details';
+      state.redirect = noRedirect ? undefined : '/rsvp/details';
     }
   }
 );

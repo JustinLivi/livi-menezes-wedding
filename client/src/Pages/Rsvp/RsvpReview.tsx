@@ -123,7 +123,25 @@ export class UnconnectedRsvpReview extends React.Component<
     if (userId) {
       rsvp({
         body: { userId, rsvp: response },
-        params: { relationshipIndex }
+        params: { relationshipIndex, noRedirect: true }
+      });
+    }
+  };
+
+  public handleRehearsalClick: (
+    response: boolean,
+    userId?: string,
+    relationshipIndex?: number
+  ) => React.MouseEventHandler<HTMLElement> = (
+    response,
+    userId,
+    relationshipIndex
+  ) => event => {
+    const { rsvpRehearsal: rsvp } = this.props;
+    if (userId) {
+      rsvp({
+        body: { userId, rsvp: response },
+        params: { relationshipIndex, noRedirect: true }
       });
     }
   };
@@ -154,6 +172,11 @@ export class UnconnectedRsvpReview extends React.Component<
             <ReviewResponse
               handleCantMakeIt={this.handleCeremonyClick(false, userId)}
               handleImGoing={this.handleCeremonyClick(true, userId)}
+              handleCantMakeItRehearsal={this.handleRehearsalClick(
+                false,
+                userId
+              )}
+              handleImGoingRehearsal={this.handleRehearsalClick(true, userId)}
               photo={photo}
               name={name}
               attendingRehearsal={rehearsalRsvp}
@@ -165,6 +188,7 @@ export class UnconnectedRsvpReview extends React.Component<
                 return <CircularProgress color='secondary' />;
               }
               const {
+                id,
                 profile,
                 name: relationName,
                 attendingRehearsal: relationAttendingRehearsal,
@@ -177,12 +201,18 @@ export class UnconnectedRsvpReview extends React.Component<
                   <ReviewResponse
                     handleCantMakeIt={this.handleCeremonyClick(
                       false,
-                      userId,
+                      id,
                       index
                     )}
-                    handleImGoing={this.handleCeremonyClick(
+                    handleImGoing={this.handleCeremonyClick(true, id, index)}
+                    handleCantMakeItRehearsal={this.handleRehearsalClick(
+                      false,
+                      id,
+                      index
+                    )}
+                    handleImGoingRehearsal={this.handleRehearsalClick(
                       true,
-                      userId,
+                      id,
                       index
                     )}
                     photo={profile && profile.photo}
