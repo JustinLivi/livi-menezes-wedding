@@ -69,6 +69,11 @@ export class UnconnectedRsvpRelation extends React.Component<
     }
   }
 
+  public componentDidUpdate() {
+    this.relationId = extractRelationId(this.props);
+    this.componentDidMount();
+  }
+
   public rsvp: (response: boolean) => () => void = response => () => {
     const { rsvpCeremony: shouldRsvp, userId } = this.props;
     if (userId) {

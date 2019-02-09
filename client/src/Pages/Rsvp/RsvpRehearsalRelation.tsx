@@ -96,6 +96,11 @@ export class UnconnectedRsvpRehearsalRelation extends React.Component<
     }
   }
 
+  public componentDidUpdate() {
+    this.relationId = extractRelationId(this.props);
+    this.componentDidMount();
+  }
+
   public render() {
     const {
       name,
