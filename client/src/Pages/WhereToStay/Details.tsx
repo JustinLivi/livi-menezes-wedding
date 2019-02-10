@@ -45,8 +45,13 @@ export const UnstyledWhereToStayDetails: React.SFC<
           </Link>
         </Typography>
         <Typography variant='body1' component='p' gutterBottom>
+          Book via&nbsp;
+          <Link href='https://gc.synxis.com/rez.aspx?Hotel=68042&Chain=15564&arrive=10/12/2019&depart=10/14/2019&adult=1&child=0&group=ME101119RV&chain=15564&BRAND=JV&template=JV_RBE&shell=JV_RBE'>
+            Joie de Vivre
+          </Link>
+          &nbsp;or call&nbsp;
           <Link href='tel:+1-407-745-3477'>+1 (407) 745-3477</Link>. We are
-          under the <strong>Menezes/Livi Wedding Block</strong>.
+          under the <strong>Livi Menezes Wedding Block</strong>.
         </Typography>
         <Typography variant='h6' component='h2'>
           <Link target='_blank' href='https://www.monaco-baltimore.com/'>
