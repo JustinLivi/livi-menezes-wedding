@@ -57,9 +57,9 @@ export class UnstyledFirstDateAnswer extends React.Component<
             Fun fact #2
           </Typography>
           <Typography className={topName} component='p'>
-            Dooby’s is about a block away from the George Peabody Library and
-            where we will be having our “first look” and split more avocado
-            toast before the wedding.
+            Dooby’s is about a block away from the George Peabody Library. We
+            will be having our “first look” and splitting more avocado toast
+            there before the wedding.
           </Typography>
         </CardContent>
       </StandardCard>
