@@ -102,9 +102,9 @@ export const nextSelector = (
   props: RsvpRehearsalRelationBarParentProps
 ): string =>
   createSelector(
-    [getRelationshipRsvpRehearsal, getHasMoreRelations],
-    (weddingRsvp, hasMoreRelations) =>
-      hasMoreRelations && weddingRsvp === undefined
+    [getHasMoreRelations],
+    hasMoreRelations =>
+      hasMoreRelations
         ? `/rsvp/u/${extractRelationId(props) + 1}`
         : '/rsvp/review'
   )(state, props);
