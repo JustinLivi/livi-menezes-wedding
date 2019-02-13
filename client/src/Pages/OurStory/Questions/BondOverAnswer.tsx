@@ -64,8 +64,8 @@ export class UnstyledBondOverAnswer extends React.Component<
           <Typography className={topName} gutterBottom component='p'>
             Justin promised that he would never be able to help with Marisa’s
             tech problems despite being a software engineer. He later admitted
-            that she is technologically cursed, however Marisa did code part of
-            this website.
+            that she is technologically cursed, but Marisa did code part of this
+            website.
           </Typography>
           <Typography className={topName} component='p'>
             Marisa is a dog person.
