@@ -126,7 +126,7 @@ export class UnstyledProtectedRouter extends React.Component<
               </Button>
             </Grid>
           </Grid>
-        ) : profile || true ? (
+        ) : profile ? (
           <React.Fragment>
             <SideBar />
             <div className={root}>
