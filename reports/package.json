@@ -4,15 +4,21 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "report:pending-rsvp": "ts-node ./pendingRsvp.ts"
+    "report:fetch-raw": "ts-node ./src/fetchRaw.ts"
   },
   "author": "Justin Livi",
   "license": "MIT",
   "dependencies": {
     "@types/aws-sdk": "^2.7.0",
+    "@types/fs-extra": "^5.0.5",
+    "@types/json2csv": "^4.2.0",
+    "@types/lodash": "^4.14.121",
     "@types/node": "^11.9.3",
     "@types/yup": "^0.26.9",
     "aws-sdk": "^2.401.0",
+    "fs-extra": "^7.0.1",
+    "json2csv": "^4.3.4",
+    "lodash": "^4.17.11",
     "prettier": "^1.16.4",
     "ts-node": "^8.0.2",
     "tslint": "^5.12.1",

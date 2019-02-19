@@ -17,6 +17,9 @@ build
 backend.tfvars
 .terraform
 
+# reports
+/reports/data
+
 # misc
 .DS_Store
 .env.local

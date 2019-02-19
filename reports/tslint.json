@@ -3,6 +3,7 @@
   "rules": {
     "jsx-boolean-value": [true, "never"],
     "no-submodule-imports": [false],
-    "interface-name": [true, "never-prefix"]
+    "interface-name": [true, "never-prefix"],
+    "object-literal-sort-keys": false
   }
 }
