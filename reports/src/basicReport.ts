@@ -13,8 +13,12 @@ const parser = new Parser<Profile>({
     },
     {
       label: 'Attending Wedding',
-      value: 'attendingWedding',
-      default: 'Pending'
+      value: row =>
+        row.attendingWedding === undefined
+          ? 'Pending'
+          : row.attendingWedding
+          ? 'Attending'
+          : 'Not Attending'
     },
     {
       label: 'Attending Rehearsal Dinner',
@@ -35,7 +39,7 @@ const parser = new Parser<Profile>({
           (totalCount, answer) =>
             totalCount + (answer && answer.correct ? 1 : 0),
           0
-        ) || 0}`
+        ) || ''}`
     },
     {
       label: 'Answers Attempted',
@@ -44,7 +48,7 @@ const parser = new Parser<Profile>({
           row.answers,
           (totalCount, answer) => totalCount + (answer ? 1 : 0),
           0
-        ) || 0}`
+        ) || ''}`
     }
   ]
 });

@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "report:fetch-raw": "ts-node ./src/fetchRaw.ts"
+    "report:fetch-raw": "ts-node ./src/fetchRaw.ts",
+    "report:basic": "ts-node ./src/basicReport.ts",
+    "report:quiz": "ts-node ./src/quizReport.ts"
   },
   "author": "Justin Livi",
   "license": "MIT",
