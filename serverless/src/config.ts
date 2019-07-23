@@ -27,7 +27,7 @@ const schema = yup.object({
     .string()
     .required()
     .when('IS_OFFLINE', {
-      is: 'true',
+      is: true,
       then: yup.string().transform(() => envDefaults.DYNAMODB_ENDPOINT)
     })
     .default(envDefaults.DYNAMODB_ENDPOINT),
@@ -40,7 +40,7 @@ const schema = yup.object({
     .string()
     .required()
     .when('IS_OFFLINE', {
-      is: 'true',
+      is: true,
       then: yup.string().transform(() => envDefaults.REGION)
     })
     .default(envDefaults.REGION),
@@ -48,7 +48,7 @@ const schema = yup.object({
     .string()
     .required()
     .when('IS_OFFLINE', {
-      is: 'true',
+      is: true,
       then: yup.string().transform(() => envDefaults.UI_ORIGIN)
     })
     .default(envDefaults.UI_ORIGIN)

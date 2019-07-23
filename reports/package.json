@@ -4,9 +4,10 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "report:fetch-raw": "ts-node ./src/fetchRaw.ts",
+    "report:fetch-raw": "DYNAMODB_ENDPOINT=dynamodb.us-east-1.amazonaws.com REGION=us-east-1 ts-node ./src/fetchRaw.ts",
     "report:basic": "ts-node ./src/basicReport.ts",
-    "report:quiz": "ts-node ./src/quizReport.ts"
+    "report:quiz": "ts-node ./src/quizReport.ts",
+    "report:addresses": "ts-node ./src/addressReport.ts"
   },
   "author": "Justin Livi",
   "license": "MIT",
