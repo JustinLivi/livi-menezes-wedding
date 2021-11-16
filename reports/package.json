@@ -18,7 +18,7 @@
     "@types/lodash": "^4.14.121",
     "@types/node": "^11.9.3",
     "@types/yup": "^0.26.9",
-    "aws-sdk": "^2.401.0",
+    "aws-sdk": "^2.814.0",
     "fs-extra": "^7.0.1",
     "json2csv": "^4.3.4",
     "lodash": "^4.17.19",
